@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Shagarah</string>
+    <string name="sign_in">تسجيل دخول</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="sign_up_now">قم بانشاء حساب الآن</string>
+    <string name="dont_have_an_account">لا تملك حساب ؟</string>
+    <string name="sign_up">انشاء حساب</string>
+    <string name="user_name">اسم المستخدم</string>
+    <string name="already_have_an_account">"تمتلك حساب بالفعل ؟ "</string>
+    <string name="request_status">حالة الطلب</string>
+    <string name="tree_type">نوع الشجرة</string>
+    <string name="request_timestamp">تاريخ انشاء الطلب</string>
+    <string name="show_request">عرض الطلب</string>
+    <string name="tree_code">كود الشجرة</string>
+    <string name="more_details">مزيد من التفاصيل</string>
+    <string name="tree_status">حالة الشجرة</string>
+    <string name="current_requests">الطلبات الحالية</string>
+    <string name="tree_analysis_request_title">طلب تحليل الشجرة</string>
+</resources>

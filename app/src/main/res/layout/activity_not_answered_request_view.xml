@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.NotAnsweredRequestViewActivity">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/request_images_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/request_status_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/request_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@id/request_images_viewpager" />
+
+    <TextView
+        android:id="@+id/request_status_value_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="تحت المراجعة"
+        android:textColor="@color/colorAccentDark"
+        android:textSize="16sp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/request_status_label" />
+
+    <TextView
+        android:id="@+id/timestamp_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/request_timestamp"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/request_status_value_text_view" />
+
+    <TextView
+        android:id="@+id/timestamp_value_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="الأحد 26/6/2022"
+        android:textColor="@color/colorAccentDark"
+        android:textSize="16sp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timestamp_label" />
+
+    <View
+        android:id="@+id/dividing_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/transparent_gray"
+        app:layout_constraintTop_toBottomOf="@id/timestamp_value_text_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/request_question_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="السؤال المرتبط بالطلب"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dividing_view" />
+
+    <TextView
+        android:id="@+id/request_question_value_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintTop_toBottomOf="@id/request_question_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="16dp"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="ما هو نوع هذه الشجرة وحالتها العامة ؟"
+        android:background="@drawable/cornered_gray_bg"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/play_audio_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/request_question_value_text_view">
+
+        <FrameLayout
+            android:id="@+id/controllers_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/playButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@null"
+                android:src="@drawable/ic_action_play"
+                android:tint="@color/colorPrimaryDark"
+                android:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/pauseButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@null"
+                android:src="@drawable/ic_action_pause"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/audio_progress_bar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:visibility="visible" />
+
+        </FrameLayout>
+
+        <SeekBar
+            android:id="@+id/seek_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:progressBackgroundTint="@color/dark_gray"
+            app:layout_constraintBottom_toBottomOf="@id/controllers_layout"
+            app:layout_constraintStart_toEndOf="@id/controllers_layout"
+            app:layout_constraintTop_toTopOf="@id/controllers_layout"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.7" />
+
+        <TextView
+            android:id="@+id/audio_progress_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="00:00"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/seek_bar"
+            app:layout_constraintStart_toEndOf="@id/seek_bar"
+            app:layout_constraintTop_toTopOf="@id/seek_bar" />
+
+        <TextView
+            android:id="@+id/audio_length_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="00:05"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/seek_bar"
+            app:layout_constraintStart_toEndOf="@id/audio_progress_textview"
+            app:layout_constraintTop_toTopOf="@id/seek_bar" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/answer_question_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/cornered_accent_bg"
+        android:text="اجب علي السؤال"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/play_audio_item_layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

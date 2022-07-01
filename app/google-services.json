@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "925549787815",
+    "firebase_url": "https://shagarah-f2994-default-rtdb.firebaseio.com",
+    "project_id": "shagarah-f2994",
+    "storage_bucket": "shagarah-f2994.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925549787815:android:bc2cef8e020e4306f4b982",
+        "android_client_info": {
+          "package_name": "com.egrobots.shagarah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925549787815-tirde1r4b1ksnb5aqesvhv9150ja0flb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.egrobots.shagarah",
+            "certificate_hash": "51247baa05eff6421afb67f99b356fa2ad164748"
+          }
+        },
+        {
+          "client_id": "925549787815-d304vn9e6364o8m7fg3t1ore20k08uhk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4QoVMl09dmWf5BdOcuYm9_ruLS2cL9Co"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925549787815-d304vn9e6364o8m7fg3t1ore20k08uhk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
