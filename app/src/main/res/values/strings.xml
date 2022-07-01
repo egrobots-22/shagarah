@@ -17,4 +17,6 @@
     <string name="tree_status">حالة الشجرة</string>
     <string name="current_requests">الطلبات الحالية</string>
     <string name="tree_analysis_request_title">طلب تحليل الشجرة</string>
+    <string name="start_now">ابدأ الآن</string>
+    <string name="write_your_question_here">اكتب سؤالك هنا</string>
 </resources>

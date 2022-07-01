@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.egrobots.shagarah.R;
 import com.egrobots.shagarah.models.Request;
@@ -27,6 +30,8 @@ public class RequestsActivity extends AppCompatActivity implements RequestsAdapt
 
     @BindView(R.id.requests_recycler_view)
     RecyclerView requestsRecyclerView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class RequestsActivity extends AppCompatActivity implements RequestsAdapt
                         }
                         requestsAdapter.setItems(requestList);
                         requestsAdapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -77,4 +83,10 @@ public class RequestsActivity extends AppCompatActivity implements RequestsAdapt
         intent.putExtra("request_user_id", request.getUserId());
         startActivity(intent);
     }
+
+    @OnClick(R.id.add_request_fab)
+    public void onAddRequestClicked() {
+        startActivity(new Intent(this, NewRequestActivity.class));
+    }
+
 }
