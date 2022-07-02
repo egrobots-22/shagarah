@@ -2,7 +2,7 @@
 
     <item>
         <layer-list>
-            <item android:top="8dp">
+            <item >
                 <shape android:shape="rectangle">
                     <!--  Gradient Bg for listrow -->
                     <corners android:radius="48dp" />

@@ -19,4 +19,7 @@
     <string name="tree_analysis_request_title">طلب تحليل الشجرة</string>
     <string name="start_now">ابدأ الآن</string>
     <string name="write_your_question_here">اكتب سؤالك هنا</string>
+    <string name="done">تم</string>
+    <string name="cancel">الغاء</string>
+    <string name="answer_following_questions">أجب على الأسئلة التالية</string>
 </resources>

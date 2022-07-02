@@ -32,9 +32,9 @@ public class AnsweredRequestViewActivity extends AppCompatActivity implements On
     private static final int REQUEST_CODE_PERMISSIONS = 1;
     private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION};
 
+    private LatLng imageLocation;
     @BindView(R.id.map_view)
     MapView mapView;
-    private LatLng imageLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
