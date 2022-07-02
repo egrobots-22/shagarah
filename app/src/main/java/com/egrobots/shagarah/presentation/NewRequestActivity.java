@@ -29,7 +29,7 @@ import com.egrobots.shagarah.R;
 import com.egrobots.shagarah.managers.AudioRecorder;
 import com.egrobots.shagarah.managers.CameraXRecorder;
 import com.egrobots.shagarah.managers.ExoPlayerVideoManager;
-import com.egrobots.shagarah.models.Image;
+import com.egrobots.shagarah.data.models.Image;
 import com.egrobots.shagarah.presentation.helpers.GuideDialog;
 import com.egrobots.shagarah.utils.Constants;
 
@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.UUID;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;

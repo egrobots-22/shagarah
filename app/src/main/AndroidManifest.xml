@@ -3,6 +3,7 @@
     package="com.egrobots.shagarah">
 
     <application
+        android:name=".BaseActivity"
         android:allowBackup="true"
         android:icon="@mipmap/ic_shagrah_logo"
         android:label="@string/app_name"

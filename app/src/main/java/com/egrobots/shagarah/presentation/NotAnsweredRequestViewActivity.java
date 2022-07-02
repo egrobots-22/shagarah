@@ -8,25 +8,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.LayoutMode;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.bottomsheets.BottomSheet;
 import com.egrobots.shagarah.R;
-import com.egrobots.shagarah.models.Request;
+import com.egrobots.shagarah.data.models.Request;
 import com.egrobots.shagarah.presentation.adapters.ImagesAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.function.Function;
 
 public class NotAnsweredRequestViewActivity extends AppCompatActivity {
 

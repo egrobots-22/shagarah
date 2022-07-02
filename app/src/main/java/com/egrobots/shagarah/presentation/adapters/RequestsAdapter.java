@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.egrobots.shagarah.R;
-import com.egrobots.shagarah.models.Request;
+import com.egrobots.shagarah.data.models.Request;
 
 import java.util.ArrayList;
 import java.util.List;

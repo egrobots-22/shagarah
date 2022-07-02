@@ -121,18 +121,31 @@
                 android:textColorHint="@color/colorPrimaryDark"
                 android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/sign_up_button"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/cornered_accent_bg"
-                android:text="@string/sign_up"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="24dp">
+
+                <Button
+                    android:id="@+id/sign_up_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/cornered_accent_bg"
+                    android:text="@string/sign_up"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

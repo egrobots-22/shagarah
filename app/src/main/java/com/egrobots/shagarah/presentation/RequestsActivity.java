@@ -1,37 +1,54 @@
 package com.egrobots.shagarah.presentation;
 
-import androidx.annotation.NonNull;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.egrobots.shagarah.R;
+import com.egrobots.shagarah.data.models.Request;
+import com.egrobots.shagarah.presentation.adapters.RequestsAdapter;
+import com.egrobots.shagarah.presentation.helpers.ViewModelProviderFactory;
+import com.egrobots.shagarah.presentation.viewmodels.AuthenticationViewModel;
+import com.egrobots.shagarah.presentation.viewmodels.RequestsViewModel;
+import com.egrobots.shagarah.utils.Constants;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.support.DaggerAppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ProgressBar;
+public class RequestsActivity extends DaggerAppCompatActivity implements RequestsAdapter.OnRequestClickedCallback {
 
-import com.egrobots.shagarah.R;
-import com.egrobots.shagarah.models.Request;
-import com.egrobots.shagarah.presentation.adapters.RequestsAdapter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class RequestsActivity extends AppCompatActivity implements RequestsAdapter.OnRequestClickedCallback {
-
-    private List<Request> requestList;
+    private List<Request> requestList = new ArrayList<>();
 
     @BindView(R.id.requests_recycler_view)
     RecyclerView requestsRecyclerView;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+    @BindView(R.id.add_request_fab)
+    FloatingActionButton addRequestFab;
+    @Inject
+    ViewModelProviderFactory providerFactory;
+    private RequestsViewModel requestsViewModel;
+    private AuthenticationViewModel authenticationViewModel;
+    private boolean isAdmin;
+    private String userId;
+    private RequestsAdapter requestsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,37 +56,47 @@ public class RequestsActivity extends AppCompatActivity implements RequestsAdapt
         setContentView(R.layout.activity_requests);
         ButterKnife.bind(this);
         setTitle(getString(R.string.current_requests));
-
-        RequestsAdapter requestsAdapter = new RequestsAdapter(this);
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        requestsAdapter = new RequestsAdapter(this);
         requestsRecyclerView.setLayoutManager(new LinearLayoutManager(RequestsActivity.this));
         requestsRecyclerView.setAdapter(requestsAdapter);
 
-        FirebaseDatabase.getInstance()
-                .getReference("requests")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        requestList = new ArrayList<>();
-                        for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                            for (DataSnapshot requestSnapshot : userSnapshot.getChildren()) {
-                                Request request = requestSnapshot.getValue(Request.class);
-                                request.setId(requestSnapshot.getKey());
-                                request.setUserId(userSnapshot.getKey());
-                                requestList.add(request);
-                            }
-                        }
-                        requestsAdapter.setItems(requestList);
-                        requestsAdapter.notifyDataSetChanged();
-                        progressBar.setVisibility(View.GONE);
-                    }
+        authenticationViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(AuthenticationViewModel.class);
+        requestsViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(RequestsViewModel.class);
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
+        authenticationViewModel.getCurrentUser(userId);
+        authenticationViewModel.observeUserState().observe(this, user -> {
+            isAdmin = user.getRole() != null;
+            if (isAdmin) {
+                addRequestFab.setVisibility(View.GONE);
+                requestsViewModel.getRequests(null);
+            } else {
+                addRequestFab.setVisibility(View.VISIBLE);
+                requestsViewModel.getRequests(userId);
+            }
+        });
+        observeRequests();
+        observeError();
     }
+
+    private void observeRequests() {
+        requestsViewModel.observeRequests().observe(this, request -> {
+            if (request != null) {
+                requestList.add(request);
+            } else {
+                requestsAdapter.setItems(requestList);
+                requestsAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void observeError() {
+        requestsViewModel.observeError().observe(this, error -> {
+            Toast.makeText(RequestsActivity.this, error, Toast.LENGTH_SHORT).show();
+        });
+    }
+
 
     @Override
     public void onRequestClicked(Request request) {
@@ -79,14 +106,31 @@ public class RequestsActivity extends AppCompatActivity implements RequestsAdapt
         } else {
             intent = new Intent(this, NotAnsweredRequestViewActivity.class);
         }
-        intent.putExtra("request_id", request.getId());
-        intent.putExtra("request_user_id", request.getUserId());
+        intent.putExtra(Constants.REQUEST_ID, request.getId());
+        intent.putExtra(Constants.REQUEST_USER_ID, request.getUserId());
         startActivity(intent);
     }
 
     @OnClick(R.id.add_request_fab)
     public void onAddRequestClicked() {
         startActivity(new Intent(this, NewRequestActivity.class));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.signout_action) {
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            startActivity(new Intent(this, SignInActivity.class));
+        }
+        return true;
     }
 
 }

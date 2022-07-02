@@ -1,6 +1,7 @@
 package com.egrobots.shagarah.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import dagger.android.support.DaggerAppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +10,7 @@ import android.os.Handler;
 import com.egrobots.shagarah.R;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends DaggerAppCompatActivity {
 
     private static final long SPLASH_TIME_OUT = 500;
 

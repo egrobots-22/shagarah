@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.egrobots.shagarah.R;
-import com.egrobots.shagarah.models.Image;
+import com.egrobots.shagarah.data.models.Image;
 
 import java.util.ArrayList;
 import java.util.List;

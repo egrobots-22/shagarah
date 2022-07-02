@@ -2,14 +2,11 @@ package com.egrobots.shagarah.presentation;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import com.egrobots.shagarah.R;
-import com.egrobots.shagarah.models.Image;
-import com.egrobots.shagarah.models.Request;
+import com.egrobots.shagarah.data.models.Request;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;

@@ -1,4 +1,4 @@
-package com.egrobots.shagarah.models;
+package com.egrobots.shagarah.data.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

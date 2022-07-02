@@ -1,7 +1,6 @@
-package com.egrobots.shagarah.models;
+package com.egrobots.shagarah.data.models;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -42,10 +41,6 @@ public class Request {
 
     public String getTimestamp() {
         SimpleDateFormat formatter = new SimpleDateFormat("E - d MMM, yyyy", new Locale("ar"));
-        // Create a calendar object that will convert the date and time value in
-        // milliseconds to date.
-//        Calendar calendar = Calendar.getInstance(new Locale("ar"));
-//        calendar.setTimeInMillis((int) timestamp);
         return formatter.format(timestamp);
     }
 
@@ -87,6 +82,11 @@ public class Request {
 
     public void setAnswer(HashMap<String, Object> answer) {
         this.answer = answer;
+    }
+
+    public enum RequestStatus {
+        ANSWERED,
+        IN_PROGRESS
     }
 
 }

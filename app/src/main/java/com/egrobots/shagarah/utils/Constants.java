@@ -9,4 +9,10 @@ public class Constants {
     public static final String REQUEST_ID = "request_id";
     public static final String IS_ADMIN = "is_admin";
     public static final String REQUEST_USER_ID = "request_user_id";
+    public static final String DEVICE_TOKEN = "device_token";
+    public static final String USER_NAME = "user_name";
+    public static final String USERS_NODE = "users";
+    public static final String PREF_NAME = "default";
+    public static final String USER_ROLE = "user_role";
+    public static final String USER_ID = "user_id";
 }
