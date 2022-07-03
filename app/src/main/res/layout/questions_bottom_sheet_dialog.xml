@@ -36,13 +36,15 @@
                 app:layout_constraintTop_toBottomOf="@id/dialog_title" />
 
             <EditText
-                android:id="@+id/tree_type_value_text_view"
+                android:id="@+id/tree_type_value_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/cornered_gray_bg"
                 android:gravity="start|center"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/colorAccent"
@@ -58,16 +60,18 @@
                 android:layout_margin="16dp"
                 android:text="@string/tree_code"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_type_value_text_view" />
+                app:layout_constraintTop_toBottomOf="@id/tree_type_value_edit_text" />
 
             <EditText
-                android:id="@+id/tree_code_value_text_view"
+                android:id="@+id/tree_code_value_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/cornered_gray_bg"
                 android:gravity="start|center"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/colorAccent"
@@ -83,16 +87,18 @@
                 android:layout_margin="16dp"
                 android:text="@string/tree_status"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_code_value_text_view" />
+                app:layout_constraintTop_toBottomOf="@id/tree_code_value_edit_text" />
 
             <EditText
-                android:id="@+id/tree_status_value_text_view"
+                android:id="@+id/tree_status_value_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/cornered_gray_bg"
                 android:gravity="start|center"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/colorAccent"
@@ -108,16 +114,18 @@
                 android:layout_margin="16dp"
                 android:text="الأمراض و الآفات"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_status_value_text_view" />
+                app:layout_constraintTop_toBottomOf="@id/tree_status_value_edit_text" />
 
             <EditText
-                android:id="@+id/diseases_value_text_view"
+                android:id="@+id/diseases_value_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/cornered_gray_bg"
                 android:gravity="start|center"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/colorAccent"
@@ -133,16 +141,18 @@
                 android:layout_margin="16dp"
                 android:text="التسميد"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/diseases_value_text_view" />
+                app:layout_constraintTop_toBottomOf="@id/diseases_value_edit_text" />
 
             <EditText
-                android:id="@+id/tasmed_value_text_view"
+                android:id="@+id/tasmed_value_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/cornered_gray_bg"
                 android:gravity="start|center"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/colorAccent"
@@ -158,16 +168,18 @@
                 android:layout_margin="16dp"
                 android:text="الري"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tasmed_value_text_view" />
+                app:layout_constraintTop_toBottomOf="@id/tasmed_value_edit_text" />
 
             <EditText
-                android:id="@+id/alray_value_text_view"
+                android:id="@+id/alray_value_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/cornered_gray_bg"
                 android:gravity="start|center"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/colorAccent"
@@ -183,16 +195,18 @@
                 android:layout_margin="16dp"
                 android:text="العمليات"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/alray_value_text_view" />
+                app:layout_constraintTop_toBottomOf="@id/alray_value_edit_text" />
 
             <EditText
-                android:id="@+id/operations_value_text_view"
+                android:id="@+id/operations_value_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/cornered_gray_bg"
                 android:gravity="start|center"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/colorAccent"
@@ -208,16 +222,18 @@
                 android:layout_margin="16dp"
                 android:text="الثمار"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/operations_value_text_view" />
+                app:layout_constraintTop_toBottomOf="@id/operations_value_edit_text" />
 
             <EditText
-                android:id="@+id/althemar_value_text_view"
+                android:id="@+id/althemar_value_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/cornered_gray_bg"
                 android:gravity="start|center"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/colorAccent"
@@ -234,7 +250,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/althemar_value_text_view">
+                app:layout_constraintTop_toBottomOf="@id/althemar_value_edit_text">
 
                 <Button
                     android:id="@+id/cancel_button"

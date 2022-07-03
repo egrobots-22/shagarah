@@ -14,7 +14,7 @@ public class Request {
     private long timestamp;
     private String audioQuestion;
     private String textQuestion;
-    private HashMap<String, Object> answer;
+    private QuestionAnalysis questionAnalysis;
 
     public Request() {
     }
@@ -53,7 +53,11 @@ public class Request {
     }
 
     public String getStatus() {
-        return status;
+        if (status.equals(RequestStatus.ANSWERED.toString())) {
+            return "تم الرد";
+        } else {
+            return "تحت المراجعة";
+        }
     }
 
     public void setStatus(String status) {
@@ -76,12 +80,12 @@ public class Request {
         this.textQuestion = textQuestion;
     }
 
-    public HashMap<String, Object> getAnswer() {
-        return answer;
+    public QuestionAnalysis getQuestionAnalysis() {
+        return questionAnalysis;
     }
 
-    public void setAnswer(HashMap<String, Object> answer) {
-        this.answer = answer;
+    public void setQuestionAnalysis(QuestionAnalysis questionAnalysis) {
+        this.questionAnalysis = questionAnalysis;
     }
 
     public enum RequestStatus {

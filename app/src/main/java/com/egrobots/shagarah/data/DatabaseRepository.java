@@ -1,6 +1,7 @@
 package com.egrobots.shagarah.data;
 
 import com.egrobots.shagarah.data.models.CurrentUser;
+import com.egrobots.shagarah.data.models.QuestionAnalysis;
 import com.egrobots.shagarah.data.models.Request;
 import com.egrobots.shagarah.datasource.FirebaseDataSource;
 
@@ -26,11 +27,19 @@ public class DatabaseRepository {
         return firebaseDataSource.signUp(username, email, password);
     }
 
+    public Single<Boolean> addAnalysisAnswersToQuestion(String requestId, String requestUserId, QuestionAnalysis questionAnalysis) {
+        return firebaseDataSource.addAnalysisAnswersToQuestion(requestId, requestUserId, questionAnalysis);
+    }
+
     public Single<CurrentUser> getCurrentUser(String userId) {
         return firebaseDataSource.getCurrentUser(userId);
     }
 
     public Flowable<Request> getRequests(String userId) {
         return firebaseDataSource.getRequests(userId);
+    }
+
+    public Single<Request> getRequest(String requestId, String userId) {
+        return firebaseDataSource.getRequest(requestId, userId);
     }
 }

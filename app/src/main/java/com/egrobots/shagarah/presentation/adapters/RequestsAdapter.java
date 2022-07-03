@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.egrobots.shagarah.R;
+import com.egrobots.shagarah.data.models.QuestionAnalysis;
 import com.egrobots.shagarah.data.models.Request;
 
 import java.util.ArrayList;
@@ -19,7 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.RequestViewHolder> {
+public class RequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final static int IN_PROGRESS_ITEM_VIEW = 0;
+    private final static int DONE_ITEM_VIEW = 1;
 
     private List<Request> requestsList = new ArrayList<>();
     private OnRequestClickedCallback onRequestClickedCallback;
@@ -30,26 +34,50 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
 
     @NonNull
     @Override
-    public RequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_item_layout, parent, false);
-        return new RequestViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == IN_PROGRESS_ITEM_VIEW) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_item_layout, parent, false);
+            return new RequestViewHolder(view);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_done_item_layout, parent, false);
+            return new AnsweredRequestViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof RequestViewHolder) {
+            Request request = requestsList.get(position);
+            ((RequestViewHolder)holder).requestStatusTextView.setText(request.getStatus());
+            ((RequestViewHolder)holder).timestampTextView.setText(request.getTimestamp());
+            ((RequestViewHolder)holder).showRequestButton.setOnClickListener(v -> onRequestClickedCallback.onRequestClicked(request));
+            Glide.with(holder.itemView.getContext())
+                    .load(request.getImages().get(0).getUrl())
+                    .placeholder(R.drawable.shagarah_logo)
+                    .into(((RequestViewHolder)holder).requestThumbnailImgView);
+        } else if (holder instanceof AnsweredRequestViewHolder) {
+            Request request = requestsList.get(position);
+            QuestionAnalysis questionAnalysis = request.getQuestionAnalysis();
+            ((AnsweredRequestViewHolder)holder).treeTypeTextView.setText(questionAnalysis.getTreeType());
+            ((AnsweredRequestViewHolder)holder).treeCodeTextView.setText(questionAnalysis.getTreeCode());
+            ((AnsweredRequestViewHolder)holder).treeStatusTextView.setText(questionAnalysis.getTreeStatus());
+            ((AnsweredRequestViewHolder)holder).moreDetailsButton.setOnClickListener(v -> onRequestClickedCallback.onRequestClicked(request));
+            Glide.with(holder.itemView.getContext())
+                    .load(request.getImages().get(0).getUrl())
+                    .placeholder(R.drawable.shagarah_logo)
+                    .into(((AnsweredRequestViewHolder)holder).requestThumbnailImgView);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
         Request request = requestsList.get(position);
-        holder.requestStatusTextView.setText(request.getStatus());
-        holder.timestampTextView.setText(request.getTimestamp());
-        Glide.with(holder.itemView.getContext())
-                .load(request.getImages().get(0).getUrl())
-                .placeholder(R.drawable.shagarah_logo)
-                .into(holder.requestThumbnailImgView);
-        holder.showRequestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRequestClickedCallback.onRequestClicked(request);
-            }
-        });
+        if (request.getQuestionAnalysis() == null) {
+            return IN_PROGRESS_ITEM_VIEW;
+        } else {
+            return DONE_ITEM_VIEW;
+        }
     }
 
     @Override
@@ -61,7 +89,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
         this.requestsList = requestList;
     }
 
-    class RequestViewHolder extends RecyclerView.ViewHolder {
+    static class RequestViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.request_status_value_text_view)
         TextView requestStatusTextView;
@@ -73,6 +101,25 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
         ImageView requestThumbnailImgView;
 
         public RequestViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    static class AnsweredRequestViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.tree_type_value_text_view)
+        TextView treeTypeTextView;
+        @BindView(R.id.tree_code_value_text_view)
+        TextView treeCodeTextView;
+        @BindView(R.id.tree_status_value_text_view)
+        TextView treeStatusTextView;
+        @BindView(R.id.more_details_button)
+        Button moreDetailsButton;
+        @BindView(R.id.request_thumbnail_img_view)
+        ImageView requestThumbnailImgView;
+
+        public AnsweredRequestViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

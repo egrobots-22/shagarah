@@ -64,6 +64,12 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
         authenticationViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(AuthenticationViewModel.class);
         requestsViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(RequestsViewModel.class);
 
+        getCurrentUser();
+        observeRequests();
+        observeError();
+    }
+
+    private void getCurrentUser() {
         authenticationViewModel.getCurrentUser(userId);
         authenticationViewModel.observeUserState().observe(this, user -> {
             isAdmin = user.getRole() != null;
@@ -75,8 +81,6 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
                 requestsViewModel.getRequests(userId);
             }
         });
-        observeRequests();
-        observeError();
     }
 
     private void observeRequests() {
@@ -101,13 +105,14 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
     @Override
     public void onRequestClicked(Request request) {
         Intent intent;
-        if (request.getStatus().equals("answered")) {
+        if (request.getQuestionAnalysis() != null) {
             intent = new Intent(this, AnsweredRequestViewActivity.class);
         } else {
             intent = new Intent(this, NotAnsweredRequestViewActivity.class);
         }
         intent.putExtra(Constants.REQUEST_ID, request.getId());
         intent.putExtra(Constants.REQUEST_USER_ID, request.getUserId());
+        intent.putExtra(Constants.IS_ADMIN, isAdmin);
         startActivity(intent);
     }
 

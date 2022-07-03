@@ -2,27 +2,49 @@ package com.egrobots.shagarah.presentation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.support.DaggerAppCompatActivity;
 
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.egrobots.shagarah.R;
+import com.egrobots.shagarah.data.models.QuestionAnalysis;
 import com.egrobots.shagarah.data.models.Request;
+import com.egrobots.shagarah.managers.AudioPlayer;
 import com.egrobots.shagarah.presentation.adapters.ImagesAdapter;
+import com.egrobots.shagarah.presentation.helpers.ViewModelProviderFactory;
+import com.egrobots.shagarah.presentation.viewmodels.AuthenticationViewModel;
+import com.egrobots.shagarah.presentation.viewmodels.RequestsViewModel;
+import com.egrobots.shagarah.presentation.viewmodels.SelectedRequestViewModel;
+import com.egrobots.shagarah.utils.Constants;
+import com.egrobots.shagarah.utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class NotAnsweredRequestViewActivity extends AppCompatActivity {
+import java.io.IOException;
+
+import javax.inject.Inject;
+
+public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
+
+    public static final int TIME_UNIT = 500;
 
     @BindView(R.id.request_images_viewpager)
     ViewPager2 requestImagesViewPager;
@@ -34,6 +56,28 @@ public class NotAnsweredRequestViewActivity extends AppCompatActivity {
     TextView requestQuestionTextView;
     @BindView(R.id.play_audio_item_layout)
     View audioQuestionView;
+    @BindView(R.id.playButton)
+    ImageButton playButton;
+    @BindView(R.id.pauseButton)
+    ImageButton pauseButton;
+    @BindView(R.id.audio_progress_textview)
+    TextView audioProgressTextView;
+    @BindView(R.id.answer_question_button)
+    Button answerQuestionButton;
+    @BindView(R.id.seek_bar)
+    SeekBar seekBar;
+    @BindView(R.id.audio_length_textview)
+    TextView audioLengthTextView;
+    @Inject
+    ViewModelProviderFactory providerFactory;
+
+    private SelectedRequestViewModel selectedRequestViewModel;
+    private ImagesAdapter imagesAdapter;
+    private AudioPlayer audioPlayer;
+    private Handler handler = new Handler();
+    private Runnable mUpdateTimeTask;
+    private String requestId;
+    private String requestUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,48 +86,163 @@ public class NotAnsweredRequestViewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setTitle(getString(R.string.tree_analysis_request_title));
 
-        String requestId = getIntent().getStringExtra("request_id");
-        String requestUserId = getIntent().getStringExtra("request_user_id");
+        requestId = getIntent().getStringExtra(Constants.REQUEST_ID);
+        requestUserId = getIntent().getStringExtra(Constants.REQUEST_USER_ID);
+        boolean isAdmin = getIntent().getBooleanExtra(Constants.IS_ADMIN, false);
 
-        ImagesAdapter imagesAdapter = new ImagesAdapter();
+        imagesAdapter = new ImagesAdapter();
         requestImagesViewPager.setAdapter(imagesAdapter);
-        FirebaseDatabase.getInstance()
-                .getReference("requests")
-                .child(requestUserId)
-                .child(requestId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Request request = snapshot.getValue(Request.class);
-                        imagesAdapter.setImages(request.getImages());
-                        imagesAdapter.notifyDataSetChanged();
-                        requestStatusTextView.setText(request.getStatus());
-                        timestampTextView.setText(request.getTimestamp());
-                        requestQuestionTextView.setText(request.getTextQuestion().isEmpty()?"لا يوجد سؤال نصي" : request.getTextQuestion());
-                        if (request.getAudioQuestion()==null || request.getAudioQuestion().isEmpty()) {
-                            audioQuestionView.setVisibility(View.GONE);
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+        selectedRequestViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(SelectedRequestViewModel.class);
+        selectedRequestViewModel.getRequest(requestId, requestUserId);
+        observeRequests();
+        observeError();
+        if (isAdmin) {
+            answerQuestionButton.setVisibility(View.VISIBLE);
+            observeAnalysisAnswer();
+        } else {
+            answerQuestionButton.setVisibility(View.GONE);
+        }
     }
+
+    private void observeRequests() {
+        selectedRequestViewModel.observeRequest().observe(this, request -> {
+            if (request != null) {
+                imagesAdapter.setImages(request.getImages());
+                imagesAdapter.notifyDataSetChanged();
+                requestStatusTextView.setText(request.getStatus());
+                timestampTextView.setText(request.getTimestamp());
+                requestQuestionTextView.setText(request.getTextQuestion().isEmpty()?getString(R.string.no_current_text_question) : request.getTextQuestion());
+                if (request.getAudioQuestion()==null || request.getAudioQuestion().isEmpty()) {
+                    audioQuestionView.setVisibility(View.GONE);
+                } else {
+                    audioQuestionView.setVisibility(View.VISIBLE);
+                    setAudioPlayer(request.getAudioQuestion());
+                }
+            }
+        });
+    }
+
+    private void observeAnalysisAnswer() {
+        selectedRequestViewModel.observeAnalysisAnswer().observe(this, success -> {
+            if (success) {
+                Toast.makeText(NotAnsweredRequestViewActivity.this, R.string.analysis_answer_added_successufly, Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(NotAnsweredRequestViewActivity.this, R.string.unkown_error, Toast.LENGTH_SHORT).show();
+            }
+            analysisBottomSheetDialog.dismiss();
+        });
+    }
+
+    private void observeError() {
+        selectedRequestViewModel.observeError().observe(this, error -> {
+            Toast.makeText(NotAnsweredRequestViewActivity.this, error, Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void setAudioPlayer(String audioQuestion) {
+        audioPlayer = new AudioPlayer();
+        audioPlayer.setAudio(audioQuestion, new AudioPlayer.AudioPlayCallback() {
+            @Override
+            public void onFinishPlayingAnswerAudio() {
+                playButton.setVisibility(View.VISIBLE);
+                pauseButton.setVisibility(View.GONE);
+                seekBar.setProgress(0);
+                handler.removeCallbacks(mUpdateTimeTask);
+                audioProgressTextView.setText("00:00");
+            }
+
+            @Override
+            public void onStartPlayingAnswerAudio(AudioPlayer audioPlayer) {
+                playButton.setVisibility(View.GONE);
+                pauseButton.setVisibility(View.VISIBLE);
+                audioProgressTextView.setText(Utils.formatMilliSeconds(audioPlayer.getCurrentPosition()));
+                updateSeekBar();
+            }
+        });
+        mUpdateTimeTask = new Runnable() {
+            @Override
+            public void run() {
+                if (audioPlayer != null) {
+                    audioProgressTextView.setText(Utils.formatMilliSeconds(audioPlayer.getCurrentPosition()));
+                    seekBar.setProgress(audioPlayer.getCurrentPosition() / TIME_UNIT);
+                    handler.postDelayed(this, TIME_UNIT);
+                }
+            }
+        };
+        try {
+            int audioDuration = Integer.parseInt(audioPlayer.getAudioDuration());
+            audioLengthTextView.setText(Utils.formatMilliSeconds(audioDuration));
+            seekBar.setMax(audioDuration/TIME_UNIT);
+        } catch (Exception exception) {
+            Toast.makeText(this, "خطأ في تحميل السؤال الصوتي", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateSeekBar() {
+        handler.postDelayed(mUpdateTimeTask, TIME_UNIT);
+    }
+
+    @OnClick(R.id.playButton)
+    public void onPlayButton() {
+        if (audioPlayer != null) {
+            audioPlayer.playAudio();
+        }
+    }
+
+    @OnClick(R.id.pauseButton)
+    public void onPauseClicked() {
+        if (audioPlayer != null) {
+            audioPlayer.stopAudio();
+        }
+    }
+
+    private AnalysisBottomSheetDialog analysisBottomSheetDialog;
 
     @OnClick(R.id.answer_question_button)
     public void onAnswerQuestionButtonClicked() {
-        //showing fragment with questions to answer them
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.questions_bottom_sheet_dialog);
-        bottomSheetDialog.setTitle(getString(R.string.answer_following_questions));
-        bottomSheetDialog.show();
+        analysisBottomSheetDialog = new AnalysisBottomSheetDialog(this, new AnalysisBottomSheetDialog.AnalysisQuestionsCallback() {
+            @Override
+            public void onDone(QuestionAnalysis questionAnalysis) {
+                selectedRequestViewModel.addAnalysisAnswersToQuestion(requestId, requestUserId, questionAnalysis);
+            }
 
-        Button doneButton = bottomSheetDialog.findViewById(R.id.done_button);
-        Button cancelButton = bottomSheetDialog.findViewById(R.id.cancel_button);
-        doneButton.setOnClickListener(v -> Toast.makeText(NotAnsweredRequestViewActivity.this, "Dons is clicked", Toast.LENGTH_SHORT).show());
+            @Override
+            public void onCancel() {
+                analysisBottomSheetDialog.dismiss();
+            }
 
-        cancelButton.setOnClickListener(v -> Toast.makeText(NotAnsweredRequestViewActivity.this, "Cancel is clicked", Toast.LENGTH_SHORT).show());
+            @Override
+            public void onError(String error) {
+                Toast.makeText(NotAnsweredRequestViewActivity.this, error, Toast.LENGTH_SHORT).show();
+                analysisBottomSheetDialog.dismiss();
+            }
+        });
+        analysisBottomSheetDialog.show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (audioPlayer != null) {
+            audioPlayer.pauseAudio();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (audioPlayer != null) {
+            audioPlayer.stopAudio();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (audioPlayer != null) {
+            audioPlayer.stopAudio();
+        }
     }
 }

@@ -130,13 +130,6 @@
                 android:src="@drawable/ic_action_pause"
                 android:visibility="gone" />
 
-            <ProgressBar
-                android:id="@+id/audio_progress_bar"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:visibility="visible" />
-
         </FrameLayout>
 
         <SeekBar
@@ -171,7 +164,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:text="00:05"
+            android:text="00:00"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@id/seek_bar"

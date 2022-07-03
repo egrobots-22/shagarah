@@ -62,7 +62,7 @@ public class AudioPlayer {
             mediaMetadataRetriever.setDataSource(audioUri, new HashMap<>());
             String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
             mediaMetadataRetriever.release();
-            return formatMilliSeconds(Long.parseLong(durationStr));
+            return durationStr;
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }

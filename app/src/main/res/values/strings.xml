@@ -24,4 +24,7 @@
     <string name="answer_following_questions">أجب على الأسئلة التالية</string>
     <string name="email_password_required_message">يجب ادخال البريد الالكتروني و كلمة السر</string>
     <string name="sign_out">تسجيل خروج</string>
+    <string name="analysis_answer_added_successufly">تم اضافة اجابة الأسئلة</string>
+    <string name="unkown_error">خطأ غير معروف</string>
+    <string name="no_current_text_question">لا يوجد سؤال نصي</string>
 </resources>
