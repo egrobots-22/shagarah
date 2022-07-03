@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="@string/tree_type"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dialog_title" />
 
             <EditText
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="@string/tree_code"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tree_type_value_edit_text" />
 
             <EditText
@@ -77,7 +77,7 @@
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tree_code_label" />
 
             <TextView
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="@string/tree_status"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tree_code_value_edit_text" />
 
             <EditText
@@ -104,7 +104,7 @@
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tree_statue_label" />
 
             <TextView
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="الأمراض و الآفات"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tree_status_value_edit_text" />
 
             <EditText
@@ -140,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="التسميد"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/diseases_value_edit_text" />
 
             <EditText
@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="الري"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tasmed_value_edit_text" />
 
             <EditText
@@ -194,7 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="العمليات"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/alray_value_edit_text" />
 
             <EditText
@@ -221,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="الثمار"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/operations_value_edit_text" />
 
             <EditText
@@ -247,26 +247,27 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/althemar_value_edit_text">
 
                 <Button
-                    android:id="@+id/cancel_button"
+                    android:id="@+id/done_button"
                     android:layout_width="100dp"
                     android:layout_height="38dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/cornered_accent_bg"
-                    android:text="@string/cancel"
+                    android:text="@string/done"
                     android:textColor="@color/white" />
 
                 <Button
-                    android:id="@+id/done_button"
+                    android:id="@+id/cancel_button"
                     android:layout_width="100dp"
                     android:layout_height="38dp"
                     android:background="@drawable/cornered_accent_bg"
-                    android:text="@string/done"
+                    android:text="@string/cancel"
                     android:textColor="@color/white" />
 
             </LinearLayout>

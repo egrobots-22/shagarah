@@ -29,7 +29,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:text="@string/tree_type"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -41,7 +41,7 @@
                         android:text="مانجو"
                         android:textColor="@color/colorAccentDark"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tree_type_label" />
 
                     <TextView
@@ -50,7 +50,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:text="@string/tree_code"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tree_type_value_text_view" />
 
                     <TextView
@@ -62,7 +62,7 @@
                         android:text="j3l-tree-mango"
                         android:textColor="@color/colorAccentDark"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tree_code_label" />
 
                     <TextView
@@ -71,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:text="@string/tree_status"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tree_code_value_text_view" />
 
                     <TextView
@@ -83,7 +83,7 @@
                         android:text="جيدة"
                         android:textColor="@color/colorAccentDark"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tree_statue_label" />
 
                     <TextView
@@ -92,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:text="الأمراض و الآفات"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tree_status_value_text_view" />
 
                     <TextView
@@ -104,7 +104,7 @@
                         android:text="أمراض الشجرة"
                         android:textColor="@color/colorAccentDark"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/diseases_label" />
 
                     <TextView
@@ -113,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:text="التسميد"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/diseases_value_text_view" />
 
                     <TextView
@@ -125,7 +125,7 @@
                         android:text="التسميد"
                         android:textColor="@color/colorAccentDark"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tasmed_label" />
 
                     <TextView
@@ -134,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:text="الري"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tasmed_value_text_view" />
 
                     <TextView
@@ -146,7 +146,7 @@
                         android:text="الري"
                         android:textColor="@color/colorAccentDark"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/alray_label" />
 
                     <TextView
@@ -155,7 +155,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:text="العمليات"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/alray_value_text_view" />
 
                     <TextView
@@ -167,7 +167,7 @@
                         android:text="العمليات"
                         android:textColor="@color/colorAccentDark"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/operations_label" />
 
                     <TextView
@@ -176,7 +176,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:text="الثمار"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/operations_value_text_view" />
 
                     <TextView
@@ -185,132 +185,13 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
                         android:text="الثمار"
                         android:textColor="@color/colorAccentDark"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/althemar_label" />
 
-            <!--        <View-->
-            <!--            android:id="@+id/dividing_view"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="1dp"-->
-            <!--            android:background="@color/transparent_gray"-->
-            <!--            app:layout_constraintTop_toBottomOf="@id/tree_status_value_text_view"-->
-            <!--            app:layout_constraintStart_toStartOf="parent"-->
-            <!--            app:layout_constraintEnd_toEndOf="parent"/>-->
-
-            <!--        <TextView-->
-            <!--            android:id="@+id/request_question_label"-->
-            <!--            android:layout_width="wrap_content"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_marginTop="16dp"-->
-            <!--            android:text="السؤال المرتبط بالطلب"-->
-            <!--            android:layout_margin="16dp"-->
-            <!--            app:layout_constraintEnd_toEndOf="parent"-->
-            <!--            app:layout_constraintTop_toBottomOf="@id/dividing_view" />-->
-
-            <!--        <TextView-->
-            <!--            android:id="@+id/request_question_value_text_view"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="60dp"-->
-            <!--            app:layout_constraintTop_toBottomOf="@id/request_question_label"-->
-            <!--            app:layout_constraintStart_toStartOf="parent"-->
-            <!--            app:layout_constraintEnd_toEndOf="parent"-->
-            <!--            android:layout_marginStart="8dp"-->
-            <!--            android:layout_marginEnd="8dp"-->
-            <!--            android:padding="16dp"-->
-            <!--            android:gravity="center|start"-->
-            <!--            android:textColor="@color/colorPrimaryDark"-->
-            <!--            android:text="ما هو نوع هذه الشجرة وحالتها العامة ؟"-->
-            <!--            android:background="@drawable/cornered_gray_bg"/>-->
-
-            <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-            <!--            android:id="@+id/play_audio_item_layout"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_marginStart="8dp"-->
-            <!--            android:layout_marginTop="16dp"-->
-            <!--            android:layout_marginEnd="8dp"-->
-            <!--            android:background="@android:color/transparent"-->
-            <!--            app:layout_constraintEnd_toEndOf="parent"-->
-            <!--            app:layout_constraintStart_toStartOf="parent"-->
-            <!--            app:layout_constraintTop_toBottomOf="@id/request_question_value_text_view">-->
-
-            <!--            <FrameLayout-->
-            <!--                android:id="@+id/controllers_layout"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent">-->
-
-            <!--                <ImageButton-->
-            <!--                    android:id="@+id/playButton"-->
-            <!--                    android:layout_width="32dp"-->
-            <!--                    android:layout_height="32dp"-->
-            <!--                    android:background="@null"-->
-            <!--                    android:src="@drawable/ic_action_play"-->
-            <!--                    android:tint="@color/colorPrimaryDark"-->
-            <!--                    android:visibility="visible" />-->
-
-            <!--                <ImageButton-->
-            <!--                    android:id="@+id/pauseButton"-->
-            <!--                    android:layout_width="32dp"-->
-            <!--                    android:layout_height="32dp"-->
-            <!--                    android:background="@null"-->
-            <!--                    android:src="@drawable/ic_action_pause"-->
-            <!--                    android:visibility="gone" />-->
-
-            <!--                <ProgressBar-->
-            <!--                    android:id="@+id/audio_progress_bar"-->
-            <!--                    android:layout_width="32dp"-->
-            <!--                    android:layout_height="32dp"-->
-            <!--                    android:layout_gravity="center"-->
-            <!--                    android:visibility="visible" />-->
-
-            <!--            </FrameLayout>-->
-
-            <!--            <SeekBar-->
-            <!--                android:id="@+id/seek_bar"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_gravity="center"-->
-            <!--                android:progressBackgroundTint="@color/dark_gray"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/controllers_layout"-->
-            <!--                app:layout_constraintStart_toEndOf="@id/controllers_layout"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/controllers_layout"-->
-            <!--                app:layout_constraintWidth_default="percent"-->
-            <!--                app:layout_constraintWidth_percent="0.7" />-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/audio_progress_textview"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_gravity="center"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:text="00:00"-->
-            <!--                android:textColor="@color/colorPrimaryDark"-->
-            <!--                android:textSize="11sp"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/seek_bar"-->
-            <!--                app:layout_constraintStart_toEndOf="@id/seek_bar"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/seek_bar" />-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/audio_length_textview"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_gravity="center"-->
-            <!--                android:layout_marginStart="8dp"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:text="00:05"-->
-            <!--                android:textColor="@color/colorPrimaryDark"-->
-            <!--                android:textSize="11sp"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/seek_bar"-->
-            <!--                app:layout_constraintStart_toEndOf="@id/audio_progress_textview"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/seek_bar" />-->
-
-
-            <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
                     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </LinearLayout>

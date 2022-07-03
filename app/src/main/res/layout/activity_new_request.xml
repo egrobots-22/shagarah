@@ -42,7 +42,7 @@
                 android:layout_centerVertical="true"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_prev_icon"
+                android:src="@drawable/ic_next_icon"
                 android:visibility="gone" />
 
             <ImageButton
@@ -53,7 +53,7 @@
                 android:layout_centerVertical="true"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_next_icon"
+                android:src="@drawable/ic_prev_icon"
                 android:visibility="gone" />
         </RelativeLayout>
 

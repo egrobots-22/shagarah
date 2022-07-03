@@ -1,30 +1,39 @@
 package com.egrobots.shagarah.datasource;
 
+import android.net.Uri;
 import android.text.TextUtils;
 
 import com.egrobots.shagarah.data.models.CurrentUser;
+import com.egrobots.shagarah.data.models.Image;
 import com.egrobots.shagarah.data.models.QuestionAnalysis;
 import com.egrobots.shagarah.data.models.Request;
 import com.egrobots.shagarah.utils.Constants;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
 
 public class FirebaseDataSource {
 
@@ -137,25 +146,21 @@ public class FirebaseDataSource {
 
     public Flowable<Request> getRequests(String userId) {
         return Flowable.create(emitter -> {
-            DatabaseReference requestsRef;
+            Query requestsRef;
             if (userId == null) {
-                requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE);
-            } else  {
-                requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE).child(userId);
+                requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE).orderByChild("timestamp");
+            } else {
+                requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE).child(userId).orderByChild("timestamp");
             }
 
-            requestsRef.addValueEventListener(new ValueEventListener() {
+            requestsRef.addChildEventListener(new ChildEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (userId == null) {
-                        for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                            for (DataSnapshot requestSnapshot : userSnapshot.getChildren()) {
-                                Request request = requestSnapshot.getValue(Request.class);
-                                request.setId(requestSnapshot.getKey());
-                                request.setUserId(userSnapshot.getKey());
-                                emitter.onNext(request);
-                            }
-                        }
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    if (userId != null) {
+                        Request request = snapshot.getValue(Request.class);
+                        request.setId(snapshot.getKey());
+                        request.setUserId(userId);
+                        emitter.onNext(request);
                     } else {
                         for (DataSnapshot requestSnapshot : snapshot.getChildren()) {
                             Request request = requestSnapshot.getValue(Request.class);
@@ -164,12 +169,26 @@ public class FirebaseDataSource {
                             emitter.onNext(request);
                         }
                     }
-                    emitter.onComplete();
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    emitter.onError(error.toException());
+
                 }
             });
         }, BackpressureStrategy.BUFFER);
@@ -196,6 +215,74 @@ public class FirebaseDataSource {
 
         });
 
+    }
+
+    public Single<String> uploadImageToFirebaseStorage(Uri imageUri) {
+        return Single.create(emitter -> {
+            StorageReference reference = storageReference.child(Constants.REQUESTS_REF + System.currentTimeMillis() + Constants.IMAGE_FILE_TYPE);
+            UploadTask uploadFileTask = reference.putFile(imageUri);
+            uploadFileTask.continueWithTask(task -> {
+                if (!task.isSuccessful()) {
+                    emitter.onError(task.getException());
+                } else {
+                    // Continue with the fileTask to get the download URL
+                    reference.getDownloadUrl().addOnCompleteListener(task1 -> {
+                        String downloadUrl = task1.getResult().toString();
+                        emitter.onSuccess(downloadUrl);
+                    });
+                }
+                return reference.getDownloadUrl();
+            });
+        });
+    }
+
+    private void saveRequestToFirebaseDatabase(String userId
+                                                , List<Image> uploadedImagesUris
+                                                , String audioUrl
+                                                , String questionText
+                                                , SingleEmitter<Boolean> emitter) {
+        DatabaseReference requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE);
+        Request request = new Request();
+        request.setTimestamp(System.currentTimeMillis());
+        request.setImages(uploadedImagesUris);
+        request.setStatus(Request.RequestStatus.IN_PROGRESS.toString());
+        request.setAudioQuestion(audioUrl);
+        request.setTextQuestion(questionText);
+
+        requestsRef.child(userId).push()
+                .setValue(request)
+                .addOnCompleteListener(task -> {
+                    emitter.onSuccess(task.isSuccessful());
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        emitter.onError(e);
+                    }
+                });
+    }
+
+    public Single<Boolean> addNewRequest(String userId, List<Image> uploadedImagesUris, File audioRecordedFile, String questionText) {
+        return Single.create(emitter -> {
+            if (audioRecordedFile != null) {
+                //upload audio firstly
+                Uri audioFile = Uri.fromFile(audioRecordedFile);
+                StorageReference audioReference = storageReference.child(Constants.REQUESTS_REF)
+                        .child(Constants.AUDIO_ANSWERS + System.currentTimeMillis() + Constants.AUDIO_FILE_TYPE);
+
+                audioReference.putFile(audioFile).addOnSuccessListener(success -> {
+                    Task<Uri> audioUrl = success.getStorage().getDownloadUrl();
+                    audioUrl.addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            String downloadUrl = task.getResult().toString();
+                            saveRequestToFirebaseDatabase(userId, uploadedImagesUris, downloadUrl, questionText, emitter);
+                        }
+                    });
+                });
+            } else {
+                saveRequestToFirebaseDatabase(userId, uploadedImagesUris, null, questionText, emitter);
+            }
+        });
     }
 
 }

@@ -1,5 +1,8 @@
 package com.egrobots.shagarah.data.models;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.encoders.annotations.Encodable;
+
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -39,9 +42,14 @@ public class Request {
         this.userId = userId;
     }
 
-    public String getTimestamp() {
+    @Exclude
+    public String getFormattedDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("E - d MMM, yyyy", new Locale("ar"));
         return formatter.format(timestamp);
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 
     public void setTimestamp(long timestamp) {
@@ -52,12 +60,17 @@ public class Request {
         this.images = images;
     }
 
-    public String getStatus() {
+    @Exclude
+    public String getShownStatus() {
         if (status.equals(RequestStatus.ANSWERED.toString())) {
             return "تم الرد";
         } else {
             return "تحت المراجعة";
         }
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public void setStatus(String status) {

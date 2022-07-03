@@ -1,7 +1,5 @@
 package com.egrobots.shagarah.presentation;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 import butterknife.BindView;
@@ -9,9 +7,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
 
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -23,22 +18,12 @@ import android.widget.Toast;
 
 import com.egrobots.shagarah.R;
 import com.egrobots.shagarah.data.models.QuestionAnalysis;
-import com.egrobots.shagarah.data.models.Request;
 import com.egrobots.shagarah.managers.AudioPlayer;
 import com.egrobots.shagarah.presentation.adapters.ImagesAdapter;
 import com.egrobots.shagarah.presentation.helpers.ViewModelProviderFactory;
-import com.egrobots.shagarah.presentation.viewmodels.AuthenticationViewModel;
-import com.egrobots.shagarah.presentation.viewmodels.RequestsViewModel;
 import com.egrobots.shagarah.presentation.viewmodels.SelectedRequestViewModel;
 import com.egrobots.shagarah.utils.Constants;
 import com.egrobots.shagarah.utils.Utils;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -110,8 +95,8 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
             if (request != null) {
                 imagesAdapter.setImages(request.getImages());
                 imagesAdapter.notifyDataSetChanged();
-                requestStatusTextView.setText(request.getStatus());
-                timestampTextView.setText(request.getTimestamp());
+                requestStatusTextView.setText(request.getShownStatus());
+                timestampTextView.setText(request.getFormattedDate());
                 requestQuestionTextView.setText(request.getTextQuestion().isEmpty()?getString(R.string.no_current_text_question) : request.getTextQuestion());
                 if (request.getAudioQuestion()==null || request.getAudioQuestion().isEmpty()) {
                     audioQuestionView.setVisibility(View.GONE);

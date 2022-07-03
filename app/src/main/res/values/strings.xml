@@ -27,4 +27,5 @@
     <string name="analysis_answer_added_successufly">تم اضافة اجابة الأسئلة</string>
     <string name="unkown_error">خطأ غير معروف</string>
     <string name="no_current_text_question">لا يوجد سؤال نصي</string>
+    <string name="request_added_successfully">تم اضافة طلبك بنجاح</string>
 </resources>

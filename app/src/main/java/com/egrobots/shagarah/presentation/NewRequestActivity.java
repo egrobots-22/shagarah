@@ -24,14 +24,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.egrobots.shagarah.R;
+import com.egrobots.shagarah.data.models.Image;
 import com.egrobots.shagarah.managers.AudioRecorder;
 import com.egrobots.shagarah.managers.CameraXRecorder;
 import com.egrobots.shagarah.managers.ExoPlayerVideoManager;
-import com.egrobots.shagarah.data.models.Image;
 import com.egrobots.shagarah.presentation.helpers.GuideDialog;
+import com.egrobots.shagarah.presentation.helpers.ViewModelProviderFactory;
+import com.egrobots.shagarah.presentation.viewmodels.NewRequestViewModel;
 import com.egrobots.shagarah.utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,21 +41,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.inject.Inject;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.media3.ui.PlayerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.support.DaggerAppCompatActivity;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-public class NewRequestActivity extends AppCompatActivity implements GuideDialog.GuidelineCallback
+public class NewRequestActivity extends DaggerAppCompatActivity implements GuideDialog.GuidelineCallback
         , CameraXRecorder.CameraXCallback, LocationListener {
 
     private static final int REQUEST_CODE_PERMISSIONS = 1;
@@ -112,14 +117,17 @@ public class NewRequestActivity extends AppCompatActivity implements GuideDialog
     private int uploadedImageIndex;
     private ProgressDialog progressDialog;
     private LocationManager locationManager;
+    private NewRequestViewModel newRequestViewModel;
+    @Inject
+    ViewModelProviderFactory providerFactory;
 
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
 
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
-//    private FirebaseDataSource firebaseDataSource;
     private String questionText;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +140,11 @@ public class NewRequestActivity extends AppCompatActivity implements GuideDialog
         registerClickListenersForPrevNextButtons();
         initializeImageSwitcher();
 
-//        firebaseDataSource = new FirebaseDataSource(this);
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        newRequestViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(NewRequestViewModel.class);
+        observeImageUpload();
+        observeAddingRequest();
+        observeError();
     }
 
     private void initializeCameraX() {
@@ -147,9 +159,6 @@ public class NewRequestActivity extends AppCompatActivity implements GuideDialog
         if (!gpsEnabled) {
             //show dialog
             showGPSDisabledAlertToUser();
-            //enable gps location before capturing images
-//            Intent gpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//            startActivity(gpsIntent);
         }
     }
 
@@ -184,6 +193,47 @@ public class NewRequestActivity extends AppCompatActivity implements GuideDialog
         });
     }
 
+    private void observeImageUpload() {
+        newRequestViewModel.observeUploadImage().observe(this, downloadUrl -> {
+            Image img = new Image();
+            double[] latlong = getLatLongImage(imagesUris.get(uploadedImageIndex));
+            img.setUrl(downloadUrl);
+            if (latlong != null) {
+                img.setLatitude(latlong[0]);
+                img.setLongitude(latlong[1]);
+            }
+            uploadedImagesUris.add(img);
+            uploadedImageIndex++;
+            if (uploadedImageIndex < imagesUris.size()) {
+                Uri imageUri = imagesUris.get(uploadedImageIndex);
+                newRequestViewModel.uploadImageToFirebaseStorage(imageUri);
+            } else {
+                //send request
+                newRequestViewModel.addNewRequest(userId, uploadedImagesUris, audioRecordedFile, questionText);
+            }
+        });
+    }
+
+    private void observeAddingRequest() {
+        newRequestViewModel.observeAddingRequest().observe(this, success -> {
+            if (success) {
+                progressDialog.dismiss();
+                Toast.makeText(NewRequestActivity.this, R.string.request_added_successfully, Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                progressDialog.dismiss();
+                Toast.makeText(NewRequestActivity.this, R.string.unkown_error, Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+    }
+
+    private void observeError() {
+        newRequestViewModel.observeError().observe(this, error -> {
+            Toast.makeText(NewRequestActivity.this, error, Toast.LENGTH_SHORT).show();
+        });
+    }
+
     @Override
     public void onStartNowClicked() {
         initializeCameraX();
@@ -210,10 +260,12 @@ public class NewRequestActivity extends AppCompatActivity implements GuideDialog
     @OnClick(R.id.send_text_button)
     public void onSendRequestButtonClicked() {
         progressDialog.show();
+        if (audioRecorder != null) {
+            onStopRecordingAudio();
+        }
         questionText = textQuestionEditText.getText().toString();
         //upload question as text or audio
-        Toast.makeText(this, "question will be uploaded", Toast.LENGTH_SHORT).show();
-//        firebaseDataSource.uploadImageToFirebaseStorage(imagesUris.get(uploadedImageIndex));
+        newRequestViewModel.uploadImageToFirebaseStorage(imagesUris.get(uploadedImageIndex));
     }
 
     private boolean checkEnableGpsLocationAccess() {
@@ -394,6 +446,7 @@ public class NewRequestActivity extends AppCompatActivity implements GuideDialog
         handler.removeCallbacks(updateEverySecRunnable);
         //stop recorded audio
         audioRecorder.stop();
+        audioRecorder = null;
         recordAudioButton.setEnabled(true);
         recordAudioButton.setImageDrawable(ContextCompat.getDrawable(NewRequestActivity.this, R.drawable.recording_audio));
     }
@@ -455,33 +508,6 @@ public class NewRequestActivity extends AppCompatActivity implements GuideDialog
         }
         return true;
     }
-
-//    @Override
-//    public void onImageUploaded(String downloadUrl) {
-//        Image img = new Image();
-//        double[] latlong = getLatLongImage(imagesUris.get(uploadedImageIndex));
-//        img.setUrl(downloadUrl);
-//        if (latlong != null) {
-//            img.setLatitude(latlong[0]);
-//            img.setLongitude(latlong[1]);
-//        }
-//        uploadedImagesUris.add(img);
-//        uploadedImageIndex++;
-//        if (uploadedImageIndex < imagesUris.size()) {
-//            Uri imageUri = imagesUris.get(uploadedImageIndex);
-//            firebaseDataSource.uploadImageToFirebaseStorage(imageUri);
-//        } else {
-//            //send request
-//            firebaseDataSource.addNewRequest(uploadedImagesUris, audioRecordedFile, questionText);
-//        }
-//    }
-
-//    @Override
-//    public void onRequestSaved() {
-//        progressDialog.dismiss();
-//        Toast.makeText(NewRequestActivity.this, "Images are uploaded successfully", Toast.LENGTH_SHORT).show();
-//        finish();
-//    }
 
     private void showGPSDisabledAlertToUser() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

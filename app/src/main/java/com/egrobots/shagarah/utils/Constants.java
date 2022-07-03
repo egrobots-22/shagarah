@@ -17,4 +17,5 @@ public class Constants {
     public static final String USER_ID = "user_id";
     public static final String ANALYSIS_ANSWER = "questionAnalysis";
     public static final String STATUS = "status";
+    public static final String IMAGE_FILE_TYPE = ".jpg";
 }

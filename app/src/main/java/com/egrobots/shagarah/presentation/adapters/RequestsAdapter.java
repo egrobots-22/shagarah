@@ -49,8 +49,8 @@ public class RequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof RequestViewHolder) {
             Request request = requestsList.get(position);
-            ((RequestViewHolder)holder).requestStatusTextView.setText(request.getStatus());
-            ((RequestViewHolder)holder).timestampTextView.setText(request.getTimestamp());
+            ((RequestViewHolder)holder).requestStatusTextView.setText(request.getShownStatus());
+            ((RequestViewHolder)holder).timestampTextView.setText(request.getFormattedDate());
             ((RequestViewHolder)holder).showRequestButton.setOnClickListener(v -> onRequestClickedCallback.onRequestClicked(request));
             Glide.with(holder.itemView.getContext())
                     .load(request.getImages().get(0).getUrl())
@@ -87,6 +87,11 @@ public class RequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public void setItems(List<Request> requestList) {
         this.requestsList = requestList;
+    }
+
+    public void addRequest(Request request) {
+        requestsList.add(request);
+        notifyDataSetChanged();
     }
 
     static class RequestViewHolder extends RecyclerView.ViewHolder {

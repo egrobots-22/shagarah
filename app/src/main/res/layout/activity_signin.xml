@@ -94,7 +94,7 @@
                 android:inputType="textPassword"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textAlignment="viewEnd"
+                android:textAlignment="viewStart"
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/colorPrimaryDark"
                 android:textFontWeight="400"

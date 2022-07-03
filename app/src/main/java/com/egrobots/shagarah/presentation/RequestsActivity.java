@@ -19,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -85,12 +86,14 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
 
     private void observeRequests() {
         requestsViewModel.observeRequests().observe(this, request -> {
+            progressBar.setVisibility(View.GONE);
             if (request != null) {
-                requestList.add(request);
+//                requestList.add(request);
+                requestsAdapter.addRequest(request);
             } else {
+                Collections.reverse(requestList);
                 requestsAdapter.setItems(requestList);
                 requestsAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -101,6 +104,10 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     @Override
     public void onRequestClicked(Request request) {
