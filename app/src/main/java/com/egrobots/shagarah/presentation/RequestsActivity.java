@@ -27,6 +27,7 @@ import javax.inject.Inject;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -44,6 +45,8 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
     FloatingActionButton addRequestFab;
     @BindView(R.id.emptyView)
     View emptyView;
+    @BindView(R.id.refreshLayout)
+    SwipeRefreshLayout refreshLayout;
     @Inject
     ViewModelProviderFactory providerFactory;
     private RequestsViewModel requestsViewModel;
@@ -51,7 +54,8 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
     private boolean isAdmin;
     private String userId;
     private RequestsAdapter requestsAdapter;
-    private Integer requestsNum;
+    private Integer requestsNum = 0;
+    private boolean dataNotRetrievedYetFirstTime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +83,25 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
             isAdmin = user.getRole() != null;
             if (isAdmin) {
                 addRequestFab.setVisibility(View.GONE);
-//                requestsViewModel.getRequests(null);
                 requestsViewModel.isDataExist(null);
             } else {
                 addRequestFab.setVisibility(View.VISIBLE);
-//                requestsViewModel.getRequests(userId);
                 requestsViewModel.isDataExist(userId);
             }
+
+            refreshLayout.setOnRefreshListener(() -> {
+                refreshData();
+                refreshLayout.setRefreshing(false);
+            });
         });
+    }
+
+    private void refreshData() {
+        if (isAdmin) {
+            requestsViewModel.isDataExist(null);
+        } else {
+            requestsViewModel.isDataExist(userId);
+        }
     }
 
     private void observeExistData() {
@@ -96,6 +111,7 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
                 emptyView.setVisibility(View.VISIBLE);
                 requestsRecyclerView.setVisibility(View.GONE);
             } else {
+                requestList = new ArrayList<>();
                 requestsNum = size;
                 emptyView.setVisibility(View.GONE);
                 requestsRecyclerView.setVisibility(View.VISIBLE);
@@ -114,12 +130,12 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
             progressBar.setVisibility(View.GONE);
             if (request != null) {
                 requestList.add(request);
-//                requestsAdapter.addRequest(request);
                 if (requestList.size() == requestsNum) {
                     Collections.reverse(requestList);
                     reOrderList();
                     requestsAdapter.setItems(requestList);
                     requestsAdapter.notifyDataSetChanged();
+                    dataNotRetrievedYetFirstTime = false;
                 }
             }
         });
@@ -149,6 +165,9 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
     @Override
     protected void onStart() {
         super.onStart();
+        if (!dataNotRetrievedYetFirstTime) {
+            refreshData();
+        }
     }
 
     @Override

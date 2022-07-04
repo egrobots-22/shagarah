@@ -20,6 +20,7 @@ public class Request {
     private String audioQuestion;
     private String textQuestion;
     private QuestionAnalysis questionAnalysis;
+    private String flag;
 
     public Request() {
     }
@@ -117,6 +118,14 @@ public class Request {
 
     public void setQuestionAnalysis(QuestionAnalysis questionAnalysis) {
         this.questionAnalysis = questionAnalysis;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 
     public enum RequestStatus {

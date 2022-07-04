@@ -192,7 +192,11 @@ public class FirebaseDataSource {
 
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                    Request request = snapshot.getValue(Request.class);
+                    request.setId(snapshot.getKey());
+                    request.setUserId(userId);
+                    request.setFlag(Constants.UPDATED);
+//                    emitter.onNext(request);
                 }
 
                 @Override

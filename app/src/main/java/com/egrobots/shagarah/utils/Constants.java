@@ -18,4 +18,5 @@ public class Constants {
     public static final String ANALYSIS_ANSWER = "questionAnalysis";
     public static final String STATUS = "status";
     public static final String IMAGE_FILE_TYPE = ".jpg";
+    public static final String UPDATED = "updated";
 }
