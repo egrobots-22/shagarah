@@ -20,13 +20,18 @@ import android.widget.Toast;
 
 import com.egrobots.shagarah.R;
 import com.egrobots.shagarah.data.models.QuestionAnalysis;
+import com.egrobots.shagarah.data.models.TreeType;
 import com.egrobots.shagarah.managers.AudioPlayer;
 import com.egrobots.shagarah.presentation.adapters.ImagesAdapter;
 import com.egrobots.shagarah.presentation.helpers.ViewModelProviderFactory;
+import com.egrobots.shagarah.presentation.viewmodels.AnalysisViewModel;
 import com.egrobots.shagarah.presentation.viewmodels.SelectedRequestViewModel;
 import com.egrobots.shagarah.utils.Constants;
 import com.egrobots.shagarah.utils.NotificationRequest;
 import com.egrobots.shagarah.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -60,6 +65,7 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
     ViewModelProviderFactory providerFactory;
 
     private SelectedRequestViewModel selectedRequestViewModel;
+    private AnalysisViewModel analysisViewModel;
     private ImagesAdapter imagesAdapter;
     private AudioPlayer audioPlayer;
     private Handler handler = new Handler();
@@ -67,6 +73,7 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
     private String requestId;
     private String requestUserId;
     private String deviceToken;
+    private List<TreeType> treeTypeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +90,11 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
         imagesAdapter = new ImagesAdapter();
         requestImagesViewPager.setAdapter(imagesAdapter);
 
+        analysisViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(AnalysisViewModel.class);
         selectedRequestViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(SelectedRequestViewModel.class);
         selectedRequestViewModel.getRequest(requestId);
+        analysisViewModel.getTreeTypes();
+        observeTreeTypes();
         observeRequests();
         observeError();
         if (isAdmin) {
@@ -94,6 +104,13 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
             answerQuestionButton.setVisibility(View.GONE);
         }
     }
+
+    private void observeTreeTypes() {
+        analysisViewModel.observeTreeTypes().observe(this, typesList -> {
+            treeTypeList = typesList;
+        });
+    }
+
 
     private void observeRequests() {
         selectedRequestViewModel.observeRequest().observe(this, request -> {
@@ -195,7 +212,7 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
 
     @OnClick(R.id.answer_question_button)
     public void onAnswerQuestionButtonClicked() {
-        analysisBottomSheetDialog = new AnalysisBottomSheetDialog(this, new AnalysisBottomSheetDialog.AnalysisQuestionsCallback() {
+        analysisBottomSheetDialog = new AnalysisBottomSheetDialog(this, treeTypeList, new AnalysisBottomSheetDialog.AnalysisQuestionsCallback() {
             @Override
             public void onDone(QuestionAnalysis questionAnalysis) {
                 selectedRequestViewModel.addAnalysisAnswersToQuestion(requestId, questionAnalysis);
@@ -209,7 +226,7 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
             @Override
             public void onError(String error) {
                 Toast.makeText(NotAnsweredRequestViewActivity.this, error, Toast.LENGTH_SHORT).show();
-                analysisBottomSheetDialog.dismiss();
+//                analysisBottomSheetDialog.dismiss();
             }
         });
         analysisBottomSheetDialog.show();

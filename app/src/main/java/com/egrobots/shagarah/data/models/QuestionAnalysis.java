@@ -1,11 +1,13 @@
 package com.egrobots.shagarah.data.models;
 
+import java.util.Random;
+
 public class QuestionAnalysis {
 
     private String id;
     private String treeType;
+    private String treeCategory;
     private String treeCode;
-    private String treeStatus;
     private String diseases;
     private String tasmeed;
     private String alrai;
@@ -16,16 +18,15 @@ public class QuestionAnalysis {
     }
 
     public QuestionAnalysis(String treeType
-            , String treeCode
-            , String treeStatus
+            , String treeCategory
             , String diseases
             , String tasmeed
             , String alrai
             , String operations
             , String elthemar) {
         this.treeType = treeType;
-        this.treeCode = treeCode;
-        this.treeStatus = treeStatus;
+        this.treeCategory = treeCategory;
+        this.treeCode = String.valueOf(new Random().nextInt(1000000));
         this.diseases = diseases;
         this.tasmeed = tasmeed;
         this.alrai = alrai;
@@ -49,20 +50,20 @@ public class QuestionAnalysis {
         this.treeType = treeType;
     }
 
+    public String getTreeCategory() {
+        return treeCategory;
+    }
+
+    public void setTreeCategory(String treeCategory) {
+        this.treeCategory = treeCategory;
+    }
+
     public String getTreeCode() {
         return treeCode;
     }
 
     public void setTreeCode(String treeCode) {
         this.treeCode = treeCode;
-    }
-
-    public String getTreeStatus() {
-        return treeStatus;
-    }
-
-    public void setTreeStatus(String treeStatus) {
-        this.treeStatus = treeStatus;
     }
 
     public String getDiseases() {

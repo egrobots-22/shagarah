@@ -1,6 +1,7 @@
 package com.egrobots.shagarah.di;
 
 
+import com.egrobots.shagarah.di.analysis.AnalysisViewModelModule;
 import com.egrobots.shagarah.di.authentication.AuthenticationViewModelModule;
 import com.egrobots.shagarah.di.requests.NewRequestViewModelModule;
 import com.egrobots.shagarah.di.requests.RequestsViewModelModule;
@@ -32,7 +33,7 @@ public abstract class ActivityBuildersModule {
     @ContributesAndroidInjector(modules = {RequestsViewModelModule.class, AuthenticationViewModelModule.class})
     abstract RequestsActivity contributeRequestsActivity();
 
-    @ContributesAndroidInjector(modules = SelectedRequestViewModelModule.class)
+    @ContributesAndroidInjector(modules = {SelectedRequestViewModelModule.class, AnalysisViewModelModule.class})
     abstract NotAnsweredRequestViewActivity contributeNotAnsweredRequestViewActivity();
 
     @ContributesAndroidInjector(modules = SelectedRequestViewModelModule.class)

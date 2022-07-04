@@ -55,7 +55,7 @@ public class Request {
 
     @Exclude
     public String getFormattedDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("E - d MMM, yyyy - hh:mm", new Locale("ar"));
+        SimpleDateFormat formatter = new SimpleDateFormat("E - d MMM, yyyy - hh:mm aa", new Locale("ar"));
         return formatter.format(timestamp);
     }
 

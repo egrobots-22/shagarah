@@ -6,6 +6,7 @@ import com.egrobots.shagarah.data.models.CurrentUser;
 import com.egrobots.shagarah.data.models.Image;
 import com.egrobots.shagarah.data.models.QuestionAnalysis;
 import com.egrobots.shagarah.data.models.Request;
+import com.egrobots.shagarah.data.models.TreeType;
 import com.egrobots.shagarah.datasource.FirebaseDataSource;
 
 import java.io.File;
@@ -45,7 +46,7 @@ public class DatabaseRepository {
         return firebaseDataSource.isDataExist(userId);
     }
 
-        public Flowable<Request> getRequests(String userId) {
+    public Flowable<Request> getRequests(String userId) {
         return firebaseDataSource.getRequests(userId);
     }
 
@@ -59,5 +60,9 @@ public class DatabaseRepository {
 
     public Single<String> uploadImageToFirebaseStorage(Uri imageUri) {
         return firebaseDataSource.uploadImageToFirebaseStorage(imageUri);
+    }
+
+    public Flowable<List<TreeType>> getTreeTypes() {
+        return firebaseDataSource.getTreeTypes();
     }
 }

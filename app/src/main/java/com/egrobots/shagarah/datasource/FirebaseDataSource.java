@@ -7,6 +7,7 @@ import com.egrobots.shagarah.data.models.CurrentUser;
 import com.egrobots.shagarah.data.models.Image;
 import com.egrobots.shagarah.data.models.QuestionAnalysis;
 import com.egrobots.shagarah.data.models.Request;
+import com.egrobots.shagarah.data.models.TreeType;
 import com.egrobots.shagarah.utils.Constants;
 import com.egrobots.shagarah.utils.NotificationRequest;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,6 +25,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.StreamSupport;
@@ -110,10 +112,10 @@ public class FirebaseDataSource {
                 }));
     }
 
-    public Single<Boolean> addAnalysisAnswersToQuestion(Request request, QuestionAnalysis questionAnalysis) {
+    public Single<Boolean> addAnalysisAnswersToQuestion(String requestId, QuestionAnalysis questionAnalysis) {
         return Single.create(emitter -> {
             DatabaseReference answerRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE)
-                    .child(request.getId());
+                    .child(requestId);
 
             HashMap<String, Object> updates = new HashMap<>();
             updates.put(Constants.ANALYSIS_ANSWER, questionAnalysis);
@@ -308,6 +310,28 @@ public class FirebaseDataSource {
                 saveRequestToFirebaseDatabase(userId, uploadedImagesUris, null, questionText, emitter);
             }
         });
+    }
+
+    public Flowable<List<TreeType>> getTreeTypes() {
+        return Flowable.create(emitter -> {
+            DatabaseReference treeTypesRef = firebaseDatabase.getReference(Constants.ANALYSIS_NODE).child("treeType");
+            treeTypesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            List<TreeType> treeTypeList = new ArrayList<>();
+                            for (DataSnapshot typeSnapshot : snapshot.getChildren()) {
+                                TreeType type = typeSnapshot.getValue(TreeType.class);
+                                treeTypeList.add(type);
+                            }
+                            emitter.onNext(treeTypeList);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            emitter.onError(error.toException());
+                        }
+                    });
+        }, BackpressureStrategy.BUFFER);
     }
 
 }

@@ -57,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@id/tree_type_label" />
 
         <TextView
-            android:id="@+id/tree_code_label"
+            android:id="@+id/tree_category_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -74,14 +74,14 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tree_code_label" />
+            app:layout_constraintTop_toBottomOf="@id/tree_category_label" />
 
         <TextView
             android:id="@+id/tree_statue_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/tree_status"
+            android:text="@string/category"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tree_code_value_text_view" />
 

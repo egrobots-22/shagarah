@@ -62,7 +62,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             QuestionAnalysis questionAnalysis = request.getQuestionAnalysis();
             ((AnsweredRequestViewHolder)holder).treeTypeTextView.setText(questionAnalysis.getTreeType());
             ((AnsweredRequestViewHolder)holder).treeCodeTextView.setText(questionAnalysis.getTreeCode());
-            ((AnsweredRequestViewHolder)holder).treeStatusTextView.setText(questionAnalysis.getTreeStatus());
+            ((AnsweredRequestViewHolder)holder).treeCategoryTextView.setText(questionAnalysis.getTreeCategory());
             ((AnsweredRequestViewHolder)holder).moreDetailsButton.setOnClickListener(v -> onRequestClickedCallback.onRequestClicked(request));
             ((AnsweredRequestViewHolder)holder).itemView.setOnClickListener(v -> onRequestClickedCallback.onRequestClicked(request));
             Glide.with(holder.itemView.getContext())
@@ -120,7 +120,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @BindView(R.id.tree_code_value_text_view)
         TextView treeCodeTextView;
         @BindView(R.id.tree_status_value_text_view)
-        TextView treeStatusTextView;
+        TextView treeCategoryTextView;
         @BindView(R.id.more_details_button)
         Button moreDetailsButton;
         @BindView(R.id.request_thumbnail_img_view)

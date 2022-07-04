@@ -49,8 +49,8 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
     TextView treeTypeTextView;
     @BindView(R.id.tree_code_value_text_view)
     TextView treeCodeTextView;
-    @BindView(R.id.tree_status_value_text_view)
-    TextView treeStatusTextView;
+    @BindView(R.id.tree_category_value_text_view)
+    TextView treeCategoryTextView;
     @BindView(R.id.diseases_value_text_view)
     TextView diseasesTextView;
     @BindView(R.id.tasmed_value_text_view)
@@ -97,7 +97,7 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
             //set question answers
             treeTypeTextView.setText(request.getQuestionAnalysis().getTreeType());
             treeCodeTextView.setText(request.getQuestionAnalysis().getTreeCode());
-            treeStatusTextView.setText(request.getQuestionAnalysis().getTreeStatus());
+            treeCategoryTextView.setText(request.getQuestionAnalysis().getTreeCategory());
             diseasesTextView.setText(request.getQuestionAnalysis().getDiseases());
             tasmedTextView.setText(request.getQuestionAnalysis().getTasmeed());
             alrayTextView.setText(request.getQuestionAnalysis().getAlrai());

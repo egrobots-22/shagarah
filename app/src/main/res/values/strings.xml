@@ -30,4 +30,6 @@
     <string name="request_added_successfully">تم اضافة طلبك بنجاح</string>
     <string name="no_current_requests">لا يوجد طلبات حالية</string>
     <string name="uploading">جاري التحميل</string>
+    <string name="all_questions_required_msg">يجب اجابة جميع الأسئلة</string>
+    <string name="category">الصنف</string>
 </resources>

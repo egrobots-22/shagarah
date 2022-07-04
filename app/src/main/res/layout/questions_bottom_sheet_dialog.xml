@@ -51,19 +51,33 @@
                 android:textColorHint="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_type_label" />
+                app:layout_constraintTop_toBottomOf="@id/tree_type_label"
+                android:visibility="gone"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/tree_type_value_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:padding="8dp"
+                android:textSize="14sp"
+                android:textAlignment="viewStart"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/border_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tree_type_label"/>
 
             <TextView
-                android:id="@+id/tree_code_label"
+                android:id="@+id/tree_category_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/tree_code"
+                android:text="@string/category"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_type_value_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/tree_type_value_spinner" />
 
             <EditText
-                android:id="@+id/tree_code_value_edit_text"
+                android:id="@+id/tree_category_value_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginStart="16dp"
@@ -78,34 +92,21 @@
                 android:textColorHint="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_code_label" />
+                app:layout_constraintTop_toBottomOf="@id/tree_category_label"
+                android:visibility="gone"/>
 
-            <TextView
-                android:id="@+id/tree_statue_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/tree_status"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_code_value_edit_text" />
-
-            <EditText
-                android:id="@+id/tree_status_value_edit_text"
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/tree_category_value_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
+                android:padding="8dp"
+                android:textSize="14sp"
+                android:textAlignment="viewStart"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/cornered_gray_bg"
-                android:gravity="start|center"
-                android:inputType="text"
-                android:maxLines="1"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:textColor="@color/colorAccent"
-                android:textColorHint="@color/colorPrimaryDark"
-                android:textSize="16sp"
+                android:background="@drawable/border_spinner"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_statue_label" />
+                app:layout_constraintTop_toBottomOf="@id/tree_category_label"/>
 
             <TextView
                 android:id="@+id/diseases_label"
@@ -114,7 +115,7 @@
                 android:layout_margin="16dp"
                 android:text="الأمراض و الآفات"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_status_value_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/tree_category_value_spinner" />
 
             <EditText
                 android:id="@+id/diseases_value_edit_text"
