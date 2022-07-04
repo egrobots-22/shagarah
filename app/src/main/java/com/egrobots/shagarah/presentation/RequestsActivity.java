@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.egrobots.shagarah.R;
+import com.egrobots.shagarah.data.models.CurrentUser;
 import com.egrobots.shagarah.data.models.Request;
 import com.egrobots.shagarah.presentation.adapters.RequestsAdapter;
 import com.egrobots.shagarah.presentation.helpers.ViewModelProviderFactory;
@@ -56,6 +57,7 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
     private RequestsAdapter requestsAdapter;
     private Integer requestsNum = 0;
     private boolean dataNotRetrievedYetFirstTime = true;
+    private CurrentUser requestUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
     private void getCurrentUser() {
         authenticationViewModel.getCurrentUser(userId);
         authenticationViewModel.observeUserState().observe(this, user -> {
+            requestUser = user;
             isAdmin = user.getRole() != null;
             if (isAdmin) {
                 addRequestFab.setVisibility(View.GONE);
@@ -180,6 +183,7 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
         }
         intent.putExtra(Constants.REQUEST_ID, request.getId());
         intent.putExtra(Constants.REQUEST_USER_ID, request.getUserId());
+        intent.putExtra(Constants.DEVICE_TOKEN, requestUser.getToken());
         intent.putExtra(Constants.IS_ADMIN, isAdmin);
         startActivity(intent);
     }

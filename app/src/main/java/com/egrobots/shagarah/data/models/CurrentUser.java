@@ -12,10 +12,11 @@ public class CurrentUser {
     public CurrentUser() {
     }
 
-    public CurrentUser(String username, String password, String email) {
+    public CurrentUser(String username, String password, String email, String token) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.token = token;
     }
 
     public String getId() {

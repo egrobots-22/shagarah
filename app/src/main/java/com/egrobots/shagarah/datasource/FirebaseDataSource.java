@@ -8,6 +8,7 @@ import com.egrobots.shagarah.data.models.Image;
 import com.egrobots.shagarah.data.models.QuestionAnalysis;
 import com.egrobots.shagarah.data.models.Request;
 import com.egrobots.shagarah.utils.Constants;
+import com.egrobots.shagarah.utils.NotificationRequest;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -93,7 +94,7 @@ public class FirebaseDataSource {
                         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
                             if (!TextUtils.isEmpty(token)) {
                                 DatabaseReference usersRef = firebaseDatabase.getReference(Constants.USERS_NODE);
-                                CurrentUser user = new CurrentUser(username, password, email);
+                                CurrentUser user = new CurrentUser(username, password, email, token);
                                 usersRef.child(userId).setValue(user).addOnCompleteListener(task1 -> {
                                     if (task1.isSuccessful()) {
                                         emitter.onSuccess(user);
@@ -109,10 +110,10 @@ public class FirebaseDataSource {
                 }));
     }
 
-    public Single<Boolean> addAnalysisAnswersToQuestion(String requestId, QuestionAnalysis questionAnalysis) {
+    public Single<Boolean> addAnalysisAnswersToQuestion(Request request, QuestionAnalysis questionAnalysis) {
         return Single.create(emitter -> {
             DatabaseReference answerRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE)
-                    .child(requestId);
+                    .child(request.getId());
 
             HashMap<String, Object> updates = new HashMap<>();
             updates.put(Constants.ANALYSIS_ANSWER, questionAnalysis);

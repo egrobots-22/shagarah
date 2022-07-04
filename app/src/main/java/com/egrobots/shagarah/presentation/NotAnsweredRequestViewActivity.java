@@ -25,6 +25,7 @@ import com.egrobots.shagarah.presentation.adapters.ImagesAdapter;
 import com.egrobots.shagarah.presentation.helpers.ViewModelProviderFactory;
 import com.egrobots.shagarah.presentation.viewmodels.SelectedRequestViewModel;
 import com.egrobots.shagarah.utils.Constants;
+import com.egrobots.shagarah.utils.NotificationRequest;
 import com.egrobots.shagarah.utils.Utils;
 
 import javax.inject.Inject;
@@ -65,6 +66,7 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
     private Runnable mUpdateTimeTask;
     private String requestId;
     private String requestUserId;
+    private String deviceToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
 
         requestId = getIntent().getStringExtra(Constants.REQUEST_ID);
         requestUserId = getIntent().getStringExtra(Constants.REQUEST_USER_ID);
+        deviceToken = getIntent().getStringExtra(Constants.DEVICE_TOKEN);
         boolean isAdmin = getIntent().getBooleanExtra(Constants.IS_ADMIN, false);
 
         imagesAdapter = new ImagesAdapter();
@@ -114,6 +117,9 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
         selectedRequestViewModel.observeAnalysisAnswer().observe(this, success -> {
             if (success) {
                 Toast.makeText(NotAnsweredRequestViewActivity.this, R.string.analysis_answer_added_successufly, Toast.LENGTH_SHORT).show();
+                //send notification to the requested user
+                NotificationRequest notificationRequest = new NotificationRequest(this);
+                notificationRequest.sendNotificationRequest(deviceToken);
                 finish();
             } else {
                 Toast.makeText(NotAnsweredRequestViewActivity.this, R.string.unkown_error, Toast.LENGTH_SHORT).show();
