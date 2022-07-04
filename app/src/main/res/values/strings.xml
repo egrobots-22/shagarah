@@ -28,4 +28,6 @@
     <string name="unkown_error">خطأ غير معروف</string>
     <string name="no_current_text_question">لا يوجد سؤال نصي</string>
     <string name="request_added_successfully">تم اضافة طلبك بنجاح</string>
+    <string name="no_current_requests">لا يوجد طلبات حالية</string>
+    <string name="uploading">جاري التحميل</string>
 </resources>

@@ -29,8 +29,8 @@ public class SelectedRequestViewModel extends ViewModel {
         this.databaseRepository = databaseRepository;
     }
 
-    public void getRequest(String requestId, String userId) {
-        SingleObserver<Request> singleObserver = databaseRepository.getRequest(requestId, userId)
+    public void getRequest(String requestId) {
+        SingleObserver<Request> singleObserver = databaseRepository.getRequest(requestId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new SingleObserver<Request>() {
@@ -51,9 +51,9 @@ public class SelectedRequestViewModel extends ViewModel {
                 });
     }
 
-    public void addAnalysisAnswersToQuestion(String requestId, String requestUserId, QuestionAnalysis questionAnalysis) {
+    public void addAnalysisAnswersToQuestion(String requestId, QuestionAnalysis questionAnalysis) {
         SingleObserver<Boolean> singleObserver
-                = databaseRepository.addAnalysisAnswersToQuestion(requestId, requestUserId, questionAnalysis)
+                = databaseRepository.addAnalysisAnswersToQuestion(requestId, questionAnalysis)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new SingleObserver<Boolean>() {

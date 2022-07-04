@@ -45,6 +45,7 @@ public class SignInActivity extends DaggerAppCompatActivity {
                 Intent intent = new Intent(this, RequestsActivity.class);
                 intent.putExtra(Constants.USER_ID, user.getId());
                 startActivity(intent);
+                finish();
             }
         });
     }

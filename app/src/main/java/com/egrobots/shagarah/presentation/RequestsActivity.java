@@ -24,7 +24,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +42,8 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
     ProgressBar progressBar;
     @BindView(R.id.add_request_fab)
     FloatingActionButton addRequestFab;
+    @BindView(R.id.emptyView)
+    View emptyView;
     @Inject
     ViewModelProviderFactory providerFactory;
     private RequestsViewModel requestsViewModel;
@@ -50,6 +51,7 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
     private boolean isAdmin;
     private String userId;
     private RequestsAdapter requestsAdapter;
+    private Integer requestsNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
         requestsViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(RequestsViewModel.class);
 
         getCurrentUser();
+        observeExistData();
         observeRequests();
         observeError();
     }
@@ -76,10 +79,32 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
             isAdmin = user.getRole() != null;
             if (isAdmin) {
                 addRequestFab.setVisibility(View.GONE);
-                requestsViewModel.getRequests(null);
+//                requestsViewModel.getRequests(null);
+                requestsViewModel.isDataExist(null);
             } else {
                 addRequestFab.setVisibility(View.VISIBLE);
-                requestsViewModel.getRequests(userId);
+//                requestsViewModel.getRequests(userId);
+                requestsViewModel.isDataExist(userId);
+            }
+        });
+    }
+
+    private void observeExistData() {
+        requestsViewModel.observeDataExist().observe(this, size -> {
+            progressBar.setVisibility(View.GONE);
+            if (size == 0) {
+                emptyView.setVisibility(View.VISIBLE);
+                requestsRecyclerView.setVisibility(View.GONE);
+            } else {
+                requestsNum = size;
+                emptyView.setVisibility(View.GONE);
+                requestsRecyclerView.setVisibility(View.VISIBLE);
+                //get requests
+                if (isAdmin) {
+                    requestsViewModel.getRequests(null);
+                } else {
+                    requestsViewModel.getRequests(userId);
+                }
             }
         });
     }
@@ -88,14 +113,31 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
         requestsViewModel.observeRequests().observe(this, request -> {
             progressBar.setVisibility(View.GONE);
             if (request != null) {
-//                requestList.add(request);
-                requestsAdapter.addRequest(request);
-            } else {
-                Collections.reverse(requestList);
-                requestsAdapter.setItems(requestList);
-                requestsAdapter.notifyDataSetChanged();
+                requestList.add(request);
+//                requestsAdapter.addRequest(request);
+                if (requestList.size() == requestsNum) {
+                    Collections.reverse(requestList);
+                    reOrderList();
+                    requestsAdapter.setItems(requestList);
+                    requestsAdapter.notifyDataSetChanged();
+                }
             }
         });
+    }
+
+    private void reOrderList() {
+        ArrayList<Request> inProgressItems = new ArrayList<>();
+        ArrayList<Request> answeredItems = new ArrayList<>();
+        for (Request request : requestList) {
+            if (request.getStatus() == Request.RequestStatus.IN_PROGRESS.value) {
+                inProgressItems.add(request);
+            } else {
+                answeredItems.add(request);
+            }
+        }
+        requestList.clear();
+        requestList.addAll(inProgressItems);
+        requestList.addAll(answeredItems);
     }
 
     private void observeError() {

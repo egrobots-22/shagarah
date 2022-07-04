@@ -2,6 +2,7 @@ package com.egrobots.shagarah.presentation;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -73,7 +76,7 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
         String requestUserId = getIntent().getStringExtra("request_user_id");
 
         selectedRequestViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(SelectedRequestViewModel.class);
-        selectedRequestViewModel.getRequest(requestId, requestUserId);
+        selectedRequestViewModel.getRequest(requestId);
         observeRequest(savedInstanceState);
         observeError();
     }
@@ -138,13 +141,18 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
         mapLoaded = true;
         googleMap.addMarker(new MarkerOptions()
                 .position(imageLocation)
-                .title("Marker in Sydney"));
+                .title("موقع الشجرة"));
+        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        googleMap.addCircle(new CircleOptions()
+                .center(imageLocation)
+                .radius(1)
+                .strokeColor(Color.RED));
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(imageLocation,15));
         // Zoom in, animating the camera.
         googleMap.animateCamera(CameraUpdateFactory.zoomIn());
         // Zoom out to zoom level 10, animating with a duration of 2 seconds.
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(20), 2000, null);
     }
 
     @Override

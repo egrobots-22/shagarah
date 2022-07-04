@@ -136,7 +136,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
         ButterKnife.bind(this);
         guideDialog.show(getSupportFragmentManager(), null);
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Uploading");
+        progressDialog.setTitle(getString(R.string.uploading));
         registerClickListenersForPrevNextButtons();
         initializeImageSwitcher();
 

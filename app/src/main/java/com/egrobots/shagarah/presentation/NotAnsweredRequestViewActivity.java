@@ -79,7 +79,7 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
         requestImagesViewPager.setAdapter(imagesAdapter);
 
         selectedRequestViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(SelectedRequestViewModel.class);
-        selectedRequestViewModel.getRequest(requestId, requestUserId);
+        selectedRequestViewModel.getRequest(requestId);
         observeRequests();
         observeError();
         if (isAdmin) {
@@ -190,7 +190,7 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
         analysisBottomSheetDialog = new AnalysisBottomSheetDialog(this, new AnalysisBottomSheetDialog.AnalysisQuestionsCallback() {
             @Override
             public void onDone(QuestionAnalysis questionAnalysis) {
-                selectedRequestViewModel.addAnalysisAnswersToQuestion(requestId, requestUserId, questionAnalysis);
+                selectedRequestViewModel.addAnalysisAnswersToQuestion(requestId, questionAnalysis);
             }
 
             @Override

@@ -68,6 +68,7 @@
                 android:inputType="textPersonName"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:textAlignment="viewStart"
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/colorPrimaryDark"
                 android:textSize="16sp"
@@ -91,6 +92,7 @@
                 android:inputType="textEmailAddress"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:textAlignment="viewStart"
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/colorPrimaryDark"
                 android:textSize="16sp"
@@ -156,6 +158,13 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/already_have_an_account"
+                    android:textColor="@color/tritary_gray"
+                    android:textSize="14sp" />
+
+                <TextView
                     android:id="@+id/sign_in_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -163,14 +172,6 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp"
                     android:layout_marginEnd="8dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/already_have_an_account"
-                    android:textColor="@color/tritary_gray"
-                    android:textFontWeight="400"
-                    android:textSize="14sp" />
 
             </LinearLayout>
 

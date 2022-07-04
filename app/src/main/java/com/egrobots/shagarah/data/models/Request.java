@@ -12,9 +12,11 @@ public class Request {
 
     private String id;
     private String userId;
+    private String requestUserId;
     private List<Image> images;
-    private String status;
+    private int status;
     private long timestamp;
+    private long timestampToOrder;
     private String audioQuestion;
     private String textQuestion;
     private QuestionAnalysis questionAnalysis;
@@ -42,9 +44,17 @@ public class Request {
         this.userId = userId;
     }
 
+    public String getRequestUserId() {
+        return requestUserId;
+    }
+
+    public void setRequestUserId(String requestUserId) {
+        this.requestUserId = requestUserId;
+    }
+
     @Exclude
     public String getFormattedDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("E - d MMM, yyyy", new Locale("ar"));
+        SimpleDateFormat formatter = new SimpleDateFormat("E - d MMM, yyyy - hh:mm", new Locale("ar"));
         return formatter.format(timestamp);
     }
 
@@ -56,24 +66,32 @@ public class Request {
         this.timestamp = timestamp;
     }
 
+    public long getTimestampToOrder() {
+        return timestampToOrder;
+    }
+
+    public void setTimestampToOrder(long timestampToOrder) {
+        this.timestampToOrder = timestampToOrder;
+    }
+
     public void setImages(List<Image> images) {
         this.images = images;
     }
 
     @Exclude
     public String getShownStatus() {
-        if (status.equals(RequestStatus.ANSWERED.toString())) {
+        if (status == RequestStatus.ANSWERED.value) {
             return "تم الرد";
         } else {
             return "تحت المراجعة";
         }
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -102,8 +120,13 @@ public class Request {
     }
 
     public enum RequestStatus {
-        ANSWERED,
-        IN_PROGRESS
+        ANSWERED(1),
+        IN_PROGRESS(0);
+
+        public int value;
+        RequestStatus(int i) {
+            value = i;
+        }
     }
 
 }

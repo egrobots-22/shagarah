@@ -33,20 +33,24 @@ public class DatabaseRepository {
         return firebaseDataSource.signUp(username, email, password);
     }
 
-    public Single<Boolean> addAnalysisAnswersToQuestion(String requestId, String requestUserId, QuestionAnalysis questionAnalysis) {
-        return firebaseDataSource.addAnalysisAnswersToQuestion(requestId, requestUserId, questionAnalysis);
+    public Single<Boolean> addAnalysisAnswersToQuestion(String requestId, QuestionAnalysis questionAnalysis) {
+        return firebaseDataSource.addAnalysisAnswersToQuestion(requestId, questionAnalysis);
     }
 
     public Single<CurrentUser> getCurrentUser(String userId) {
         return firebaseDataSource.getCurrentUser(userId);
     }
 
-    public Flowable<Request> getRequests(String userId) {
+    public Single<Integer> isDataExist(String userId) {
+        return firebaseDataSource.isDataExist(userId);
+    }
+
+        public Flowable<Request> getRequests(String userId) {
         return firebaseDataSource.getRequests(userId);
     }
 
-    public Single<Request> getRequest(String requestId, String userId) {
-        return firebaseDataSource.getRequest(requestId, userId);
+    public Single<Request> getRequest(String requestId) {
+        return firebaseDataSource.getRequest(requestId);
     }
 
     public Single<Boolean> addNewRequest(String userId, List<Image> uploadedImagesUris, File audioRecordedFile, String questionText) {

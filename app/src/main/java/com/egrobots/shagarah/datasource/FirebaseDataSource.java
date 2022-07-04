@@ -25,6 +25,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 import javax.inject.Inject;
 
@@ -108,15 +109,14 @@ public class FirebaseDataSource {
                 }));
     }
 
-    public Single<Boolean> addAnalysisAnswersToQuestion(String requestId, String requestUserId, QuestionAnalysis questionAnalysis) {
+    public Single<Boolean> addAnalysisAnswersToQuestion(String requestId, QuestionAnalysis questionAnalysis) {
         return Single.create(emitter -> {
             DatabaseReference answerRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE)
-                    .child(requestUserId)
                     .child(requestId);
 
             HashMap<String, Object> updates = new HashMap<>();
             updates.put(Constants.ANALYSIS_ANSWER, questionAnalysis);
-            updates.put(Constants.STATUS, Request.RequestStatus.ANSWERED);
+            updates.put(Constants.STATUS, Request.RequestStatus.ANSWERED.value);
             answerRef.updateChildren(updates).addOnCompleteListener(task -> {
                 emitter.onSuccess(task.isSuccessful());
             });
@@ -144,31 +144,50 @@ public class FirebaseDataSource {
         });
     }
 
+    public Single<Integer> isDataExist(String userId) {
+        return Single.create(emitter -> {
+            Query requestsRef;
+            if (userId == null) {
+                requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE);
+            } else {
+                requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE).orderByChild("userId").equalTo(userId);
+            }
+            //check if there are current requests
+            requestsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.hasChildren()) {
+                        int size = Long.valueOf(StreamSupport.stream(snapshot.getChildren().spliterator(), false).count()).intValue();
+                        emitter.onSuccess(size);
+                    } else {
+                        emitter.onSuccess(0);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        });
+    }
+
     public Flowable<Request> getRequests(String userId) {
         return Flowable.create(emitter -> {
             Query requestsRef;
             if (userId == null) {
-                requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE).orderByChild("timestamp");
+                requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE);
             } else {
-                requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE).child(userId).orderByChild("timestamp");
+                requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE).orderByChild("userId").equalTo(userId);
             }
 
             requestsRef.addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if (userId != null) {
-                        Request request = snapshot.getValue(Request.class);
-                        request.setId(snapshot.getKey());
-                        request.setUserId(userId);
-                        emitter.onNext(request);
-                    } else {
-                        for (DataSnapshot requestSnapshot : snapshot.getChildren()) {
-                            Request request = requestSnapshot.getValue(Request.class);
-                            request.setId(requestSnapshot.getKey());
-                            request.setUserId(snapshot.getKey());
-                            emitter.onNext(request);
-                        }
-                    }
+                    Request request = snapshot.getValue(Request.class);
+                    request.setId(snapshot.getKey());
+                    request.setUserId(userId);
+                    emitter.onNext(request);
                 }
 
                 @Override
@@ -194,10 +213,9 @@ public class FirebaseDataSource {
         }, BackpressureStrategy.BUFFER);
     }
 
-    public Single<Request> getRequest(String requestId, String userId) {
+    public Single<Request> getRequest(String requestId) {
         return Single.create(emitter -> {
             firebaseDatabase.getReference(Constants.REQUESTS_NODE)
-                    .child(userId)
                     .child(requestId)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -237,19 +255,21 @@ public class FirebaseDataSource {
     }
 
     private void saveRequestToFirebaseDatabase(String userId
-                                                , List<Image> uploadedImagesUris
-                                                , String audioUrl
-                                                , String questionText
-                                                , SingleEmitter<Boolean> emitter) {
+            , List<Image> uploadedImagesUris
+            , String audioUrl
+            , String questionText
+            , SingleEmitter<Boolean> emitter) {
         DatabaseReference requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE);
         Request request = new Request();
+        request.setUserId(userId);
         request.setTimestamp(System.currentTimeMillis());
+        request.setTimestampToOrder(-System.currentTimeMillis());
         request.setImages(uploadedImagesUris);
-        request.setStatus(Request.RequestStatus.IN_PROGRESS.toString());
+        request.setStatus(Request.RequestStatus.IN_PROGRESS.value);
         request.setAudioQuestion(audioUrl);
         request.setTextQuestion(questionText);
 
-        requestsRef.child(userId).push()
+        requestsRef.push()
                 .setValue(request)
                 .addOnCompleteListener(task -> {
                     emitter.onSuccess(task.isSuccessful());
