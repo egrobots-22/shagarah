@@ -130,6 +130,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
     private String questionText;
     private String userId;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +144,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
         initializeImageSwitcher();
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        token = getIntent().getStringExtra(Constants.DEVICE_TOKEN);
         newRequestViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(NewRequestViewModel.class);
         observeImageUpload();
         observeAddingRequest();
@@ -213,7 +215,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
                 newRequestViewModel.uploadImageToFirebaseStorage(imageUri);
             } else {
                 //send request
-                newRequestViewModel.addNewRequest(userId, uploadedImagesUris, audioRecordedFile, questionText);
+                newRequestViewModel.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, questionText);
             }
         });
     }

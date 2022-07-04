@@ -54,8 +54,8 @@ public class DatabaseRepository {
         return firebaseDataSource.getRequest(requestId);
     }
 
-    public Single<Boolean> addNewRequest(String userId, List<Image> uploadedImagesUris, File audioRecordedFile, String questionText) {
-        return firebaseDataSource.addNewRequest(userId, uploadedImagesUris, audioRecordedFile, questionText);
+    public Single<Boolean> addNewRequest(String userId, String token, List<Image> uploadedImagesUris, File audioRecordedFile, String questionText) {
+        return firebaseDataSource.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, questionText);
     }
 
     public Single<String> uploadImageToFirebaseStorage(Uri imageUri) {
@@ -64,5 +64,9 @@ public class DatabaseRepository {
 
     public Flowable<List<TreeType>> getTreeTypes() {
         return firebaseDataSource.getTreeTypes();
+    }
+
+    public void setRequestRating(String requestId, float rating) {
+        firebaseDataSource.setRequestRating(requestId, rating);
     }
 }

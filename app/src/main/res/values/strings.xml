@@ -32,4 +32,5 @@
     <string name="uploading">جاري التحميل</string>
     <string name="all_questions_required_msg">يجب اجابة جميع الأسئلة</string>
     <string name="category">الصنف</string>
+    <string name="add_rating_lbl">أضف تقييم</string>
 </resources>

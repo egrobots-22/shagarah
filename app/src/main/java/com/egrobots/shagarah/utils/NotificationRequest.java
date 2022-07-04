@@ -17,7 +17,7 @@ import java.util.Map;
 public class NotificationRequest {
 
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
-    final private String serverKey = "key=" + "AAAA-utWhlc:APA91bHQGBnp8J9YFIF_RgYMs7575T9omtB_XQmFMoA_i7Pehq56694p6tReL3VAdZlKsDiTtdSU1aYwTTAAw-9TaDLOpzAGo_Qo5_oZ4NV9VjnAfTjx6_VS4XONTLAnZXaeY0Ltggun";
+    final private String serverKey = "key=" + "AAAA138Q-qc:APA91bGytl4G7QtYgsAf_nr1iZOiSlXFZDILkA42AFhyTG-m_UJ_bSh3O20HAgjdPxiqNO-i8q9Au2s8Z_RWXGW7BFylpQWJXcifA7-186Uzfcz1CALAxS40WSTmSz0kn8KSD2ItGlhv";
     final private String contentType = "application/json";
     static final String TAG = "NOTIFICATION TAG";
 

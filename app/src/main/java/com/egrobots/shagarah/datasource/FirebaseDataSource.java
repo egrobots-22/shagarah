@@ -262,6 +262,7 @@ public class FirebaseDataSource {
     }
 
     private void saveRequestToFirebaseDatabase(String userId
+            , String token
             , List<Image> uploadedImagesUris
             , String audioUrl
             , String questionText
@@ -269,6 +270,7 @@ public class FirebaseDataSource {
         DatabaseReference requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE);
         Request request = new Request();
         request.setUserId(userId);
+        request.setToken(token);
         request.setTimestamp(System.currentTimeMillis());
         request.setTimestampToOrder(-System.currentTimeMillis());
         request.setImages(uploadedImagesUris);
@@ -289,7 +291,7 @@ public class FirebaseDataSource {
                 });
     }
 
-    public Single<Boolean> addNewRequest(String userId, List<Image> uploadedImagesUris, File audioRecordedFile, String questionText) {
+    public Single<Boolean> addNewRequest(String userId, String token, List<Image> uploadedImagesUris, File audioRecordedFile, String questionText) {
         return Single.create(emitter -> {
             if (audioRecordedFile != null) {
                 //upload audio firstly
@@ -302,12 +304,12 @@ public class FirebaseDataSource {
                     audioUrl.addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             String downloadUrl = task.getResult().toString();
-                            saveRequestToFirebaseDatabase(userId, uploadedImagesUris, downloadUrl, questionText, emitter);
+                            saveRequestToFirebaseDatabase(userId, token, uploadedImagesUris, downloadUrl, questionText, emitter);
                         }
                     });
                 });
             } else {
-                saveRequestToFirebaseDatabase(userId, uploadedImagesUris, null, questionText, emitter);
+                saveRequestToFirebaseDatabase(userId, token, uploadedImagesUris, null, questionText, emitter);
             }
         });
     }
@@ -334,4 +336,12 @@ public class FirebaseDataSource {
         }, BackpressureStrategy.BUFFER);
     }
 
+    public void setRequestRating(String requestId, float rating) {
+        HashMap<String, Object> updates = new HashMap<>();
+        updates.put("rating", rating);
+        firebaseDatabase.getReference(Constants.REQUESTS_NODE)
+                .child(requestId)
+                .child("questionAnalysis")
+                .updateChildren(updates);
+    }
 }

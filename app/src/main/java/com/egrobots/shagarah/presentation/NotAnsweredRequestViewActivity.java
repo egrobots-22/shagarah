@@ -256,13 +256,4 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
         }
     }
 
-    private ScaleGestureDetector scaleGestureDetector;
-    private float mScaleFactor = 1.0f;
-
-    @Override
-    public boolean onTouchEvent(MotionEvent motionEvent) {
-        scaleGestureDetector.onTouchEvent(motionEvent);
-        return true;
-    }
-
 }

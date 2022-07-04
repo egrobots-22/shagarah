@@ -57,7 +57,7 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
     private RequestsAdapter requestsAdapter;
     private Integer requestsNum = 0;
     private boolean dataNotRetrievedYetFirstTime = true;
-    private CurrentUser requestUser;
+    private CurrentUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
     private void getCurrentUser() {
         authenticationViewModel.getCurrentUser(userId);
         authenticationViewModel.observeUserState().observe(this, user -> {
-            requestUser = user;
+            currentUser = user;
             isAdmin = user.getRole() != null;
             if (isAdmin) {
                 addRequestFab.setVisibility(View.GONE);
@@ -183,14 +183,16 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
         }
         intent.putExtra(Constants.REQUEST_ID, request.getId());
         intent.putExtra(Constants.REQUEST_USER_ID, request.getUserId());
-        intent.putExtra(Constants.DEVICE_TOKEN, requestUser.getToken());
+        intent.putExtra(Constants.DEVICE_TOKEN, request.getToken());
         intent.putExtra(Constants.IS_ADMIN, isAdmin);
         startActivity(intent);
     }
 
     @OnClick(R.id.add_request_fab)
     public void onAddRequestClicked() {
-        startActivity(new Intent(this, NewRequestActivity.class));
+        Intent intent = new Intent(this, NewRequestActivity.class);
+        intent.putExtra(Constants.DEVICE_TOKEN, currentUser.getToken());
+        startActivity(intent);
     }
 
     @Override

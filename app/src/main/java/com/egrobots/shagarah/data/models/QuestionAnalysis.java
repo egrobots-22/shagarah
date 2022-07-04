@@ -13,6 +13,7 @@ public class QuestionAnalysis {
     private String alrai;
     private String operations;
     private String elthemar;
+    private float rating;
 
     public QuestionAnalysis() {
     }
@@ -104,5 +105,13 @@ public class QuestionAnalysis {
 
     public void setElthemar(String elthemar) {
         this.elthemar = elthemar;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 }

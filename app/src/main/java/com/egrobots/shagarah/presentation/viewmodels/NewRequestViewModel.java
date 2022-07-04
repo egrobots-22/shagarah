@@ -31,9 +31,9 @@ public class NewRequestViewModel extends ViewModel {
         this.databaseRepository = databaseRepository;
     }
 
-    public void addNewRequest(String userId, List<Image> uploadedImagesUris, File audioRecordedFile, String questionText) {
+    public void addNewRequest(String userId, String token, List<Image> uploadedImagesUris, File audioRecordedFile, String questionText) {
         SingleObserver<Boolean> singleObserver
-                = databaseRepository.addNewRequest(userId, uploadedImagesUris, audioRecordedFile, questionText)
+                = databaseRepository.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, questionText)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new SingleObserver<Boolean>() {

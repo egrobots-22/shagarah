@@ -4,31 +4,26 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.egrobots.shagarah.R;
-import com.egrobots.shagarah.data.models.Request;
 import com.egrobots.shagarah.presentation.helpers.ViewModelProviderFactory;
 import com.egrobots.shagarah.presentation.viewmodels.SelectedRequestViewModel;
+import com.egrobots.shagarah.utils.Constants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import butterknife.BindView;
@@ -61,6 +56,10 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
     TextView operationsTextView;
     @BindView(R.id.althemar_value_text_view)
     TextView althemarTextView;
+    @BindView(R.id.rating_layout)
+    View ratingLayout;
+    @BindView(R.id.request_answer_rating)
+    RatingBar requestAnswerRating;
     @Inject
     ViewModelProviderFactory providerFactory;
     private boolean mapLoaded;
@@ -72,8 +71,14 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
         ButterKnife.bind(this);
         setTitle(getString(R.string.tree_analysis_request_title));
 
-        String requestId = getIntent().getStringExtra("request_id");
-        String requestUserId = getIntent().getStringExtra("request_user_id");
+        String requestId = getIntent().getStringExtra(Constants.REQUEST_ID);
+        String requestUserId = getIntent().getStringExtra(Constants.REQUEST_USER_ID);
+        boolean isAdmin = getIntent().getBooleanExtra(Constants.IS_ADMIN, false);
+        if (isAdmin) {
+            ratingLayout.setVisibility(View.GONE);
+        } else {
+            ratingLayout.setVisibility(View.VISIBLE);
+        }
 
         selectedRequestViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(SelectedRequestViewModel.class);
         selectedRequestViewModel.getRequest(requestId);
@@ -103,6 +108,12 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
             alrayTextView.setText(request.getQuestionAnalysis().getAlrai());
             operationsTextView.setText(request.getQuestionAnalysis().getOperations());
             althemarTextView.setText(request.getQuestionAnalysis().getElthemar());
+            requestAnswerRating.setRating(request.getQuestionAnalysis().getRating());
+
+            //add rating for the answer
+            requestAnswerRating.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+                selectedRequestViewModel.setAnswerRating(request.getId(), rating);
+            });
         });
     }
 
