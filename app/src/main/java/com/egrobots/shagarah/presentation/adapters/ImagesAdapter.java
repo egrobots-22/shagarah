@@ -1,6 +1,8 @@
 package com.egrobots.shagarah.presentation.adapters;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -8,6 +10,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.egrobots.shagarah.R;
 import com.egrobots.shagarah.data.models.Image;
+import com.jsibbold.zoomage.ZoomageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +49,10 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
         this.images = images;
     }
 
-    class ImageViewHolder extends RecyclerView.ViewHolder {
+    static class ImageViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.img_view)
-        ImageView imageView;
+        ZoomageView imageView;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);

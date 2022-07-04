@@ -98,6 +98,8 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
     EditText textQuestionEditText;
     @BindView(R.id.record_audio_button)
     ImageButton recordAudioButton;
+    @BindView(R.id.image_num_text_view)
+    TextView imageNumTextView;
 
     private Uri fileUri;
     private List<Uri> imagesUris = new ArrayList<>();
@@ -181,6 +183,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
                 nextImageButton.setVisibility(View.GONE);
             }
             imageSwitcher.setImageURI(imagesUris.get(selectedImagePosition));
+            imageNumTextView.setText(String.format("صورة رقم: %d", selectedImagePosition + 1));
         });
 
         prevImageButton.setOnClickListener(v -> {
@@ -190,6 +193,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
                 prevImageButton.setVisibility(View.GONE);
             }
             imageSwitcher.setImageURI(imagesUris.get(selectedImagePosition));
+            imageNumTextView.setText(String.format("صورة رقم: %d", selectedImagePosition + 1));
         });
     }
 
@@ -237,12 +241,13 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
     @Override
     public void onStartNowClicked() {
         initializeCameraX();
+        imageNumTextView.setVisibility(View.VISIBLE);
+        imageNumTextView.setText(String.format("صورة رقم: %d", imagesUris.size() + 1));
     }
 
     @OnClick(R.id.capture_button)
     public void onCaptureButtonClicked() {
         if (isAddingNewImage) {
-            //no image captured yet
             cameraXRecorder.captureImage();
         }
     }
@@ -361,6 +366,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
         multipleImagesView.setVisibility(View.GONE);
         captureButton.setEnabled(true);
         captureButton.setImageDrawable(ContextCompat.getDrawable(NewRequestActivity.this, R.drawable.start_record));
+        imageNumTextView.setText(String.format("صورة رقم: %d", imagesUris.size() + 1));
         isAddingNewImage = true;
     }
 

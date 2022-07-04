@@ -9,6 +9,8 @@ import dagger.android.support.DaggerAppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -230,4 +232,14 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
             audioPlayer.stopAudio();
         }
     }
+
+    private ScaleGestureDetector scaleGestureDetector;
+    private float mScaleFactor = 1.0f;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        scaleGestureDetector.onTouchEvent(motionEvent);
+        return true;
+    }
+
 }

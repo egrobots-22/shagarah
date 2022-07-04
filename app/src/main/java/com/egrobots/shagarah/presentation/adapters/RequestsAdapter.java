@@ -52,6 +52,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((RequestViewHolder)holder).requestStatusTextView.setText(request.getShownStatus());
             ((RequestViewHolder)holder).timestampTextView.setText(request.getFormattedDate());
             ((RequestViewHolder)holder).showRequestButton.setOnClickListener(v -> onRequestClickedCallback.onRequestClicked(request));
+            ((RequestViewHolder)holder).itemView.setOnClickListener(v -> onRequestClickedCallback.onRequestClicked(request));
             Glide.with(holder.itemView.getContext())
                     .load(request.getImages().get(0).getUrl())
                     .placeholder(R.drawable.shagarah_logo)
@@ -63,6 +64,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((AnsweredRequestViewHolder)holder).treeCodeTextView.setText(questionAnalysis.getTreeCode());
             ((AnsweredRequestViewHolder)holder).treeStatusTextView.setText(questionAnalysis.getTreeStatus());
             ((AnsweredRequestViewHolder)holder).moreDetailsButton.setOnClickListener(v -> onRequestClickedCallback.onRequestClicked(request));
+            ((AnsweredRequestViewHolder)holder).itemView.setOnClickListener(v -> onRequestClickedCallback.onRequestClicked(request));
             Glide.with(holder.itemView.getContext())
                     .load(request.getImages().get(0).getUrl())
                     .placeholder(R.drawable.shagarah_logo)
