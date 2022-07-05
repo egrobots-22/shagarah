@@ -2,7 +2,6 @@ package com.egrobots.shagarah.presentation;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -26,24 +25,54 @@ import butterknife.OnClick;
 public class AnalysisBottomSheetDialog extends BottomSheetDialog {
 
     private List<TreeType> treeTypeList;
-    private List<String> diseasesList;
     private AnalysisQuestionsCallback analysisQuestionsCallback;
     private Context context;
 
     @BindView(R.id.tree_type_list_view)
     ListView treeTypeListView;
-    @BindView(R.id.tree_category_list_view)
-    ListView treeCategoriesListView;
-    @BindView(R.id.diseases_list_view)
-    ListView diseasesListView;
     @BindView(R.id.tree_type_value_edit_text)
     EditText treeTypeEditText;
+
+    @BindView(R.id.tree_category_list_view)
+    ListView treeCategoriesListView;
     @BindView(R.id.tree_category_value_edit_text)
     EditText treeCategoryEditText;
-    @BindView(R.id.diseases_value_edit_text)
-    EditText diseasesEditText;
-    @BindView(R.id.selected_diseases_layout)
-    LinearLayout selectedDiseasesLayout;
+
+    @BindView(R.id.afat_list_view)
+    ListView afatListView;
+    @BindView(R.id.afat_value_edit_text)
+    EditText afatEditText;
+    @BindView(R.id.selected_afat_layout)
+    LinearLayout selectedAfatLayout;
+
+    @BindView(R.id.amrad_3odwia_list_view)
+    ListView amrad3odwiaListView;
+    @BindView(R.id.amrad_3odwia_value_edit_text)
+    EditText amrad3odwiaEditText;
+    @BindView(R.id.selected_amrad_3odwia_layout)
+    LinearLayout selectedAmrad3odwiaLayout;
+
+    @BindView(R.id.amrad_bikteria_list_view)
+    ListView amradBikteriaListView;
+    @BindView(R.id.amrad_bikteria_value_edit_text)
+    EditText amradBikteriaEditText;
+    @BindView(R.id.selected_amrad_bikteria_layout)
+    LinearLayout selectedAmradBikteriaLayout;
+
+    @BindView(R.id.amrad_fetrya_list_view)
+    ListView amradFetryaListView;
+    @BindView(R.id.amrad_fetrya_value_edit_text)
+    EditText amradFetryaEditText;
+    @BindView(R.id.selected_amrad_fetrya_layout)
+    LinearLayout selectedAmradFetryaLayout;
+
+    @BindView(R.id.amrad_viruses_list_view)
+    ListView amradVirusesListView;
+    @BindView(R.id.amrad_viruses_value_edit_text)
+    EditText amradVirusesEditText;
+    @BindView(R.id.selected_amrad_viruses_layout)
+    LinearLayout selectedAmradVirusesLayout;
+
     @BindView(R.id.tasmed_value_edit_text)
     EditText tasmedEditText;
     @BindView(R.id.alray_value_edit_text)
@@ -52,23 +81,20 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
     EditText operationsEditText;
     @BindView(R.id.althemar_value_edit_text)
     EditText althemarEditText;
+
     private String selectedTreeType = "";
     private String selectedCategory = "";
-    private boolean isTreeTypesListVisible;
-    private boolean isTreeCategoryListVisible;
-    private boolean isDiseasesListVisible;
-    private ArrayAdapter<String> categoryAdapter;
-    private ArrayAdapter<String> typeAdapter;
-    private ArrayAdapter<String> diseasesAdapter;
-    private List<String> selectedDiseases = new ArrayList<>();
+    private List<String> selectedAfat = new ArrayList<>();
+    private List<String> selectedAmrad3odwia = new ArrayList<>();
+    private List<String> selectedAmraBikteria = new ArrayList<>();
+    private List<String> selectedAmradFetrya = new ArrayList<>();
+    private List<String> selectedAmradViruses = new ArrayList<>();
 
     public AnalysisBottomSheetDialog(@NonNull Context context,
                                      List<TreeType> treeTypeList,
-                                     List<String> diseasesList,
                                      AnalysisQuestionsCallback analysisQuestionsCallback) {
         super(context);
         this.treeTypeList = treeTypeList;
-        this.diseasesList = diseasesList;
         this.analysisQuestionsCallback = analysisQuestionsCallback;
         this.context = context;
         setContentView(R.layout.questions_bottom_sheet_dialog);
@@ -92,7 +118,6 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
         });
 
         setTreeTypesSpinner();
-        setDiseasesSpinner();
     }
 
     private void setTreeTypesSpinner() {
@@ -104,42 +129,111 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
         treeTypesSearchableList.setItemsList(getContext(), typesList, treeTypeListView, treeTypeEditText, false, null,
                 (position, selectedItem, selectedItemsList) -> {
                     selectedTreeType = selectedItem;
-                    setCategoriesSpinner(position);
-                    setDiseasesSpinner();
+                    clearOldSelections();
+                    setCategoriesList(position);
+                    setAfatList(position);
+                    setAmrad3odwiaList(position);
+                    setAmradBikteriaList(position);
+                    setAmradFetryaList(position);
+                    setAmradVirusesList(position);
                 });
     }
 
-    private void setCategoriesSpinner(int position) {
+    private void clearOldSelections() {
+        selectedCategory = "";
+        treeCategoryEditText.setText("");
+        afatEditText.setText("");
+        amrad3odwiaEditText.setText("");
+        amradBikteriaEditText.setText("");
+        amradFetryaEditText.setText("");
+        amradVirusesEditText.setText("");
+
+        selectedAmrad3odwia.clear();
+        selectedAfat.clear();
+        selectedAmraBikteria.clear();
+        selectedAmradFetrya.clear();
+        selectedAmradViruses.clear();
+
+        selectedAfatLayout.removeAllViews();
+        selectedAmrad3odwiaLayout.removeAllViews();
+        selectedAmradBikteriaLayout.removeAllViews();
+        selectedAmradFetryaLayout.removeAllViews();
+        selectedAmradVirusesLayout.removeAllViews();
+
+        treeCategoriesListView.setVisibility(View.GONE);
+        afatListView.setVisibility(View.GONE);
+        amrad3odwiaListView.setVisibility(View.GONE);
+        amradBikteriaListView.setVisibility(View.GONE);
+        amradFetryaListView.setVisibility(View.GONE);
+        amradVirusesListView.setVisibility(View.GONE);
+    }
+
+    private void setCategoriesList(int position) {
         List<String> catsList = treeTypeList.get(position).getCats();
         SearchableList categoriesSearchableList = new SearchableList();
         categoriesSearchableList.setItemsList(getContext(),
                 catsList, treeCategoriesListView, treeCategoryEditText, false, null,
-                (position1, selectedItem, selectedItemsList) -> selectedCategory = selectedItem);
+                (selectedPosition, selectedItem, selectedItemsList) -> selectedCategory = selectedItem);
     }
 
-    private void setDiseasesSpinner() {
+    private void setAfatList(int position) {
+        List<String> afatList = treeTypeList.get(position).getAlafat();
         SearchableList diseasesSearchableList = new SearchableList();
         diseasesSearchableList.setItemsList(getContext(),
-                diseasesList, diseasesListView, diseasesEditText, true, selectedDiseasesLayout,
-                (position, selectedItem, selectedItemsList) -> selectedDiseases = selectedItemsList);
+                afatList, afatListView, afatEditText, true, selectedAfatLayout,
+                (selectedPosition, selectedItem, selectedItemsList) -> selectedAfat = selectedItemsList);
     }
 
+    private void setAmrad3odwiaList(int position) {
+        List<String> amrad3odwiaList = treeTypeList.get(position).getAmrad_3odwia();
+        SearchableList amrad3odwiaSearchableList = new SearchableList();
+        amrad3odwiaSearchableList.setItemsList(getContext(),
+                amrad3odwiaList, amrad3odwiaListView, amrad3odwiaEditText, true, selectedAmrad3odwiaLayout,
+                (selectedPosition, selectedItem, selectedItemsList) -> selectedAmrad3odwia = selectedItemsList);
+    }
+
+    private void setAmradBikteriaList(int position) {
+        List<String> amradBikteriaList = treeTypeList.get(position).getAmrad_bikteria();
+        SearchableList amradBikteriaSearchableList = new SearchableList();
+        amradBikteriaSearchableList.setItemsList(getContext(),
+                amradBikteriaList, amradBikteriaListView, amradBikteriaEditText, true, selectedAmradBikteriaLayout,
+                (selectedPosition, selectedItem, selectedItemsList) -> selectedAmraBikteria = selectedItemsList);
+    }
+
+    private void setAmradFetryaList(int position) {
+        List<String> amradFetryaList = treeTypeList.get(position).getAmrad_fetrya();
+        SearchableList amradFetryaSearchableList = new SearchableList();
+        amradFetryaSearchableList.setItemsList(getContext(),
+                amradFetryaList, amradFetryaListView, amradFetryaEditText, true, selectedAmradFetryaLayout,
+                (selectedPosition, selectedItem, selectedItemsList) -> selectedAmradFetrya = selectedItemsList);
+    }
+
+    private void setAmradVirusesList(int position) {
+        List<String> amradVirusesList = treeTypeList.get(position).getAmrad_viruses();
+        SearchableList amradVirusesSearchableList = new SearchableList();
+        amradVirusesSearchableList.setItemsList(getContext(),
+                amradVirusesList, amradVirusesListView, amradVirusesEditText, true, selectedAmradVirusesLayout,
+                (selectedPosition, selectedItem, selectedItemsList) -> selectedAmradViruses = selectedItemsList);
+    }
 
     @OnClick(R.id.done_button)
     public void onDoneClicked() {
-        String diseases = diseasesEditText.getText().toString();
+        String diseases = afatEditText.getText().toString();
         String tasmed = tasmedEditText.getText().toString();
         String alray = alrayEditText.getText().toString();
         String operations = operationsEditText.getText().toString();
         String althemar = althemarEditText.getText().toString();
 
         if (selectedTreeType.isEmpty() || selectedCategory.isEmpty()
-                || selectedDiseases.isEmpty() || tasmed.isEmpty() || alray.isEmpty()
-                || operations.isEmpty() || althemar.isEmpty()) {
+                || selectedAfat.isEmpty() || selectedAmrad3odwia.isEmpty()
+                || selectedAmraBikteria.isEmpty() || selectedAmradViruses.isEmpty() || selectedAmradFetrya.isEmpty()
+                || tasmed.isEmpty() || alray.isEmpty() || operations.isEmpty()
+                || althemar.isEmpty()) {
             analysisQuestionsCallback.onError(context.getString(R.string.all_questions_required_msg));
         } else {
             QuestionAnalysis questionAnalysis = new QuestionAnalysis(selectedTreeType, selectedCategory
-                    , selectedDiseases, tasmed, alray, operations, althemar);
+                    , selectedAfat, selectedAmrad3odwia, selectedAmraBikteria
+                    , selectedAmradFetrya, selectedAmradViruses, tasmed, alray, operations, althemar);
             analysisQuestionsCallback.onDone(questionAnalysis);
         }
     }

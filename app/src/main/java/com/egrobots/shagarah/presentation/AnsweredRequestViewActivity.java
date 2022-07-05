@@ -46,8 +46,18 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
     TextView treeCodeTextView;
     @BindView(R.id.tree_category_value_text_view)
     TextView treeCategoryTextView;
-    @BindView(R.id.diseases_value_text_view)
-    TextView diseasesTextView;
+
+    @BindView(R.id.afat_value_text_view)
+    TextView afatTextView;
+    @BindView(R.id.amrad_3odwia_value_text_view)
+    TextView amrad3odwiaTextView;
+    @BindView(R.id.amrad_bikteria_value_text_view)
+    TextView amradBikteriaTextView;
+    @BindView(R.id.amrad_fetrya_value_text_view)
+    TextView amradFetryaTextView;
+    @BindView(R.id.amrad_viruses_value_text_view)
+    TextView amradVirusesTextView;
+
     @BindView(R.id.tasmed_value_text_view)
     TextView tasmedTextView;
     @BindView(R.id.alray_value_text_view)
@@ -103,7 +113,14 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
             treeTypeTextView.setText(request.getQuestionAnalysis().getTreeType());
             treeCodeTextView.setText(request.getQuestionAnalysis().getTreeCode());
             treeCategoryTextView.setText(request.getQuestionAnalysis().getTreeCategory());
-            diseasesTextView.setText(request.getQuestionAnalysis().getDiseasesListAsString());
+
+            afatTextView.setText(request.getQuestionAnalysis().getAlafatAsString());
+            amrad3odwiaTextView.setText(request.getQuestionAnalysis().getAmarad3odwiaAsString());
+            amradBikteriaTextView.setText(request.getQuestionAnalysis().getAmradBikteriaAsString());
+            amradFetryaTextView.setText(request.getQuestionAnalysis().getAmradFetryaAsString());
+            amradVirusesTextView.setText(request.getQuestionAnalysis().getAmradVirusesAsString());
+
+
             tasmedTextView.setText(request.getQuestionAnalysis().getTasmeed());
             alrayTextView.setText(request.getQuestionAnalysis().getAlrai());
             operationsTextView.setText(request.getQuestionAnalysis().getOperations());

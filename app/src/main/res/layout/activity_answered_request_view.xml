@@ -120,16 +120,16 @@
                         app:layout_constraintTop_toBottomOf="@id/tree_category_label" />
 
                     <TextView
-                        android:id="@+id/diseases_label"
+                        android:id="@+id/afat_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
-                        android:text="الأمراض و الآفات"
+                        android:text="الآفات"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tree_category_value_text_view" />
 
                     <TextView
-                        android:id="@+id/diseases_value_text_view"
+                        android:id="@+id/afat_value_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
@@ -138,7 +138,91 @@
                         android:textColor="@color/colorAccentDark"
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/diseases_label" />
+                        app:layout_constraintTop_toBottomOf="@id/afat_label" />
+
+                    <TextView
+                        android:id="@+id/amrad_3odwia_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="الأمراض العضوية"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/afat_value_text_view" />
+
+                    <TextView
+                        android:id="@+id/amrad_3odwia_value_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="الأمراض العضوية"
+                        android:textColor="@color/colorAccentDark"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/amrad_3odwia_label" />
+
+                    <TextView
+                        android:id="@+id/amrad_bikteria_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="الأمراض البكتيرية"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/amrad_3odwia_value_text_view" />
+
+                    <TextView
+                        android:id="@+id/amrad_bikteria_value_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="الأمراض البكتيرية"
+                        android:textColor="@color/colorAccentDark"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/amrad_bikteria_label" />
+
+                    <TextView
+                        android:id="@+id/amrad_fetryal_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="الأمراض الفطرية"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/amrad_bikteria_value_text_view" />
+
+                    <TextView
+                        android:id="@+id/amrad_fetrya_value_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="الأمراض الفطرية"
+                        android:textColor="@color/colorAccentDark"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/amrad_fetryal_label" />
+
+                    <TextView
+                        android:id="@+id/amrad_viruese_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="الأمراض الفطرية"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/amrad_fetrya_value_text_view" />
+
+                    <TextView
+                        android:id="@+id/amrad_viruses_value_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="الأمراض الفطرية"
+                        android:textColor="@color/colorAccentDark"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/amrad_viruese_label" />
 
                     <TextView
                         android:id="@+id/tasmed_label"
@@ -147,7 +231,7 @@
                         android:layout_margin="16dp"
                         android:text="التسميد"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/diseases_value_text_view" />
+                        app:layout_constraintTop_toBottomOf="@id/amrad_viruses_value_text_view" />
 
                     <TextView
                         android:id="@+id/tasmed_value_text_view"

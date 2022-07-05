@@ -55,8 +55,10 @@ public class SearchableList {
             String selectedItem = listAdapter.getItem(position);
             searchableEditText.setText(selectedItem);
             if (canAddMultipleItems) {
-                selectedItemsList.add(selectedItem);
-                addSelectedItemTextView(selectedItem);
+                if (!isItemExistInList(selectedItem)) {
+                    selectedItemsList.add(selectedItem);
+                    addSelectedItemTextView(selectedItem);
+                }
             }
             listView.setVisibility(View.GONE);
             listAdapter.getFilter().filter("");
@@ -95,6 +97,15 @@ public class SearchableList {
 
             }
         });
+    }
+
+    private boolean isItemExistInList(String selectedItem) {
+        for (String item : selectedItemsList) {
+            if (selectedItem.equals(item)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void addSelectedItemTextView(String selectedItem) {

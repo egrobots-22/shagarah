@@ -11,7 +11,11 @@ public class QuestionAnalysis {
     private String treeType;
     private String treeCategory;
     private String treeCode;
-    private List<String> diseasesList;
+    private List<String> alafat;
+    private List<String> amrad_3odwia;
+    private List<String> amrad_bikteria;
+    private List<String> amrad_fetrya;
+    private List<String> amrad_viruses;
     private String tasmeed;
     private String alrai;
     private String operations;
@@ -23,7 +27,11 @@ public class QuestionAnalysis {
 
     public QuestionAnalysis(String treeType
             , String treeCategory
-            , List<String> diseasesList
+            , List<String> alafat
+            , List<String> amrad_3odwia
+            , List<String> amrad_bikteria
+            , List<String> amrad_fetrya
+            , List<String> amrad_viruses
             , String tasmeed
             , String alrai
             , String operations
@@ -31,7 +39,11 @@ public class QuestionAnalysis {
         this.treeType = treeType;
         this.treeCategory = treeCategory;
         this.treeCode = String.valueOf(new Random().nextInt(1000000));
-        this.diseasesList = diseasesList;
+        this.alafat = alafat;
+        this.amrad_3odwia = amrad_3odwia;
+        this.amrad_bikteria = amrad_bikteria;
+        this.amrad_fetrya = amrad_fetrya;
+        this.amrad_viruses = amrad_viruses;
         this.tasmeed = tasmeed;
         this.alrai = alrai;
         this.operations = operations;
@@ -70,22 +82,104 @@ public class QuestionAnalysis {
         this.treeCode = treeCode;
     }
 
-    public List<String> getDiseasesList() {
-        return diseasesList;
+    public List<String> getAlafat() {
+        return alafat;
     }
 
     @Exclude
-    public String getDiseasesListAsString() {
-        StringBuilder diseasesListAsString = new StringBuilder();
-        for (String disease : diseasesList) {
-            diseasesListAsString.append(disease);
-            diseasesListAsString.append(" - ");
+    public String getAlafatAsString() {
+        StringBuilder alafatListAsString = new StringBuilder();
+        if (alafat != null) {
+            for (String disease : alafat) {
+                alafatListAsString.append(disease);
+                alafatListAsString.append(" - ");
+            }
         }
-        return diseasesListAsString.toString();
+        return alafatListAsString.toString();
     }
 
-    public void setDiseasesList(List<String> diseasesList) {
-        this.diseasesList = diseasesList;
+    public void setAlafat(List<String> alafat) {
+        this.alafat = alafat;
+    }
+
+    public List<String> getAmrad_3odwia() {
+        return amrad_3odwia;
+    }
+
+    @Exclude
+    public String getAmarad3odwiaAsString() {
+        StringBuilder amrad3odwiaAsString = new StringBuilder();
+        if (amrad_3odwia != null) {
+            for (String disease : amrad_3odwia) {
+                amrad3odwiaAsString.append(disease);
+                amrad3odwiaAsString.append(" - ");
+            }
+        }
+        return amrad3odwiaAsString.toString();
+    }
+
+    public void setAmrad_3odwia(List<String> amrad_3odwia) {
+        this.amrad_3odwia = amrad_3odwia;
+    }
+
+    public List<String> getAmrad_bikteria() {
+        return amrad_bikteria;
+    }
+
+    @Exclude
+    public String getAmradBikteriaAsString() {
+        StringBuilder amradBikteriaAsString = new StringBuilder();
+        if (amrad_bikteria != null) {
+            for (String disease : amrad_bikteria) {
+                amradBikteriaAsString.append(disease);
+                amradBikteriaAsString.append(" - ");
+            }
+        }
+        return amradBikteriaAsString.toString();
+    }
+
+    public void setAmrad_bikteria(List<String> amrad_bikteria) {
+        this.amrad_bikteria = amrad_bikteria;
+    }
+
+    public List<String> getAmrad_fetrya() {
+        return amrad_fetrya;
+    }
+
+    @Exclude
+    public String getAmradFetryaAsString() {
+        StringBuilder amradFetryaAsString = new StringBuilder();
+        if (amrad_fetrya != null) {
+            for (String disease : amrad_fetrya) {
+                amradFetryaAsString.append(disease);
+                amradFetryaAsString.append(" - ");
+            }
+        }
+        return amradFetryaAsString.toString();
+    }
+
+    public void setAmrad_fetrya(List<String> amrad_fetrya) {
+        this.amrad_fetrya = amrad_fetrya;
+    }
+
+    public List<String> getAmrad_viruses() {
+        return amrad_viruses;
+    }
+
+    @Exclude
+    public String getAmradVirusesAsString() {
+        StringBuilder virusesListAsString = new StringBuilder();
+        if (amrad_viruses != null) {
+            for (String disease : amrad_viruses) {
+                virusesListAsString.append(disease);
+                virusesListAsString.append(" - ");
+            }
+        }
+        return virusesListAsString.toString();
+    }
+
+    public void setAmrad_viruses(List<String> amrad_viruses) {
+        this.amrad_viruses = amrad_viruses;
     }
 
     public String getTasmeed() {

@@ -210,13 +210,7 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
 
     @OnClick(R.id.answer_question_button)
     public void onAnswerQuestionButtonClicked() {
-        List<String> diseases = new ArrayList<>();
-        diseases.add("مرض 1");
-        diseases.add("مرض 2");
-        diseases.add("مرض 3");
-        diseases.add("مرض 4");
-        diseases.add("مرض 5");
-        analysisBottomSheetDialog = new AnalysisBottomSheetDialog(this, treeTypeList, diseases
+        analysisBottomSheetDialog = new AnalysisBottomSheetDialog(this, treeTypeList
                 , new AnalysisBottomSheetDialog.AnalysisQuestionsCallback() {
             @Override
             public void onDone(QuestionAnalysis questionAnalysis) {
@@ -231,7 +225,6 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
             @Override
             public void onError(String error) {
                 Toast.makeText(NotAnsweredRequestViewActivity.this, error, Toast.LENGTH_SHORT).show();
-//                analysisBottomSheetDialog.dismiss();
             }
         });
         analysisBottomSheetDialog.show();
