@@ -42,30 +42,21 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/cornered_gray_bg"
+                android:drawableEnd="@drawable/ic_arrow_down"
                 android:gravity="start|center"
-                android:inputType="text"
                 android:maxLines="1"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_type_label"
-                android:visibility="gone"/>
-
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/tree_type_value_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:padding="8dp"
-                android:textSize="14sp"
+                android:hint="@string/select_tree_type_hint"
                 android:textAlignment="viewStart"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/border_spinner"
+                android:visibility="visible"
+                android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_type_label"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tree_type_label" />
 
             <TextView
                 android:id="@+id/tree_category_label"
@@ -74,7 +65,8 @@
                 android:layout_margin="16dp"
                 android:text="@string/category"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_type_value_spinner" />
+                app:layout_constraintTop_toBottomOf="@id/tree_type_value_edit_text" />
+
 
             <EditText
                 android:id="@+id/tree_category_value_edit_text"
@@ -83,30 +75,20 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/cornered_gray_bg"
+                android:drawableEnd="@drawable/ic_arrow_down"
                 android:gravity="start|center"
-                android:inputType="text"
                 android:maxLines="1"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_category_label"
-                android:visibility="gone"/>
-
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/tree_category_value_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:padding="8dp"
-                android:textSize="14sp"
+                android:hint="@string/select_category_hint"
                 android:textAlignment="viewStart"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/border_spinner"
+                android:visibility="visible"
+                android:focusable="true"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_category_label"/>
+                app:layout_constraintTop_toBottomOf="@id/tree_category_label" />
 
             <TextView
                 android:id="@+id/diseases_label"
@@ -115,7 +97,7 @@
                 android:layout_margin="16dp"
                 android:text="الأمراض و الآفات"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_category_value_spinner" />
+                app:layout_constraintTop_toBottomOf="@id/tree_category_value_edit_text" />
 
             <EditText
                 android:id="@+id/diseases_value_edit_text"
@@ -272,6 +254,36 @@
                     android:textColor="@color/white" />
 
             </LinearLayout>
+
+            <ListView
+                android:id="@+id/tree_type_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/cornered_transparent_bg"
+                android:visibility="gone"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tree_type_value_edit_text" />
+
+            <ListView
+                android:id="@+id/tree_category_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/cornered_transparent_bg"
+                android:visibility="gone"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tree_category_value_edit_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

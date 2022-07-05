@@ -1,11 +1,12 @@
 package com.egrobots.shagarah.presentation;
 
 import android.content.Context;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.ListView;
 
 import com.egrobots.shagarah.R;
 import com.egrobots.shagarah.data.models.QuestionAnalysis;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 public class AnalysisBottomSheetDialog extends BottomSheetDialog {
 
@@ -26,14 +28,14 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
     private AnalysisQuestionsCallback analysisQuestionsCallback;
     private Context context;
 
+    @BindView(R.id.tree_type_list_view)
+    ListView treeTypeListView;
+    @BindView(R.id.tree_category_list_view)
+    ListView treeCategoriesListView;
     @BindView(R.id.tree_type_value_edit_text)
     EditText treeTypeEditText;
-    @BindView(R.id.tree_type_value_spinner)
-    Spinner treeTypeSpinner;
     @BindView(R.id.tree_category_value_edit_text)
-    EditText treeCodeEditText;
-    @BindView(R.id.tree_category_value_spinner)
-    Spinner treeCategorySpinner;
+    EditText treeCategoryEditText;
     @BindView(R.id.diseases_value_edit_text)
     EditText diseasesEditText;
     @BindView(R.id.tasmed_value_edit_text)
@@ -46,6 +48,9 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
     EditText althemarEditText;
     private String selectedTreeType = "";
     private String selectedCategory = "";
+    private boolean isTreeTypesListVisible;
+    private boolean isTreeCategoryListVisible;
+    private ArrayAdapter<String> categoryAdapter;
 
 
     public AnalysisBottomSheetDialog(@NonNull Context context,
@@ -62,50 +67,87 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
         setTreeTypesSpinner();
     }
 
+    private ArrayAdapter<String> typeAdapter;
+
     private void setTreeTypesSpinner() {
-        ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item);
+        typeAdapter = new ArrayAdapter<String>(context, R.layout.spinner_list_item_layout);
         ArrayList<String> typesList = new ArrayList<>();
         for (TreeType treeType : treeTypeList) {
             typesList.add(treeType.getType());
         }
         typeAdapter.addAll(typesList);
-        treeTypeSpinner.setAdapter(typeAdapter);
-        treeTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedTreeType = treeTypeList.get(position).getType();
-                setCategorySpinner(position);
+        treeTypeListView.setAdapter(typeAdapter);
+        treeTypeListView.setOnItemClickListener((parent, view, position, id) -> {
+            selectedTreeType = typeAdapter.getItem(position);
+            treeTypeEditText.setText(selectedTreeType);
+            treeTypeListView.setVisibility(View.GONE);
+            setCategorySpinner(position);
+        });
+        treeTypeEditText.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (isTreeTypesListVisible) {
+                    treeTypeListView.setVisibility(View.GONE);
+                    isTreeTypesListVisible = false;
+                } else {
+                    treeTypeListView.setVisibility(View.VISIBLE);
+                    isTreeTypesListVisible = true;
+                }
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            return false;
+        });
+        treeTypeEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                treeTypeListView.setVisibility(View.GONE);
             }
         });
     }
 
+    @OnTextChanged(R.id.tree_type_value_edit_text)
+    public void onTreeTypeTextChanged(CharSequence s) {
+        typeAdapter.getFilter().filter(s);
+        treeTypeListView.setVisibility(View.VISIBLE);
+    }
+
+    @OnTextChanged(R.id.tree_category_value_edit_text)
+    public void onTreeCategoryTextChanged(CharSequence s) {
+        categoryAdapter.getFilter().filter(s);
+        treeCategoriesListView.setVisibility(View.VISIBLE);
+    }
+
     private void setCategorySpinner(int position) {
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item);
+        categoryAdapter = new ArrayAdapter<String>(context, R.layout.spinner_list_item_layout);
         List<String> categoryList = treeTypeList.get(position).getCategory();
         categoryAdapter.addAll(categoryList);
-        treeCategorySpinner.setAdapter(categoryAdapter);
-        treeCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        treeCategoriesListView.setAdapter(categoryAdapter);
+        treeCategoriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedCategory = categoryList.get(position);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedCategory = categoryAdapter.getItem(position);
+                treeCategoryEditText.setText(selectedCategory);
+                treeCategoriesListView.setVisibility(View.GONE);
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+        });
+        treeCategoryEditText.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (isTreeCategoryListVisible) {
+                    treeCategoriesListView.setVisibility(View.GONE);
+                    isTreeCategoryListVisible = false;
+                } else {
+                    treeCategoriesListView.setVisibility(View.VISIBLE);
+                    isTreeCategoryListVisible = true;
+                }
+            }
+            return false;
+        });
+        treeCategoryEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                treeCategoriesListView.setVisibility(View.GONE);
             }
         });
     }
 
     @OnClick(R.id.done_button)
     public void onDoneClicked() {
-        String treeType = treeTypeEditText.getText().toString();
-        String treeCode = treeCodeEditText.getText().toString();
         String diseases = diseasesEditText.getText().toString();
         String tasmed = tasmedEditText.getText().toString();
         String alray = alrayEditText.getText().toString();
