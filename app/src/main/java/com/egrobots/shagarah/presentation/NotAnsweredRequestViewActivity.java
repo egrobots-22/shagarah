@@ -1,16 +1,7 @@
 package com.egrobots.shagarah.presentation;
 
-import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.widget.ViewPager2;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import dagger.android.support.DaggerAppCompatActivity;
-
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -34,6 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import dagger.android.support.DaggerAppCompatActivity;
 
 public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
 
@@ -119,8 +117,8 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
                 imagesAdapter.notifyDataSetChanged();
                 requestStatusTextView.setText(request.getShownStatus());
                 timestampTextView.setText(request.getFormattedDate());
-                requestQuestionTextView.setText(request.getTextQuestion().isEmpty()?getString(R.string.no_current_text_question) : request.getTextQuestion());
-                if (request.getAudioQuestion()==null || request.getAudioQuestion().isEmpty()) {
+                requestQuestionTextView.setText(request.getTextQuestion().isEmpty() ? getString(R.string.no_current_text_question) : request.getTextQuestion());
+                if (request.getAudioQuestion() == null || request.getAudioQuestion().isEmpty()) {
                     audioQuestionView.setVisibility(View.GONE);
                 } else {
                     audioQuestionView.setVisibility(View.VISIBLE);
@@ -184,7 +182,7 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
         try {
             int audioDuration = Integer.parseInt(audioPlayer.getAudioDuration());
             audioLengthTextView.setText(Utils.formatMilliSeconds(audioDuration));
-            seekBar.setMax(audioDuration/TIME_UNIT);
+            seekBar.setMax(audioDuration / TIME_UNIT);
         } catch (Exception exception) {
             Toast.makeText(this, "خطأ في تحميل السؤال الصوتي", Toast.LENGTH_SHORT).show();
         }
@@ -212,7 +210,14 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
 
     @OnClick(R.id.answer_question_button)
     public void onAnswerQuestionButtonClicked() {
-        analysisBottomSheetDialog = new AnalysisBottomSheetDialog(this, treeTypeList, new AnalysisBottomSheetDialog.AnalysisQuestionsCallback() {
+        List<String> diseases = new ArrayList<>();
+        diseases.add("مرض 1");
+        diseases.add("مرض 2");
+        diseases.add("مرض 3");
+        diseases.add("مرض 4");
+        diseases.add("مرض 5");
+        analysisBottomSheetDialog = new AnalysisBottomSheetDialog(this, treeTypeList, diseases
+                , new AnalysisBottomSheetDialog.AnalysisQuestionsCallback() {
             @Override
             public void onDone(QuestionAnalysis questionAnalysis) {
                 selectedRequestViewModel.addAnalysisAnswersToQuestion(requestId, questionAnalysis);

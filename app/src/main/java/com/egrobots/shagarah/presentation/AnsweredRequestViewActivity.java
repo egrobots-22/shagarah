@@ -103,7 +103,7 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
             treeTypeTextView.setText(request.getQuestionAnalysis().getTreeType());
             treeCodeTextView.setText(request.getQuestionAnalysis().getTreeCode());
             treeCategoryTextView.setText(request.getQuestionAnalysis().getTreeCategory());
-            diseasesTextView.setText(request.getQuestionAnalysis().getDiseases());
+            diseasesTextView.setText(request.getQuestionAnalysis().getDiseasesListAsString());
             tasmedTextView.setText(request.getQuestionAnalysis().getTasmeed());
             alrayTextView.setText(request.getQuestionAnalysis().getAlrai());
             operationsTextView.setText(request.getQuestionAnalysis().getOperations());

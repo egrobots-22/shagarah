@@ -1,5 +1,8 @@
 package com.egrobots.shagarah.data.models;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.List;
 import java.util.Random;
 
 public class QuestionAnalysis {
@@ -8,7 +11,7 @@ public class QuestionAnalysis {
     private String treeType;
     private String treeCategory;
     private String treeCode;
-    private String diseases;
+    private List<String> diseasesList;
     private String tasmeed;
     private String alrai;
     private String operations;
@@ -20,7 +23,7 @@ public class QuestionAnalysis {
 
     public QuestionAnalysis(String treeType
             , String treeCategory
-            , String diseases
+            , List<String> diseasesList
             , String tasmeed
             , String alrai
             , String operations
@@ -28,7 +31,7 @@ public class QuestionAnalysis {
         this.treeType = treeType;
         this.treeCategory = treeCategory;
         this.treeCode = String.valueOf(new Random().nextInt(1000000));
-        this.diseases = diseases;
+        this.diseasesList = diseasesList;
         this.tasmeed = tasmeed;
         this.alrai = alrai;
         this.operations = operations;
@@ -67,12 +70,22 @@ public class QuestionAnalysis {
         this.treeCode = treeCode;
     }
 
-    public String getDiseases() {
-        return diseases;
+    public List<String> getDiseasesList() {
+        return diseasesList;
     }
 
-    public void setDiseases(String diseases) {
-        this.diseases = diseases;
+    @Exclude
+    public String getDiseasesListAsString() {
+        StringBuilder diseasesListAsString = new StringBuilder();
+        for (String disease : diseasesList) {
+            diseasesListAsString.append(disease);
+            diseasesListAsString.append(" - ");
+        }
+        return diseasesListAsString.toString();
+    }
+
+    public void setDiseasesList(List<String> diseasesList) {
+        this.diseasesList = diseasesList;
     }
 
     public String getTasmeed() {
