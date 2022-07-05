@@ -20,4 +20,5 @@ public class Constants {
     public static final String IMAGE_FILE_TYPE = ".jpg";
     public static final String UPDATED = "updated";
     public static final String ANALYSIS_NODE = "analysis";
+    public static final String TREE_TYPES_NODE = "types";
 }

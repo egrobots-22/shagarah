@@ -6,7 +6,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -113,7 +112,7 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
         typeAdapter = new ArrayAdapter<String>(context, R.layout.spinner_list_item_layout);
         ArrayList<String> typesList = new ArrayList<>();
         for (TreeType treeType : treeTypeList) {
-            typesList.add(treeType.getType());
+            typesList.add(treeType.getName());
         }
         typeAdapter.addAll(typesList);
         treeTypeListView.setAdapter(typeAdapter);
@@ -151,7 +150,7 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
 
     private void setCategorySpinner(int position) {
         categoryAdapter = new ArrayAdapter<String>(context, R.layout.spinner_list_item_layout);
-        List<String> categoryList = treeTypeList.get(position).getCategory();
+        List<String> categoryList = treeTypeList.get(position).getCats();
         categoryAdapter.addAll(categoryList);
         treeCategoriesListView.setAdapter(categoryAdapter);
         treeCategoriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

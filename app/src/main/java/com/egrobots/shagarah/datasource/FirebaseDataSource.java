@@ -316,7 +316,7 @@ public class FirebaseDataSource {
 
     public Flowable<List<TreeType>> getTreeTypes() {
         return Flowable.create(emitter -> {
-            DatabaseReference treeTypesRef = firebaseDatabase.getReference(Constants.ANALYSIS_NODE).child("treeType");
+            DatabaseReference treeTypesRef = firebaseDatabase.getReference(Constants.ANALYSIS_NODE).child(Constants.TREE_TYPES_NODE);
             treeTypesRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
