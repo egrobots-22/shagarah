@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 public class SearchableList {
 
@@ -28,9 +29,11 @@ public class SearchableList {
     private ArrayAdapter<String> listAdapter;
     private ListView listView;
     private boolean canAddMultipleItems;
+    private boolean canAddOtherValue;
     private EditText searchableEditText;
     private List<String> selectedItemsList = new ArrayList<>();
     private LinearLayout selectedItemsLayout;
+    private LinearLayout otherLayout;
     private SearchableListCallback searchableListCallback;
     private boolean isListVisible;
 
@@ -38,8 +41,10 @@ public class SearchableList {
                              List<String> itemsList,
                              ListView listView,
                              EditText searchableEditText,
-                             Boolean canAddMultipleItems,
+                             boolean canAddMultipleItems,
                              @Nullable LinearLayout selectedItemsLayout,
+                             boolean canAddOtherValue,
+                             LinearLayout otherLayout,
                              @NotNull SearchableListCallback searchableListCallback) {
         this.context = context;
         this.itemsList = itemsList;
@@ -47,28 +52,46 @@ public class SearchableList {
         this.searchableEditText = searchableEditText;
         this.canAddMultipleItems = canAddMultipleItems;
         this.selectedItemsLayout = selectedItemsLayout;
+        this.canAddOtherValue = canAddOtherValue;
+        this.otherLayout = otherLayout;
         this.searchableListCallback = searchableListCallback;
-        listAdapter = new ArrayAdapter<String>(context, R.layout.spinner_list_item_layout);
+
+        listAdapter = new ArrayAdapter<>(context, R.layout.spinner_list_item_layout);
+        if (canAddOtherValue) {
+            itemsList.add(context.getString(R.string.other_string));
+        }
         listAdapter.addAll(itemsList);
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedItem = listAdapter.getItem(position);
-            searchableEditText.setText(selectedItem);
-            if (canAddMultipleItems) {
-                searchableEditText.setText("");
-                if (!isItemExistInList(selectedItem)) {
-                    selectedItemsList.add(selectedItem);
-                    addSelectedItemTextView(selectedItem);
+            if (position == listAdapter.getCount() - 1 && listAdapter.getItem(position).equals(context.getResources().getString(R.string.other_string))) {
+                otherLayout.setVisibility(View.VISIBLE);
+                listView.setVisibility(View.GONE);
+                if (selectedItemsLayout != null) {
+                    selectedItemsLayout.setVisibility(View.GONE);
+                    selectedItemsList.clear();
+                }
+            } else {
+                if (otherLayout!=null) {
+                    otherLayout.setVisibility(View.GONE);
+                    getOtherEditText().setText("");
+                }
+                String selectedItem = listAdapter.getItem(position);
+                searchableEditText.setText(selectedItem);
+                if (canAddMultipleItems) {
+                    searchableEditText.setText("");
+                    if (!isItemExistInList(selectedItem)) {
+                        selectedItemsList.add(selectedItem);
+                        addSelectedItemTextView(selectedItem);
+                    }
+                }
+                listView.setVisibility(View.GONE);
+                listAdapter.getFilter().filter("");
+                if (canAddMultipleItems) {
+                    searchableListCallback.onItemSelected(position, null, selectedItemsList);
+                } else {
+                    searchableListCallback.onItemSelected(position, selectedItem, null);
                 }
             }
-            listView.setVisibility(View.GONE);
-            listAdapter.getFilter().filter("");
-            if (canAddMultipleItems) {
-                searchableListCallback.onItemSelected(position, null, selectedItemsList);
-            } else {
-                searchableListCallback.onItemSelected(position, selectedItem, null);
-            }
-
         });
         searchableEditText.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -127,6 +150,10 @@ public class SearchableList {
 
         layoutParams.setMargins(2, 0, 2, 0);
         selectedItemsLayout.addView(selectedDiseaseTextView, layoutParams);
+    }
+
+    public EditText getOtherEditText() {
+        return otherLayout.findViewById(R.id.other_edit_text);
     }
 
     private void toggleListVisibility() {

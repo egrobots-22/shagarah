@@ -90,9 +90,15 @@ public class QuestionAnalysis {
     public String getAlafatAsString() {
         StringBuilder alafatListAsString = new StringBuilder();
         if (alafat != null) {
+            int i=0;
             for (String disease : alafat) {
-                alafatListAsString.append(disease);
-                alafatListAsString.append(" - ");
+                if (i < alafat.size() - 1) {
+                    alafatListAsString.append(disease);
+                    alafatListAsString.append(" - ");
+                } else {
+                    alafatListAsString.append(disease);
+                }
+                i++;
             }
         }
         return alafatListAsString.toString();
@@ -110,9 +116,15 @@ public class QuestionAnalysis {
     public String getAmarad3odwiaAsString() {
         StringBuilder amrad3odwiaAsString = new StringBuilder();
         if (amrad_3odwia != null) {
+            int i=0;
             for (String disease : amrad_3odwia) {
-                amrad3odwiaAsString.append(disease);
-                amrad3odwiaAsString.append(" - ");
+                if (i < amrad_3odwia.size() - 1) {
+                    amrad3odwiaAsString.append(disease);
+                    amrad3odwiaAsString.append(" - ");
+                } else {
+                    amrad3odwiaAsString.append(disease);
+                }
+                i++;
             }
         }
         return amrad3odwiaAsString.toString();
@@ -130,9 +142,15 @@ public class QuestionAnalysis {
     public String getAmradBikteriaAsString() {
         StringBuilder amradBikteriaAsString = new StringBuilder();
         if (amrad_bikteria != null) {
+            int i = 0;
             for (String disease : amrad_bikteria) {
-                amradBikteriaAsString.append(disease);
-                amradBikteriaAsString.append(" - ");
+                if (i < amrad_bikteria.size() - 1) {
+                    amradBikteriaAsString.append(disease);
+                    amradBikteriaAsString.append(" - ");
+                } else {
+                    amradBikteriaAsString.append(disease);
+                }
+                i++;
             }
         }
         return amradBikteriaAsString.toString();
@@ -150,9 +168,15 @@ public class QuestionAnalysis {
     public String getAmradFetryaAsString() {
         StringBuilder amradFetryaAsString = new StringBuilder();
         if (amrad_fetrya != null) {
+            int i = 0;
             for (String disease : amrad_fetrya) {
-                amradFetryaAsString.append(disease);
-                amradFetryaAsString.append(" - ");
+                if (i < amrad_fetrya.size() - 1) {
+                    amradFetryaAsString.append(disease);
+                    amradFetryaAsString.append(" - ");
+                } else {
+                    amradFetryaAsString.append(disease);
+                }
+                i++;
             }
         }
         return amradFetryaAsString.toString();
@@ -170,9 +194,15 @@ public class QuestionAnalysis {
     public String getAmradVirusesAsString() {
         StringBuilder virusesListAsString = new StringBuilder();
         if (amrad_viruses != null) {
+            int i = 0;
             for (String disease : amrad_viruses) {
-                virusesListAsString.append(disease);
-                virusesListAsString.append(" - ");
+                if (i < amrad_viruses.size() - 1) {
+                    virusesListAsString.append(disease);
+                    virusesListAsString.append(" - ");
+                } else {
+                    virusesListAsString.append(disease);
+                }
+                i++;
             }
         }
         return virusesListAsString.toString();

@@ -243,7 +243,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
     public void onStartNowClicked() {
         initializeCameraX();
         imageNumTextView.setVisibility(View.VISIBLE);
-        imageNumTextView.setText(String.format("صورة رقم: %d", imagesUris.size() + 1));
+        imageNumTextView.setText(String.format("متبقى %d صور", 4));
     }
 
     @OnClick(R.id.capture_button)
@@ -299,6 +299,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
             deleteImageButton.setVisibility(View.GONE);
             //add question as text or voice
             addQuestionView.setVisibility(View.VISIBLE);
+            imageNumTextView.setVisibility(View.GONE);
         } else {
             captureButton.setEnabled(false);
             if (imagesUris.size() > 1) {
@@ -358,7 +359,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
         multipleImagesView.setVisibility(View.GONE);
         captureButton.setEnabled(true);
         captureButton.setImageDrawable(ContextCompat.getDrawable(NewRequestActivity.this, R.drawable.start_record));
-        imageNumTextView.setText(String.format("صورة رقم: %d", imagesUris.size() + 1));
+        imageNumTextView.setText(String.format("متبقى %d صور", 4 - imagesUris.size()));
         isAddingNewImage = true;
     }
 

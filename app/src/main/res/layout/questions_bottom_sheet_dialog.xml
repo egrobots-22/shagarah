@@ -59,6 +59,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tree_type_label" />
 
+<!--            <include-->
+<!--                android:id="@+id/other_type_edit_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:visibility="gone"-->
+<!--                layout="@layout/other_value_selected_layout"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/tree_type_value_edit_text" />-->
+
             <TextView
                 android:id="@+id/tree_category_label"
                 android:layout_width="wrap_content"
@@ -91,6 +102,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tree_category_label" />
 
+            <include
+                android:id="@+id/other_category_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                layout="@layout/other_value_selected_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tree_category_value_edit_text" />
+
             <TextView
                 android:id="@+id/afat_label"
                 android:layout_width="wrap_content"
@@ -98,7 +120,7 @@
                 android:layout_margin="16dp"
                 android:text="الآفات"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tree_category_value_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/other_category_edit_text" />
 
             <EditText
                 android:id="@+id/afat_value_edit_text"
@@ -122,6 +144,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/afat_label" />
 
+            <include
+                android:id="@+id/other_afat_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                layout="@layout/other_value_selected_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/afat_value_edit_text" />
+
             <LinearLayout
                 android:id="@+id/selected_afat_layout"
                 android:layout_width="match_parent"
@@ -133,7 +166,7 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/afat_value_edit_text">
+                app:layout_constraintTop_toBottomOf="@id/other_afat_edit_text">
 
             </LinearLayout>
 
@@ -168,6 +201,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amrad_3odwia_label" />
 
+            <include
+                android:id="@+id/other_3odwia_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                layout="@layout/other_value_selected_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/amrad_3odwia_value_edit_text" />
+
             <LinearLayout
                 android:id="@+id/selected_amrad_3odwia_layout"
                 android:layout_width="match_parent"
@@ -179,7 +223,7 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/amrad_3odwia_value_edit_text">
+                app:layout_constraintTop_toBottomOf="@id/other_3odwia_edit_text">
 
             </LinearLayout>
 
@@ -214,6 +258,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amrad_bikteria_label" />
 
+            <include
+                android:id="@+id/other_bikteria_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                layout="@layout/other_value_selected_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/amrad_bikteria_value_edit_text" />
+
             <LinearLayout
                 android:id="@+id/selected_amrad_bikteria_layout"
                 android:layout_width="match_parent"
@@ -225,7 +280,7 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/amrad_bikteria_value_edit_text">
+                app:layout_constraintTop_toBottomOf="@id/other_bikteria_edit_text">
 
             </LinearLayout>
 
@@ -260,6 +315,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amrad_fetrya_label" />
 
+            <include
+                android:id="@+id/other_fetrya_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                layout="@layout/other_value_selected_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/amrad_fetrya_value_edit_text" />
+
             <LinearLayout
                 android:id="@+id/selected_amrad_fetrya_layout"
                 android:layout_width="match_parent"
@@ -271,7 +337,7 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/amrad_fetrya_value_edit_text">
+                app:layout_constraintTop_toBottomOf="@id/other_fetrya_edit_text">
 
             </LinearLayout>
 
@@ -306,6 +372,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amrad_viruses_label" />
 
+            <include
+                android:id="@+id/other_viruses_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                layout="@layout/other_value_selected_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/amrad_viruses_value_edit_text" />
+
             <LinearLayout
                 android:id="@+id/selected_amrad_viruses_layout"
                 android:layout_width="match_parent"
@@ -317,7 +394,7 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/amrad_viruses_value_edit_text">
+                app:layout_constraintTop_toBottomOf="@id/other_viruses_edit_text">
 
             </LinearLayout>
 
