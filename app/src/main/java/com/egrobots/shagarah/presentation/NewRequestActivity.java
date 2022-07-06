@@ -115,7 +115,6 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
     private Runnable updateEverySecRunnable;
     private int recordedSeconds;
     private Handler handler = new Handler();
-    private ExoPlayerVideoManager exoPlayerManager;
     private int uploadedImageIndex;
     private ProgressDialog progressDialog;
     private LocationManager locationManager;
@@ -324,19 +323,10 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
     public void onDoneClicked() {
         Toast.makeText(this, "images will be uploaded", Toast.LENGTH_SHORT).show();
         progressDialog.show();
-//        uploadImagesToFirebaseStorage();
-        //release exoplayer
-        if (exoPlayerManager != null) {
-            exoPlayerManager.releasePlayer();
-        }
     }
 
     @OnClick(R.id.cancel_button)
     public void onCancelButton() {
-        if (exoPlayerManager != null) {
-            //release exoplayer
-            exoPlayerManager.releasePlayer();
-        }
         recordedSeconds = 0;
         recordedSecondsTV.setVisibility(View.GONE);
         //show camerax view
@@ -465,9 +455,6 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
         if (handler != null) {
             handler.removeCallbacks(updateEverySecRunnable);
         }
-        if (exoPlayerManager != null) {
-            exoPlayerManager.releasePlayer();
-        }
     }
 
     @Override
@@ -476,9 +463,6 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
         if (handler != null) {
             handler.removeCallbacks(updateEverySecRunnable);
         }
-        if (exoPlayerManager != null) {
-            exoPlayerManager.releasePlayer();
-        }
     }
 
     @Override
@@ -486,9 +470,6 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
         super.onPause();
         if (handler != null) {
             handler.removeCallbacks(updateEverySecRunnable);
-        }
-        if (exoPlayerManager != null) {
-            exoPlayerManager.releasePlayer();
         }
     }
 
@@ -524,20 +505,16 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
                         "GPS is disabled in your device. Would you like to enable it?")
                 .setCancelable(false)
                 .setPositiveButton("Goto Settings Page To Enable GPS",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent callGPSSettingIntent = new Intent(
-                                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                startActivity(callGPSSettingIntent);
-                            }
+                        (dialog, id) -> {
+                            Intent callGPSSettingIntent = new Intent(
+                                    android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(callGPSSettingIntent);
                         });
 
         alertDialogBuilder.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        finish();
-                    }
+                (dialog, id) -> {
+                    dialog.cancel();
+                    finish();
                 });
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
