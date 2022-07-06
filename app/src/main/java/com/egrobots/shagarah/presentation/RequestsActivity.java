@@ -66,9 +66,6 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
         ButterKnife.bind(this);
         setTitle(getString(R.string.current_requests));
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        requestsAdapter = new RequestsAdapter(this);
-        requestsRecyclerView.setLayoutManager(new LinearLayoutManager(RequestsActivity.this));
-        requestsRecyclerView.setAdapter(requestsAdapter);
 
         authenticationViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(AuthenticationViewModel.class);
         requestsViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(RequestsViewModel.class);
@@ -91,7 +88,9 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
                 addRequestFab.setVisibility(View.VISIBLE);
                 requestsViewModel.isDataExist(userId);
             }
-
+            requestsAdapter = new RequestsAdapter(isAdmin,this);
+            requestsRecyclerView.setLayoutManager(new LinearLayoutManager(RequestsActivity.this));
+            requestsRecyclerView.setAdapter(requestsAdapter);
             refreshLayout.setOnRefreshListener(() -> {
                 refreshData();
                 refreshLayout.setRefreshing(false);
@@ -186,6 +185,11 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
         intent.putExtra(Constants.DEVICE_TOKEN, request.getToken());
         intent.putExtra(Constants.IS_ADMIN, isAdmin);
         startActivity(intent);
+    }
+
+    @Override
+    public void onAddRating(String requestId, float rating) {
+        requestsViewModel.setAnswerRating(requestId, rating);
     }
 
     @OnClick(R.id.add_request_fab)

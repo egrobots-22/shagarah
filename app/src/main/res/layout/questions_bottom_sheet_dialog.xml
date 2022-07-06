@@ -470,6 +470,7 @@
                 android:visibility="gone"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:nestedScrollingEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tree_type_value_edit_text" />
@@ -485,6 +486,7 @@
                 android:visibility="gone"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:nestedScrollingEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tree_category_value_edit_text" />
@@ -500,6 +502,7 @@
                 android:visibility="gone"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:nestedScrollingEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/afat_value_edit_text" />
@@ -515,6 +518,7 @@
                 android:visibility="gone"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:nestedScrollingEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amrad_3odwia_value_edit_text" />
@@ -530,6 +534,7 @@
                 android:visibility="gone"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:nestedScrollingEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amrad_bikteria_value_edit_text" />
@@ -545,6 +550,7 @@
                 android:visibility="gone"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:nestedScrollingEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amrad_fetrya_value_edit_text" />
@@ -560,6 +566,7 @@
                 android:visibility="gone"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:nestedScrollingEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amrad_viruses_value_edit_text" />

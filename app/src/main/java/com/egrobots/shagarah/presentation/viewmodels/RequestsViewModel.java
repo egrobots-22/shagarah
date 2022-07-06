@@ -83,6 +83,10 @@ public class RequestsViewModel extends ViewModel {
                 });
     }
 
+    public void setAnswerRating(String requestId, float rating) {
+        databaseRepository.setRequestRating(requestId, rating);
+    }
+
     public MediatorLiveData<Request> observeRequests() {
         return requestLiveData;
     }

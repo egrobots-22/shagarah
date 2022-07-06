@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,8 +28,10 @@ public class RequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private List<Request> requestsList = new ArrayList<>();
     private OnRequestClickedCallback onRequestClickedCallback;
+    private boolean isAdmin;
 
-    public RequestsAdapter(OnRequestClickedCallback onRequestClickedCallback) {
+    public RequestsAdapter(boolean isAdmin, OnRequestClickedCallback onRequestClickedCallback) {
+        this.isAdmin = isAdmin;
         this.onRequestClickedCallback = onRequestClickedCallback;
     }
 
@@ -65,6 +68,13 @@ public class RequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((AnsweredRequestViewHolder)holder).treeCategoryTextView.setText(questionAnalysis.getTreeCategory());
             ((AnsweredRequestViewHolder)holder).moreDetailsButton.setOnClickListener(v -> onRequestClickedCallback.onRequestClicked(request));
             ((AnsweredRequestViewHolder)holder).itemView.setOnClickListener(v -> onRequestClickedCallback.onRequestClicked(request));
+            if (!isAdmin) {
+                ((AnsweredRequestViewHolder) holder).ratingLayout.setVisibility(View.VISIBLE);
+                ((AnsweredRequestViewHolder) holder).requestAnswerRating.setRating(questionAnalysis.getRating());
+                ((AnsweredRequestViewHolder) holder).requestAnswerRating.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> onRequestClickedCallback.onAddRating(request.getId(), rating));
+            } else {
+                ((AnsweredRequestViewHolder) holder).ratingLayout.setVisibility(View.GONE);
+            }
             Glide.with(holder.itemView.getContext())
                     .load(request.getImages().get(0).getUrl())
                     .placeholder(R.drawable.shagarah_logo)
@@ -125,6 +135,10 @@ public class RequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         Button moreDetailsButton;
         @BindView(R.id.request_thumbnail_img_view)
         ImageView requestThumbnailImgView;
+        @BindView(R.id.request_answer_rating)
+        RatingBar requestAnswerRating;
+        @BindView(R.id.rating_layout)
+        View ratingLayout;
 
         public AnsweredRequestViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -134,5 +148,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public interface OnRequestClickedCallback {
         void onRequestClicked(Request request);
+
+        void onAddRating(String requestId, float rating);
     }
 }

@@ -66,10 +66,6 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
     TextView operationsTextView;
     @BindView(R.id.althemar_value_text_view)
     TextView althemarTextView;
-    @BindView(R.id.rating_layout)
-    View ratingLayout;
-    @BindView(R.id.request_answer_rating)
-    RatingBar requestAnswerRating;
     @Inject
     ViewModelProviderFactory providerFactory;
     private boolean mapLoaded;
@@ -84,11 +80,11 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
         String requestId = getIntent().getStringExtra(Constants.REQUEST_ID);
         String requestUserId = getIntent().getStringExtra(Constants.REQUEST_USER_ID);
         boolean isAdmin = getIntent().getBooleanExtra(Constants.IS_ADMIN, false);
-        if (isAdmin) {
-            ratingLayout.setVisibility(View.GONE);
-        } else {
-            ratingLayout.setVisibility(View.VISIBLE);
-        }
+//        if (isAdmin) {
+//            ratingLayout.setVisibility(View.GONE);
+//        } else {
+//            ratingLayout.setVisibility(View.VISIBLE);
+//        }
 
         selectedRequestViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(SelectedRequestViewModel.class);
         selectedRequestViewModel.getRequest(requestId);
@@ -125,12 +121,7 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
             alrayTextView.setText(request.getQuestionAnalysis().getAlrai());
             operationsTextView.setText(request.getQuestionAnalysis().getOperations());
             althemarTextView.setText(request.getQuestionAnalysis().getElthemar());
-            requestAnswerRating.setRating(request.getQuestionAnalysis().getRating());
-
-            //add rating for the answer
-            requestAnswerRating.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
-                selectedRequestViewModel.setAnswerRating(request.getId(), rating);
-            });
+//            requestAnswerRating.setRating(request.getQuestionAnalysis().getRating());
         });
     }
 

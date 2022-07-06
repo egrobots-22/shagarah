@@ -25,36 +25,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp">
 
-                    <LinearLayout
-                        android:id="@+id/rating_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:orientation="vertical"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/tree_type_label">
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/rating_layout"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginEnd="16dp"-->
+<!--                        android:orientation="vertical"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/tree_type_label">-->
 
-                            <TextView
-                                android:id="@+id/add_rating_label"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/add_rating_lbl"
-                                android:textColor="@color/colorPrimaryDark"
-                                app:layout_constraintStart_toStartOf="@id/request_answer_rating"
-                                app:layout_constraintTop_toTopOf="@id/tree_type_label" />
+<!--                            <TextView-->
+<!--                                android:id="@+id/add_rating_label"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="@string/add_rating_lbl"-->
+<!--                                android:textColor="@color/colorPrimaryDark"-->
+<!--                                app:layout_constraintStart_toStartOf="@id/request_answer_rating"-->
+<!--                                app:layout_constraintTop_toTopOf="@id/tree_type_label" />-->
 
-                            <RatingBar
-                                android:id="@+id/request_answer_rating"
-                                style="?android:attr/ratingBarStyleSmall"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginEnd="16dp"
-                                android:isIndicator="false"
-                                android:stepSize="1"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/add_rating_label" />
-                    </LinearLayout>
+<!--                            <RatingBar-->
+<!--                                android:id="@+id/request_answer_rating"-->
+<!--                                style="?android:attr/ratingBarStyleSmall"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="8dp"-->
+<!--                                android:layout_marginEnd="16dp"-->
+<!--                                android:isIndicator="false"-->
+<!--                                android:stepSize="1"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                app:layout_constraintTop_toBottomOf="@id/add_rating_label" />-->
+<!--                    </LinearLayout>-->
 
                     <TextView
                         android:id="@+id/tree_type_label"

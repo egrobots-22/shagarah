@@ -55,6 +55,7 @@ public class SearchableList {
             String selectedItem = listAdapter.getItem(position);
             searchableEditText.setText(selectedItem);
             if (canAddMultipleItems) {
+                searchableEditText.setText("");
                 if (!isItemExistInList(selectedItem)) {
                     selectedItemsList.add(selectedItem);
                     addSelectedItemTextView(selectedItem);
