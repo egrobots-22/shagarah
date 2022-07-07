@@ -69,6 +69,7 @@ public class SearchableList {
                 if (selectedItemsLayout != null) {
                     selectedItemsLayout.setVisibility(View.GONE);
                     selectedItemsList.clear();
+                    selectedItemsLayout.removeAllViews();
                 }
             } else {
                 if (otherLayout!=null) {

@@ -5,12 +5,10 @@
             <item>
                 <shape android:shape="rectangle">
                     <!--  Gradient Bg for listrow -->
-                    <corners android:radius="20dp" />
-                    <solid android:color="@color/transparent_gray" />
+                    <solid android:color="@color/white" />
 
                 </shape>
             </item>
-            <item android:drawable="@drawable/ic_arrow_down" android:gravity="center_vertical|end" android:left="16dp" android:right="16dp" />
 
         </layer-list>
     </item>

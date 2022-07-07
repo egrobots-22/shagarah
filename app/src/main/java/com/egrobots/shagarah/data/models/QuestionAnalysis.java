@@ -20,6 +20,7 @@ public class QuestionAnalysis {
     private String alrai;
     private String operations;
     private String elthemar;
+    private String questionAnswer;
     private float rating;
 
     public QuestionAnalysis() {
@@ -35,7 +36,8 @@ public class QuestionAnalysis {
             , String tasmeed
             , String alrai
             , String operations
-            , String elthemar) {
+            , String elthemar
+            , String questionAnswer) {
         this.treeType = treeType;
         this.treeCategory = treeCategory;
         this.treeCode = String.valueOf(new Random().nextInt(1000000));
@@ -48,6 +50,7 @@ public class QuestionAnalysis {
         this.alrai = alrai;
         this.operations = operations;
         this.elthemar = elthemar;
+        this.questionAnswer = questionAnswer;
     }
 
     public String getId() {
@@ -90,7 +93,7 @@ public class QuestionAnalysis {
     public String getAlafatAsString() {
         StringBuilder alafatListAsString = new StringBuilder();
         if (alafat != null) {
-            int i=0;
+            int i = 0;
             for (String disease : alafat) {
                 if (i < alafat.size() - 1) {
                     alafatListAsString.append(disease);
@@ -116,7 +119,7 @@ public class QuestionAnalysis {
     public String getAmarad3odwiaAsString() {
         StringBuilder amrad3odwiaAsString = new StringBuilder();
         if (amrad_3odwia != null) {
-            int i=0;
+            int i = 0;
             for (String disease : amrad_3odwia) {
                 if (i < amrad_3odwia.size() - 1) {
                     amrad3odwiaAsString.append(disease);
@@ -242,6 +245,14 @@ public class QuestionAnalysis {
 
     public void setElthemar(String elthemar) {
         this.elthemar = elthemar;
+    }
+
+    public String getQuestionAnswer() {
+        return questionAnswer;
+    }
+
+    public void setQuestionAnswer(String questionAnswer) {
+        this.questionAnswer = questionAnswer;
     }
 
     public float getRating() {

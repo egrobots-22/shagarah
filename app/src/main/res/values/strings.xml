@@ -37,4 +37,12 @@
     <string name="select_category_hint">اختار الصنف</string>
     <string name="add_afat_hint">أضف الآفات</string>
     <string name="other_string">أخرى</string>
+    <string name="question_answer_string">الرد علي السؤال</string>
+    <string name="add_your_answer_here_hint">اضف اجابتك علي السؤال هنا</string>
+
+    <string-array name="default_options">
+        <item>الحالة جيدة</item>
+        <item>مشكلة بسيطة</item>
+        <item>تحتاج تدخل عاجل</item>
+    </string-array>
 </resources>

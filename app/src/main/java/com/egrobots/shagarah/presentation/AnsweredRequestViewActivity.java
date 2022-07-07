@@ -75,6 +75,8 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
     TextView operationsTextView;
     @BindView(R.id.althemar_value_text_view)
     TextView althemarTextView;
+    @BindView(R.id.question_answer_value_text_view)
+    TextView questionAnswerTextView;
     @Inject
     ViewModelProviderFactory providerFactory;
     private boolean mapLoaded;
@@ -111,6 +113,7 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
                                 .into(ndviImageView);
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Toast.makeText(AnsweredRequestViewActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 },
                 volleyError -> {
@@ -156,6 +159,7 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
             alrayTextView.setText(request.getQuestionAnalysis().getAlrai());
             operationsTextView.setText(request.getQuestionAnalysis().getOperations());
             althemarTextView.setText(request.getQuestionAnalysis().getElthemar());
+            questionAnswerTextView.setText(request.getQuestionAnalysis().getQuestionAnswer());
 //            requestAnswerRating.setRating(request.getQuestionAnalysis().getRating());
         });
     }

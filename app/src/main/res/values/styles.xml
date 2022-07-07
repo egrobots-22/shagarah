@@ -18,4 +18,9 @@
         <item name="android:layoutDirection">rtl</item>
     </style>
 
+    <style name="ItemTextAppearance">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

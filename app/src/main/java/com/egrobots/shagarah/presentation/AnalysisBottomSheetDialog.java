@@ -2,6 +2,7 @@ package com.egrobots.shagarah.presentation;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatSpinner;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,8 +34,8 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
     ListView treeTypeListView;
     @BindView(R.id.tree_type_value_edit_text)
     EditText treeTypeEditText;
-//    @BindView(R.id.other_type_edit_text)
-//    LinearLayout otherTypeLayout;
+    @BindView(R.id.question_answer_edit_text)
+    EditText questionAnswerEditText;
 
     @BindView(R.id.tree_category_list_view)
     ListView treeCategoriesListView;
@@ -87,17 +89,21 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
     @BindView(R.id.other_viruses_edit_text)
     LinearLayout otherVirusesLayout;
 
-    @BindView(R.id.tasmed_value_edit_text)
-    EditText tasmedEditText;
-    @BindView(R.id.alray_value_edit_text)
-    EditText alrayEditText;
-    @BindView(R.id.operations_value_edit_text)
-    EditText operationsEditText;
-    @BindView(R.id.althemar_value_edit_text)
-    EditText althemarEditText;
+    @BindView(R.id.tasmed_spinner)
+    AppCompatSpinner tasmedSpinner;
+    @BindView(R.id.alray_spinner)
+    AppCompatSpinner alraySpinner;
+    @BindView(R.id.operations_spinner)
+    AppCompatSpinner operationsSpinner;
+    @BindView(R.id.althemar_spinner)
+    AppCompatSpinner althemarSpinner;
 
     private String selectedTreeType = "";
     private String selectedCategory = "";
+    private String selectedTasmedValue = "";
+    private String selectedAlrayValue = "";
+    private String selectedOperationsValue = "";
+    private String selectedThemarValue = "";
     private List<String> selectedAfat = new ArrayList<>();
     private List<String> selectedAmrad3odwia = new ArrayList<>();
     private List<String> selectedAmraBikteria = new ArrayList<>();
@@ -122,6 +128,7 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
         behavior.setDraggable(false);
         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         setTreeTypesSpinner();
+        setOtherEntriesValues();
     }
 
     private void setTreeTypesSpinner() {
@@ -220,37 +227,82 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
                 (selectedPosition, selectedItem, selectedItemsList) -> selectedAmradViruses = selectedItemsList);
     }
 
+    private void setOtherEntriesValues() {
+        tasmedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedTasmedValue = tasmedSpinner.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedTasmedValue = "";
+            }
+        });
+        alraySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedAlrayValue = alraySpinner.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedAlrayValue = "";
+            }
+        });
+        operationsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedOperationsValue = operationsSpinner.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedOperationsValue = "";
+            }
+        });
+        althemarSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedThemarValue = althemarSpinner.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedThemarValue = "";
+            }
+        });
+    }
+
     @OnClick(R.id.done_button)
     public void onDoneClicked() {
-        String diseases = afatEditText.getText().toString();
-        String tasmed = tasmedEditText.getText().toString();
-        String alray = alrayEditText.getText().toString();
-        String operations = operationsEditText.getText().toString();
-        String althemar = althemarEditText.getText().toString();
+        String questionAnswer = questionAnswerEditText.getText().toString();
 
-        if (!categoriesSearchableList.getOtherEditText().getText().toString().isEmpty())
+        if (categoriesSearchableList !=null && !categoriesSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedCategory = categoriesSearchableList.getOtherEditText().getText().toString();
-        if (!afatSearchableList.getOtherEditText().getText().toString().isEmpty())
+        if (afatSearchableList != null && !afatSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedAfat.add(afatSearchableList.getOtherEditText().getText().toString());
-        if (!amrad3odwiaSearchableList.getOtherEditText().getText().toString().isEmpty())
+        if (amrad3odwiaSearchableList != null && !amrad3odwiaSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedAmrad3odwia.add(amrad3odwiaSearchableList.getOtherEditText().getText().toString());
-        if (!amradBikteriaSearchableList.getOtherEditText().getText().toString().isEmpty())
+        if (amradBikteriaSearchableList != null && !amradBikteriaSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedAmraBikteria.add(amradBikteriaSearchableList.getOtherEditText().getText().toString());
-        if (!amradVirusesSearchableList.getOtherEditText().getText().toString().isEmpty())
+        if (amradVirusesSearchableList != null && !amradVirusesSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedAmradViruses.add(amradVirusesSearchableList.getOtherEditText().getText().toString());
-        if (!amradFetryaSearchableList.getOtherEditText().getText().toString().isEmpty())
+        if (amradFetryaSearchableList != null && !amradFetryaSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedAmradFetrya.add(amradFetryaSearchableList.getOtherEditText().getText().toString());
 
         if (selectedTreeType.isEmpty() || selectedCategory.isEmpty()
                 || selectedAfat.isEmpty() || selectedAmrad3odwia.isEmpty()
                 || selectedAmraBikteria.isEmpty() || selectedAmradViruses.isEmpty() || selectedAmradFetrya.isEmpty()
-                || tasmed.isEmpty() || alray.isEmpty() || operations.isEmpty()
-                || althemar.isEmpty()) {
+                || selectedTasmedValue.isEmpty() || selectedAlrayValue.isEmpty() || selectedOperationsValue.isEmpty()
+                || selectedThemarValue.isEmpty()) {
             analysisQuestionsCallback.onError(context.getString(R.string.all_questions_required_msg));
         } else {
             QuestionAnalysis questionAnalysis = new QuestionAnalysis(selectedTreeType, selectedCategory
                     , selectedAfat, selectedAmrad3odwia, selectedAmraBikteria
-                    , selectedAmradFetrya, selectedAmradViruses, tasmed, alray, operations, althemar);
+                    , selectedAmradFetrya, selectedAmradViruses
+                    , selectedTasmedValue, selectedAlrayValue
+                    , selectedOperationsValue, selectedThemarValue, questionAnswer);
             analysisQuestionsCallback.onDone(questionAnalysis);
         }
     }
