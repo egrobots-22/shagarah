@@ -4,11 +4,16 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.RatingBar;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.egrobots.shagarah.R;
 import com.egrobots.shagarah.presentation.helpers.ViewModelProviderFactory;
 import com.egrobots.shagarah.presentation.viewmodels.SelectedRequestViewModel;
@@ -20,6 +25,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.inject.Inject;
 
@@ -37,9 +45,10 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
 
     private LatLng imageLocation;
     private SelectedRequestViewModel selectedRequestViewModel;
-
     @BindView(R.id.map_view)
     MapView mapView;
+    @BindView(R.id.nvdi_index_image_view)
+    ImageView ndviImageView;
     @BindView(R.id.tree_type_value_text_view)
     TextView treeTypeTextView;
     @BindView(R.id.tree_code_value_text_view)
@@ -80,16 +89,41 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
         String requestId = getIntent().getStringExtra(Constants.REQUEST_ID);
         String requestUserId = getIntent().getStringExtra(Constants.REQUEST_USER_ID);
         boolean isAdmin = getIntent().getBooleanExtra(Constants.IS_ADMIN, false);
-//        if (isAdmin) {
-//            ratingLayout.setVisibility(View.GONE);
-//        } else {
-//            ratingLayout.setVisibility(View.VISIBLE);
-//        }
-
         selectedRequestViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(SelectedRequestViewModel.class);
         selectedRequestViewModel.getRequest(requestId);
         observeRequest(savedInstanceState);
         observeError();
+    }
+
+    private void sendVaginationRequest(double latitude, double longitude) {
+        String myUrl = "http://34.66.122.93/ndvi?lon="+longitude+"&lat=" + latitude;
+        StringRequest myRequest = new StringRequest(Request.Method.GET, myUrl,
+                response -> {
+                    try{
+                        //Create a JSON object containing information from the API.
+                         JSONObject myJsonObject = new JSONObject(response);
+                        String NDVI = myJsonObject.get("NDVI").toString();
+                        Toast.makeText(AnsweredRequestViewActivity.this, NDVI, Toast.LENGTH_SHORT).show();
+                        Log.i("Volley Response", "sendVaginationRequest: " + response);
+                        Glide.with(AnsweredRequestViewActivity.this)
+                                .load(NDVI)
+                                .placeholder(R.drawable.shagarah_logo)
+                                .into(ndviImageView);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                volleyError -> {
+                    Toast.makeText(AnsweredRequestViewActivity.this, volleyError.getMessage()!=null ? volleyError.getMessage() : "Can't connect to ther server", Toast.LENGTH_SHORT).show();
+                    Glide.with(AnsweredRequestViewActivity.this)
+                            .load("")
+                            .placeholder(R.drawable.shagarah_logo)
+                            .into(ndviImageView);
+                }
+        );
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(myRequest);
+
     }
 
     private void observeRequest(Bundle savedInstanceState) {
@@ -105,6 +139,7 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
             } else {
                 ActivityCompat.requestPermissions(AnsweredRequestViewActivity.this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
             }
+            sendVaginationRequest(latitude, longitude);
             //set question answers
             treeTypeTextView.setText(request.getQuestionAnalysis().getTreeType());
             treeCodeTextView.setText(request.getQuestionAnalysis().getTreeCode());

@@ -1,60 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".presentation.NotAnsweredRequestViewActivity">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:weightSum="12"
     tools:context=".presentation.NotAnsweredRequestViewActivity">
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/map_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="الموقع"
+        android:layout_margin="16dp"/>
 
-    <ScrollView
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
-        android:layout_marginBottom="16dp"
-        android:background="@color/white">
+        android:layout_height="400dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NVDI Index"
+        android:layout_margin="16dp"/>
+
+    <ImageView
+        android:id="@+id/nvdi_index_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp">
-
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/rating_layout"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="16dp"-->
-<!--                        android:orientation="vertical"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="@id/tree_type_label">-->
-
-<!--                            <TextView-->
-<!--                                android:id="@+id/add_rating_label"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="@string/add_rating_lbl"-->
-<!--                                android:textColor="@color/colorPrimaryDark"-->
-<!--                                app:layout_constraintStart_toStartOf="@id/request_answer_rating"-->
-<!--                                app:layout_constraintTop_toTopOf="@id/tree_type_label" />-->
-
-<!--                            <RatingBar-->
-<!--                                android:id="@+id/request_answer_rating"-->
-<!--                                style="?android:attr/ratingBarStyleSmall"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_marginTop="8dp"-->
-<!--                                android:layout_marginEnd="16dp"-->
-<!--                                android:isIndicator="false"-->
-<!--                                android:stepSize="1"-->
-<!--                                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                                app:layout_constraintTop_toBottomOf="@id/add_rating_label" />-->
-<!--                    </LinearLayout>-->
 
                     <TextView
                         android:id="@+id/tree_type_label"
@@ -310,5 +293,5 @@
                         app:layout_constraintTop_toBottomOf="@id/althemar_label" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 </LinearLayout>
+</ScrollView>

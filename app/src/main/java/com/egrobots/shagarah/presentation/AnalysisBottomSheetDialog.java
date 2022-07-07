@@ -119,20 +119,8 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
 
         FrameLayout bottomSheet = findViewById(R.id.design_bottom_sheet);
         BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
+        behavior.setDraggable(false);
         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_DRAGGING) {
-                    behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-            }
-        });
-
         setTreeTypesSpinner();
     }
 
@@ -242,15 +230,15 @@ public class AnalysisBottomSheetDialog extends BottomSheetDialog {
 
         if (!categoriesSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedCategory = categoriesSearchableList.getOtherEditText().getText().toString();
-        if(!afatSearchableList.getOtherEditText().getText().toString().isEmpty())
+        if (!afatSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedAfat.add(afatSearchableList.getOtherEditText().getText().toString());
-        if(!amrad3odwiaSearchableList.getOtherEditText().getText().toString().isEmpty())
+        if (!amrad3odwiaSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedAmrad3odwia.add(amrad3odwiaSearchableList.getOtherEditText().getText().toString());
-        if(!amradBikteriaSearchableList.getOtherEditText().getText().toString().isEmpty())
+        if (!amradBikteriaSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedAmraBikteria.add(amradBikteriaSearchableList.getOtherEditText().getText().toString());
-        if(!amradVirusesSearchableList.getOtherEditText().getText().toString().isEmpty())
+        if (!amradVirusesSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedAmradViruses.add(amradVirusesSearchableList.getOtherEditText().getText().toString());
-        if(!amradFetryaSearchableList.getOtherEditText().getText().toString().isEmpty())
+        if (!amradFetryaSearchableList.getOtherEditText().getText().toString().isEmpty())
             selectedAmradFetrya.add(amradFetryaSearchableList.getOtherEditText().getText().toString());
 
         if (selectedTreeType.isEmpty() || selectedCategory.isEmpty()
