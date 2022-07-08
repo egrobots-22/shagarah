@@ -22,7 +22,7 @@
                 <com.google.android.gms.maps.MapView
                     android:id="@+id/map_view"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp" />
+                    android:layout_height="300dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -30,10 +30,52 @@
                     android:layout_margin="16dp"
                     android:text="NVDI Index" />
 
-                <ImageView
-                    android:id="@+id/nvdi_index_image_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp" />
+            <ImageView
+                android:id="@+id/nvdi_index_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="NDWI Index" />
+
+            <ImageView
+                android:id="@+id/ndwi_index_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="حالة الطقس" />
+
+            <LinearLayout
+                android:id="@+id/weather_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/cornered_gray_bg_small_radius">
+
+                <TextView
+                    android:id="@+id/temp_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="درجة الحرارة : " />
+
+                <TextView
+                    android:id="@+id/humidity_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="الرطوبة : " />
+
+            </LinearLayout>
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

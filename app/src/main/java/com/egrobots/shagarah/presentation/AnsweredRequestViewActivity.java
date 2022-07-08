@@ -2,6 +2,7 @@ package com.egrobots.shagarah.presentation;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +50,12 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
     MapView mapView;
     @BindView(R.id.nvdi_index_image_view)
     ImageView ndviImageView;
+    @BindView(R.id.ndwi_index_image_view)
+    ImageView ndwiImageView;
+    @BindView(R.id.temp_text_view)
+    TextView tempTextView;
+    @BindView(R.id.humidity_text_view)
+    TextView humidityTextView;
     @BindView(R.id.tree_type_value_text_view)
     TextView treeTypeTextView;
     @BindView(R.id.tree_code_value_text_view)
@@ -97,7 +104,7 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
         observeError();
     }
 
-    private void sendVaginationRequest(double latitude, double longitude) {
+    private void getNDVIindex(double latitude, double longitude) {
         String myUrl = "http://34.66.122.93/ndvi?lon="+longitude+"&lat=" + latitude;
         StringRequest myRequest = new StringRequest(Request.Method.GET, myUrl,
                 response -> {
@@ -106,7 +113,7 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
                          JSONObject myJsonObject = new JSONObject(response);
                         String NDVI = myJsonObject.get("NDVI").toString();
                         Toast.makeText(AnsweredRequestViewActivity.this, NDVI, Toast.LENGTH_SHORT).show();
-                        Log.i("Volley Response", "sendVaginationRequest: " + response);
+                        Log.i("Volley Response", "get NDVI index: " + response);
                         Glide.with(AnsweredRequestViewActivity.this)
                                 .load(NDVI)
                                 .placeholder(R.drawable.shagarah_logo)
@@ -129,6 +136,70 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
 
     }
 
+    private void getNDWIindex(double latitude, double longitude) {
+        String myUrl = "http://34.66.122.93/ndwi?lon="+longitude+"&lat=" + latitude;
+        StringRequest myRequest = new StringRequest(Request.Method.GET, myUrl,
+                response -> {
+                    try{
+                        //Create a JSON object containing information from the API.
+                        JSONObject myJsonObject = new JSONObject(response);
+                        String NDWI = myJsonObject.get("NDWI").toString();
+                        Toast.makeText(AnsweredRequestViewActivity.this, NDWI, Toast.LENGTH_SHORT).show();
+                        Log.i("Volley Response", "get NDWI index: " + response);
+
+//                        TiffBitmapFactory.Options options = new TiffBitmapFactory.Options();
+//                        Bitmap bmp = TiffBitmapFactory.decodeFile(new File(NDWI), options);
+
+                        Glide.with(AnsweredRequestViewActivity.this)
+                                .load(NDWI)
+                                .placeholder(R.drawable.shagarah_logo)
+                                .into(ndwiImageView);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(AnsweredRequestViewActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                },
+                volleyError -> {
+                    Toast.makeText(AnsweredRequestViewActivity.this, volleyError.getMessage()!=null ? volleyError.getMessage() : "Can't connect to ther server", Toast.LENGTH_SHORT).show();
+                    Glide.with(AnsweredRequestViewActivity.this)
+                            .load("")
+                            .placeholder(R.drawable.shagarah_logo)
+                            .into(ndviImageView);
+                }
+        );
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(myRequest);
+
+    }
+
+    private void getWeather(double latitude, double longitude) {
+        String myUrl = "http://34.66.122.93/weather?lon="+longitude+"&lat=" + latitude;
+        StringRequest myRequest = new StringRequest(Request.Method.GET, myUrl,
+                response -> {
+                    try{
+                        //Create a JSON object containing information from the API.
+                        JSONObject myJsonObject = new JSONObject(response);
+                        JSONObject mainJsonObject = myJsonObject.getJSONObject("main");
+                        String temp = mainJsonObject.getString("temp");
+                        String humidity = mainJsonObject.getString("humidity");
+
+                        tempTextView.setText("درجة الحرارة : " + temp);
+                        humidityTextView.setText("الرطوبة : " + humidity);
+                        Toast.makeText(AnsweredRequestViewActivity.this, temp + ", " + humidity, Toast.LENGTH_SHORT).show();
+                        Log.i("Volley Response", "get weather: " + response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(AnsweredRequestViewActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                },
+                volleyError -> {
+                    Toast.makeText(AnsweredRequestViewActivity.this, volleyError.getMessage()!=null ? volleyError.getMessage() : "Can't connect to ther server", Toast.LENGTH_SHORT).show();
+                }
+        );
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(myRequest);
+    }
+
     private void observeRequest(Bundle savedInstanceState) {
         selectedRequestViewModel.observeRequest().observe(this, request -> {
             //set location
@@ -142,7 +213,9 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
             } else {
                 ActivityCompat.requestPermissions(AnsweredRequestViewActivity.this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
             }
-            sendVaginationRequest(latitude, longitude);
+            getNDVIindex(latitude, longitude);
+            getWeather(latitude, longitude);
+            getNDWIindex(latitude, longitude);
             //set question answers
             treeTypeTextView.setText(request.getQuestionAnalysis().getTreeType());
             treeCodeTextView.setText(request.getQuestionAnalysis().getTreeCode());
