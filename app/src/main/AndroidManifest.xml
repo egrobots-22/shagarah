@@ -44,6 +44,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCl3bkgKdTSlFffRNUVsgVkkwcr09EsXp0" />
 
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ica" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

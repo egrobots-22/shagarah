@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -11,18 +12,30 @@ import android.util.Log;
 import android.util.Rational;
 import android.util.Size;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.label.ImageLabel;
+import com.google.mlkit.vision.label.ImageLabeler;
+import com.google.mlkit.vision.label.ImageLabeling;
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 import androidx.annotation.NonNull;
 import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
+import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.core.UseCaseGroup;
 import androidx.camera.core.ViewPort;
+import androidx.camera.core.impl.ImageAnalysisConfig;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.video.MediaStoreOutputOptions;
 import androidx.camera.video.PendingRecording;
@@ -101,6 +114,26 @@ public class CameraXRecorder {
         useCaseGroupBuilder.addUseCase(preview);
         useCaseGroupBuilder.addUseCase(imageCapture);
 
+//        ImageAnalysis imageAnalysis =
+//                new ImageAnalysis.Builder()
+//                        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+//                        .build();
+//
+//        imageAnalysis.setAnalyzer(getExecutor(), new ImageAnalysis.Analyzer() {
+//            @Override
+//            public void analyze(@NonNull ImageProxy imageProxy) {
+//                int rotationDegrees = imageProxy.getImageInfo().getRotationDegrees();
+//                Image mediaImage = imageProxy.getImage();
+//                if (mediaImage != null) {
+//                    InputImage image = InputImage.fromMediaImage(mediaImage, rotationDegrees);
+//                    // Pass image to an ML Kit Vision API
+//                    // ...
+//                }
+//            }
+//        });
+
+//        useCaseGroupBuilder.addUseCase(imageAnalysis);
+
         //bind to lifecycle:
         cameraProvider.bindToLifecycle((LifecycleOwner) context, cameraSelector, useCaseGroupBuilder.build());
     }
@@ -125,7 +158,32 @@ public class CameraXRecorder {
                         public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                             Uri imageUri = outputFileResults.getSavedUri();
                             recordingAudio = true;
-                            cameraXCallback.onCaptureImage(imageUri);
+//                            cameraXCallback.onCaptureImage(imageUri);
+
+                            InputImage image;
+                            try {
+                                image = InputImage.fromFilePath(context, imageUri);
+                                ImageLabeler labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
+                                labeler.process(image)
+                                        .addOnSuccessListener(labels -> {
+                                            boolean isPlanet = false;
+                                            for (ImageLabel label : labels) {
+                                                String text = label.getText();
+                                                float confidence = label.getConfidence();
+                                                int index = label.getIndex();
+                                                if (text.contains("Plant")) {
+                                                    isPlanet = true;
+                                                    break;
+                                                }
+                                            }
+                                            cameraXCallback.onCaptureImage(imageUri, isPlanet);
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            cameraXCallback.onCaptureImage(null, false);
+                                        });
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         @Override
@@ -208,7 +266,7 @@ public class CameraXRecorder {
 
         void onError(String error);
 
-        void onCaptureImage(Uri imageUri);
+        void onCaptureImage(Uri imageUri, boolean isPlanet);
 
         void onStartRecordingAudio();
 

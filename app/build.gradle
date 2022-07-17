@@ -48,6 +48,7 @@ dependencies {
 
     //google maps
     // implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-mlkit-image-labeling:16.0.7'
 
     def camerax_version = "1.1.0-beta01"
     implementation "androidx.camera:camera-core:${camerax_version}"

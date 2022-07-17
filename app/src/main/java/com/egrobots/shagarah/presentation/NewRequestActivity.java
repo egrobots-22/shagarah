@@ -138,6 +138,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
         ButterKnife.bind(this);
         guideDialog.show(getSupportFragmentManager(), null);
         progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
         progressDialog.setTitle(getString(R.string.uploading));
         registerClickListenersForPrevNextButtons();
         initializeImageSwitcher();
@@ -281,41 +282,50 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
     }
 
     @Override
-    public void onCaptureImage(Uri imageUri) {
-        isAddingNewImage = false;
-        previewView.setVisibility(View.GONE);
-        multipleImagesView.setVisibility(View.VISIBLE);
-        addImageButton.setVisibility(View.VISIBLE);
-        imagesUris.add(imageUri);
-        selectedImagePosition = imagesUris.size() - 1;
-        imageSwitcher.setImageURI(imagesUris.get(selectedImagePosition));
+    public void onCaptureImage(Uri imageUri, boolean isPlanet) {
+        if (isPlanet) {
+            Toast.makeText(this, "الصورة تحتوي علي أشجار", Toast.LENGTH_SHORT).show();
+            isAddingNewImage = false;
+            previewView.setVisibility(View.GONE);
+            multipleImagesView.setVisibility(View.VISIBLE);
+            addImageButton.setVisibility(View.VISIBLE);
+            imagesUris.add(imageUri);
+            selectedImagePosition = imagesUris.size() - 1;
+            imageSwitcher.setImageURI(imagesUris.get(selectedImagePosition));
 
-        //if user capture images from 4 angles, change icon to record audio
-        if (imagesUris.size() == 4) {
-            //hide record button
-            captureButton.setVisibility(View.GONE);
-            //hide add/delete images
-            addImageButton.setVisibility(View.GONE);
-            deleteImageButton.setVisibility(View.GONE);
-            //add question as text or voice
-            addQuestionView.setVisibility(View.VISIBLE);
-            imageNumTextView.setVisibility(View.GONE);
-        } else {
-            captureButton.setEnabled(false);
-            if (imagesUris.size() > 1) {
-                deleteImageButton.setVisibility(View.VISIBLE);
-            } else {
+            //if user capture images from 4 angles, change icon to record audio
+            if (imagesUris.size() == 4) {
+                //hide record button
+                captureButton.setVisibility(View.GONE);
+                //hide add/delete images
+                addImageButton.setVisibility(View.GONE);
                 deleteImageButton.setVisibility(View.GONE);
-                prevImageButton.setVisibility(View.GONE);
-                return;
-            }
+                //add question as text or voice
+                addQuestionView.setVisibility(View.VISIBLE);
+                imageNumTextView.setVisibility(View.GONE);
+            } else {
+                captureButton.setEnabled(false);
+                if (imagesUris.size() > 1) {
+                    deleteImageButton.setVisibility(View.VISIBLE);
+                } else {
+                    deleteImageButton.setVisibility(View.GONE);
+                    prevImageButton.setVisibility(View.GONE);
+                    return;
+                }
 
-            if (selectedImagePosition == 0) {
-                nextImageButton.setVisibility(View.VISIBLE);
-                prevImageButton.setVisibility(View.GONE);
-            } else if (selectedImagePosition == imagesUris.size() - 1) {
-                nextImageButton.setVisibility(View.GONE);
-                prevImageButton.setVisibility(View.VISIBLE);
+                if (selectedImagePosition == 0) {
+                    nextImageButton.setVisibility(View.VISIBLE);
+                    prevImageButton.setVisibility(View.GONE);
+                } else if (selectedImagePosition == imagesUris.size() - 1) {
+                    nextImageButton.setVisibility(View.GONE);
+                    prevImageButton.setVisibility(View.VISIBLE);
+                }
+            }
+        } else {
+            if (imageUri == null) {
+                Toast.makeText(this, "لم يتم التعرف علي محتوى الصورة", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "الصورة التي تم التقاطها لا تحتوي علي أشجار", Toast.LENGTH_SHORT).show();
             }
         }
     }
