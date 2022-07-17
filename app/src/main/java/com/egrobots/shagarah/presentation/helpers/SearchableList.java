@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 public class SearchableList {
 
@@ -58,6 +57,9 @@ public class SearchableList {
 
         listAdapter = new ArrayAdapter<>(context, R.layout.spinner_list_item_layout);
         if (canAddOtherValue) {
+            if (itemsList == null) {
+                itemsList = new ArrayList<>();
+            }
             itemsList.add(context.getString(R.string.other_string));
         }
         listAdapter.addAll(itemsList);
@@ -72,7 +74,7 @@ public class SearchableList {
                     selectedItemsLayout.removeAllViews();
                 }
             } else {
-                if (otherLayout!=null) {
+                if (otherLayout != null) {
                     otherLayout.setVisibility(View.GONE);
                     getOtherEditText().setText("");
                 }

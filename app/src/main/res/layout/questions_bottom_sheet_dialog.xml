@@ -579,7 +579,7 @@
                 android:elevation="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tree_type_value_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/tree_type_value_edit_text" />
 
             <ListView
                 android:id="@+id/tree_category_list_view"
@@ -596,7 +596,7 @@
                 android:elevation="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tree_category_value_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/tree_category_value_edit_text" />
 
             <ListView
                 android:id="@+id/afat_list_view"
@@ -613,7 +613,7 @@
                 android:elevation="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/afat_value_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/afat_value_edit_text" />
 
             <ListView
                 android:id="@+id/amrad_3odwia_list_view"
@@ -630,7 +630,7 @@
                 android:elevation="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/amrad_3odwia_value_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/amrad_3odwia_value_edit_text" />
 
             <ListView
                 android:id="@+id/amrad_bikteria_list_view"
@@ -647,7 +647,7 @@
                 android:elevation="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/amrad_bikteria_value_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/amrad_bikteria_value_edit_text" />
 
             <ListView
                 android:id="@+id/amrad_fetrya_list_view"
@@ -664,7 +664,7 @@
                 android:elevation="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/amrad_fetrya_value_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/amrad_fetrya_value_edit_text" />
 
             <ListView
                 android:id="@+id/amrad_viruses_list_view"
@@ -681,7 +681,7 @@
                 android:elevation="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/amrad_viruses_value_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/amrad_viruses_value_edit_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
