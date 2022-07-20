@@ -215,7 +215,7 @@ public class NewRequestActivity extends DaggerAppCompatActivity implements Guide
                 newRequestViewModel.uploadImageToFirebaseStorage(imageUri);
             } else {
                 //send request
-                newRequestViewModel.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, questionText);
+                newRequestViewModel.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, questionText, "", "");
             }
         });
     }

@@ -147,9 +147,6 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
                         Toast.makeText(AnsweredRequestViewActivity.this, NDWI, Toast.LENGTH_SHORT).show();
                         Log.i("Volley Response", "get NDWI index: " + response);
 
-//                        TiffBitmapFactory.Options options = new TiffBitmapFactory.Options();
-//                        Bitmap bmp = TiffBitmapFactory.decodeFile(new File(NDWI), options);
-
                         Glide.with(AnsweredRequestViewActivity.this)
                                 .load(NDWI)
                                 .placeholder(R.drawable.shagarah_logo)

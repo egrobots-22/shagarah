@@ -21,4 +21,5 @@ public class Constants {
     public static final String UPDATED = "updated";
     public static final String ANALYSIS_NODE = "analysis";
     public static final String TREE_TYPES_NODE = "types";
+    public static final String IMAGES = "images";
 }

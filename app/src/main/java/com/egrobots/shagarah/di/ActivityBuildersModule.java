@@ -7,13 +7,14 @@ import com.egrobots.shagarah.di.requests.NewRequestViewModelModule;
 import com.egrobots.shagarah.di.requests.RequestsViewModelModule;
 import com.egrobots.shagarah.di.requests.SelectedRequestViewModelModule;
 import com.egrobots.shagarah.presentation.AnsweredRequestViewActivity;
+import com.egrobots.shagarah.presentation.CapturingImagesActivity;
 import com.egrobots.shagarah.presentation.NewRequestActivity;
 import com.egrobots.shagarah.presentation.NotAnsweredRequestViewActivity;
 import com.egrobots.shagarah.presentation.RequestsActivity;
+import com.egrobots.shagarah.presentation.ReviewRequestActivity;
 import com.egrobots.shagarah.presentation.SignInActivity;
 import com.egrobots.shagarah.presentation.SignUpActivity;
 import com.egrobots.shagarah.presentation.SplashActivity;
-import com.egrobots.shagarah.presentation.viewmodels.AuthenticationViewModel;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -41,4 +42,10 @@ public abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(modules = NewRequestViewModelModule.class)
     abstract NewRequestActivity contributeNewRequestViewActivity();
+
+    @ContributesAndroidInjector(modules = NewRequestViewModelModule.class)
+    abstract CapturingImagesActivity contributeNewRequestViewActivityNew();
+
+    @ContributesAndroidInjector(modules = NewRequestViewModelModule.class)
+    abstract ReviewRequestActivity contributeReviewRequestActivity();
 }

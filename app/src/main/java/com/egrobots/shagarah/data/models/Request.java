@@ -20,6 +20,8 @@ public class Request {
     private long timestampToOrder;
     private String audioQuestion;
     private String textQuestion;
+    private String type;
+    private String cat;
     private QuestionAnalysis questionAnalysis;
     private String flag;
 
@@ -119,6 +121,22 @@ public class Request {
 
     public void setTextQuestion(String textQuestion) {
         this.textQuestion = textQuestion;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCat() {
+        return cat;
+    }
+
+    public void setCat(String cat) {
+        this.cat = cat;
     }
 
     public QuestionAnalysis getQuestionAnalysis() {

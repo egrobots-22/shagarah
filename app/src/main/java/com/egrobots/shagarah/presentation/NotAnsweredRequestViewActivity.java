@@ -45,6 +45,10 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
     TextView timestampTextView;
     @BindView(R.id.request_question_value_text_view)
     TextView requestQuestionTextView;
+    @BindView(R.id.type_text_view)
+    TextView typeTextView;
+    @BindView(R.id.cat_text_view)
+    TextView catTextView;
     @BindView(R.id.play_audio_item_layout)
     View audioQuestionView;
     @BindView(R.id.playButton)
@@ -118,6 +122,8 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
                 requestStatusTextView.setText(request.getShownStatus());
                 timestampTextView.setText(request.getFormattedDate());
                 requestQuestionTextView.setText(request.getTextQuestion().isEmpty() ? getString(R.string.no_current_text_question) : request.getTextQuestion());
+                typeTextView.setText(request.getType());
+                catTextView.setText(request.getCat());
                 if (request.getAudioQuestion() == null || request.getAudioQuestion().isEmpty()) {
                     audioQuestionView.setVisibility(View.GONE);
                 } else {

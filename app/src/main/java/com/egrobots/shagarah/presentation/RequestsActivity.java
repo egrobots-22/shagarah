@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -194,7 +195,7 @@ public class RequestsActivity extends DaggerAppCompatActivity implements Request
 
     @OnClick(R.id.add_request_fab)
     public void onAddRequestClicked() {
-        Intent intent = new Intent(this, NewRequestActivity.class);
+        Intent intent = new Intent(this, CapturingImagesActivity.class);
         intent.putExtra(Constants.DEVICE_TOKEN, currentUser.getToken());
         startActivity(intent);
     }

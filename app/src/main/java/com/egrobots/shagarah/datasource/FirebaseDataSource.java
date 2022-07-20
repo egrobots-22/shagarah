@@ -265,7 +265,9 @@ public class FirebaseDataSource {
             , String token
             , List<Image> uploadedImagesUris
             , String audioUrl
-            , String questionText
+            , String problemDesc
+            , String type
+            , String cat
             , SingleEmitter<Boolean> emitter) {
         DatabaseReference requestsRef = firebaseDatabase.getReference(Constants.REQUESTS_NODE);
         Request request = new Request();
@@ -276,7 +278,9 @@ public class FirebaseDataSource {
         request.setImages(uploadedImagesUris);
         request.setStatus(Request.RequestStatus.IN_PROGRESS.value);
         request.setAudioQuestion(audioUrl);
-        request.setTextQuestion(questionText);
+        request.setTextQuestion(problemDesc);
+        request.setType(type);
+        request.setCat(cat);
 
         requestsRef.push()
                 .setValue(request)
@@ -291,7 +295,12 @@ public class FirebaseDataSource {
                 });
     }
 
-    public Single<Boolean> addNewRequest(String userId, String token, List<Image> uploadedImagesUris, File audioRecordedFile, String questionText) {
+    public Single<Boolean> addNewRequest(String userId, String token,
+                                         List<Image> uploadedImagesUris,
+                                         File audioRecordedFile,
+                                         String problemDesc,
+                                         String type,
+                                         String cat) {
         return Single.create(emitter -> {
             if (audioRecordedFile != null) {
                 //upload audio firstly
@@ -304,12 +313,12 @@ public class FirebaseDataSource {
                     audioUrl.addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             String downloadUrl = task.getResult().toString();
-                            saveRequestToFirebaseDatabase(userId, token, uploadedImagesUris, downloadUrl, questionText, emitter);
+                            saveRequestToFirebaseDatabase(userId, token, uploadedImagesUris, downloadUrl, problemDesc, type, cat, emitter);
                         }
                     });
                 });
             } else {
-                saveRequestToFirebaseDatabase(userId, token, uploadedImagesUris, null, questionText, emitter);
+                saveRequestToFirebaseDatabase(userId, token, uploadedImagesUris, null, problemDesc, type, cat, emitter);
             }
         });
     }

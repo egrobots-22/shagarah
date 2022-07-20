@@ -54,8 +54,10 @@ public class DatabaseRepository {
         return firebaseDataSource.getRequest(requestId);
     }
 
-    public Single<Boolean> addNewRequest(String userId, String token, List<Image> uploadedImagesUris, File audioRecordedFile, String questionText) {
-        return firebaseDataSource.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, questionText);
+    public Single<Boolean> addNewRequest(String userId, String token, List<Image> uploadedImagesUris, File audioRecordedFile, String problemDesc,
+                                         String type,
+                                         String cat) {
+        return firebaseDataSource.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, problemDesc, type, cat);
     }
 
     public Single<String> uploadImageToFirebaseStorage(Uri imageUri) {

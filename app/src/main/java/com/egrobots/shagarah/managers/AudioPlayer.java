@@ -59,7 +59,7 @@ public class AudioPlayer {
     public String getAudioDuration() {
         try {
             MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-            mediaMetadataRetriever.setDataSource(audioUri, new HashMap<>());
+            mediaMetadataRetriever.setDataSource(audioUri);
             String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
             mediaMetadataRetriever.release();
             return durationStr;
