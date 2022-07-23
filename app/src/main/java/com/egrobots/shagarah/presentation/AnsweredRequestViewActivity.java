@@ -10,12 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.egrobots.shagarah.R;
+import com.egrobots.shagarah.data.models.NDVI;
+import com.egrobots.shagarah.data.models.NDWI;
 import com.egrobots.shagarah.presentation.helpers.ViewModelProviderFactory;
 import com.egrobots.shagarah.presentation.viewmodels.SelectedRequestViewModel;
 import com.egrobots.shagarah.utils.Constants;
@@ -84,6 +87,18 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
     TextView althemarTextView;
     @BindView(R.id.question_answer_value_text_view)
     TextView questionAnswerTextView;
+    @BindView(R.id.mean_value_status_text_view)
+    TextView ndviMeanValueStatusTextView;
+    @BindView(R.id.mean_value_desc_text_view)
+    TextView ndviMeanValueDescTextView;
+    @BindView(R.id.point_value_status_text_view)
+    TextView ndviPointValueStatusTextView;
+    @BindView(R.id.point_value_desc_text_view)
+    TextView ndviPointValueDescTextView;
+    @BindView(R.id.ndwi_mean_value_status_text_view)
+    TextView ndwiMeanValueStatusTextView;
+    @BindView(R.id.ndwi_point_value_status_text_view)
+    TextView ndwiPointValueStatusTextView;
     @Inject
     ViewModelProviderFactory providerFactory;
     private boolean mapLoaded;
@@ -111,11 +126,20 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
                     try{
                         //Create a JSON object containing information from the API.
                          JSONObject myJsonObject = new JSONObject(response);
-                        String NDVI = myJsonObject.get("NDVI").toString();
-                        Toast.makeText(AnsweredRequestViewActivity.this, NDVI, Toast.LENGTH_SHORT).show();
-                        Log.i("Volley Response", "get NDVI index: " + response);
+                        String NDVIImgUrl = myJsonObject.get("ndvi_image_url").toString();
+                        String meanValue = myJsonObject.get("ndvi_mean_value").toString();
+                        String pointValue = myJsonObject.get("ndvi_point_value").toString();
+
+                        NDVI meanNDVI = new NDVI(Double.parseDouble(meanValue));
+                        ndviMeanValueStatusTextView.setText(meanNDVI.getStatus());
+                        ndviMeanValueDescTextView.setText(meanNDVI.getDesc());
+
+                        NDVI pointNDVI = new NDVI(Double.parseDouble(pointValue));
+                        ndviPointValueStatusTextView.setText(pointNDVI.getStatus());
+                        ndviPointValueDescTextView.setText(pointNDVI.getDesc());
+
                         Glide.with(AnsweredRequestViewActivity.this)
-                                .load(NDVI)
+                                .load(NDVIImgUrl)
                                 .placeholder(R.drawable.shagarah_logo)
                                 .into(ndviImageView);
                     } catch (JSONException e) {
@@ -131,6 +155,10 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
                             .into(ndviImageView);
                 }
         );
+        myRequest.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(myRequest);
 
@@ -143,12 +171,18 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
                     try{
                         //Create a JSON object containing information from the API.
                         JSONObject myJsonObject = new JSONObject(response);
-                        String NDWI = myJsonObject.get("NDWI").toString();
-                        Toast.makeText(AnsweredRequestViewActivity.this, NDWI, Toast.LENGTH_SHORT).show();
-                        Log.i("Volley Response", "get NDWI index: " + response);
+                        String NDWIImgUrl = myJsonObject.get("ndwi_image_url").toString();
+                        String meanValue = myJsonObject.get("ndwi_mean_value").toString();
+                        String pointValue = myJsonObject.get("ndwi_point_value").toString();
+
+                        NDWI meanNDWI = new NDWI(Double.parseDouble(meanValue));
+                        ndwiMeanValueStatusTextView.setText(meanNDWI.getStatus());
+
+                        NDWI pointNDWI = new NDWI(Double.parseDouble(pointValue));
+                        ndwiPointValueStatusTextView.setText(pointNDWI.getStatus());
 
                         Glide.with(AnsweredRequestViewActivity.this)
-                                .load(NDWI)
+                                .load(NDWIImgUrl)
                                 .placeholder(R.drawable.shagarah_logo)
                                 .into(ndwiImageView);
                     } catch (JSONException e) {
@@ -164,6 +198,10 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
                             .into(ndviImageView);
                 }
         );
+        myRequest.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(myRequest);
 
@@ -182,7 +220,6 @@ public class AnsweredRequestViewActivity extends DaggerAppCompatActivity impleme
 
                         tempTextView.setText("درجة الحرارة : " + temp);
                         humidityTextView.setText("الرطوبة : " + humidity);
-                        Toast.makeText(AnsweredRequestViewActivity.this, temp + ", " + humidity, Toast.LENGTH_SHORT).show();
                         Log.i("Volley Response", "get weather: " + response);
                     } catch (JSONException e) {
                         e.printStackTrace();
