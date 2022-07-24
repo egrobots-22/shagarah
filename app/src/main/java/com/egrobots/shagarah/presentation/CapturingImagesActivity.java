@@ -24,10 +24,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.egrobots.shagarah.R;
 import com.egrobots.shagarah.data.models.Image;
+import com.egrobots.shagarah.data.models.RequestSurveyQuestion;
 import com.egrobots.shagarah.managers.CameraXRecorder;
 import com.egrobots.shagarah.presentation.adapters.ImagesAdapter;
 import com.egrobots.shagarah.presentation.helpers.GuideDialog;
 import com.egrobots.shagarah.presentation.helpers.ImageDialog;
+import com.egrobots.shagarah.presentation.helpers.SurveyDialog;
 import com.egrobots.shagarah.utils.Constants;
 
 import java.util.ArrayList;
@@ -62,9 +64,11 @@ public class CapturingImagesActivity extends DaggerAppCompatActivity
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60; // 1 minute
 
     private GuideDialog guideDialog = new GuideDialog(this);
+    private SurveyDialog surveyDialog = SurveyDialog.newInstance();
     private ArrayList<String> imagesUris = new ArrayList<>();
     private List<Image> images = new ArrayList<>();
     private ImagesAdapter imagesAdapter = new ImagesAdapter();
+    private List<RequestSurveyQuestion> requestSurveyQuestions;
     private LocationManager locationManager;
     private CameraXRecorder cameraXRecorder;
     private int capturedImagesCount = 0;
@@ -115,6 +119,8 @@ public class CapturingImagesActivity extends DaggerAppCompatActivity
 
     @Override
     public void onStartNowClicked() {
+        surveyDialog.show(getSupportFragmentManager(), null);
+        surveyDialog.setSurveyDialogCallback(surveyQuestions -> requestSurveyQuestions = surveyQuestions);
         initializeCameraX();
     }
 
@@ -187,6 +193,7 @@ public class CapturingImagesActivity extends DaggerAppCompatActivity
     public void onDoneClicked() {
         Intent intent = new Intent(this, ReviewRequestActivity.class);
         intent.putParcelableArrayListExtra(Constants.IMAGES, (ArrayList<? extends Parcelable>) images);
+        intent.putParcelableArrayListExtra(Constants.SURVEY_QUESTIONS, (ArrayList<? extends Parcelable>) requestSurveyQuestions);
         startActivityForResult(intent, 0);
     }
 

@@ -6,6 +6,7 @@ import com.egrobots.shagarah.data.models.CurrentUser;
 import com.egrobots.shagarah.data.models.Image;
 import com.egrobots.shagarah.data.models.QuestionAnalysis;
 import com.egrobots.shagarah.data.models.Request;
+import com.egrobots.shagarah.data.models.RequestSurveyQuestion;
 import com.egrobots.shagarah.data.models.TreeType;
 import com.egrobots.shagarah.datasource.FirebaseDataSource;
 
@@ -56,8 +57,8 @@ public class DatabaseRepository {
 
     public Single<Boolean> addNewRequest(String userId, String token, List<Image> uploadedImagesUris, File audioRecordedFile, String problemDesc,
                                          String type,
-                                         String cat) {
-        return firebaseDataSource.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, problemDesc, type, cat);
+                                         String cat, List<RequestSurveyQuestion> surveyQuestions) {
+        return firebaseDataSource.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, problemDesc, type, cat, surveyQuestions);
     }
 
     public Single<String> uploadImageToFirebaseStorage(Uri imageUri) {

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="ما تم رشه في الشهر الماضي ؟"
+        android:textColor="@color/colorAccentDark"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/shagarah_logo" />
+
+    <CheckBox
+        android:id="@+id/q1_option1_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="المبيدات الحشرية"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <CheckBox
+        android:id="@+id/q1_option2_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="مبيدات الفطريات"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <CheckBox
+        android:id="@+id/q1_option3_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="مبيدات الأعشاب"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <RadioButton
+        android:id="@+id/q1_no_selected_option_radiobutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="لا شئ"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:background="@color/transparent_gray"
+        android:text="* الرجاء الإجابة على بعض الأسئلة لمساعدتنا في تقديم نتائج أكثر دقة"/>
+
+</LinearLayout>

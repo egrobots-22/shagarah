@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.egrobots.shagarah.R;
 import com.egrobots.shagarah.data.models.Image;
+import com.egrobots.shagarah.data.models.RequestSurveyQuestion;
 import com.egrobots.shagarah.managers.AudioPlayer;
 import com.egrobots.shagarah.managers.AudioRecorder;
 import com.egrobots.shagarah.presentation.adapters.ImagesAdapter;
@@ -73,6 +74,7 @@ public class ReviewRequestActivity extends DaggerAppCompatActivity {
 
     private ArrayList<Image> images = new ArrayList<>();
     private List<Image> uploadedImagesUris = new ArrayList<>();
+    private List<RequestSurveyQuestion> surveyQuestions = new ArrayList<>();
     private Handler handler = new Handler();
     private AudioRecorder audioRecorder;
     private AudioPlayer audioPlayer;
@@ -103,6 +105,7 @@ public class ReviewRequestActivity extends DaggerAppCompatActivity {
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         token = getIntent().getStringExtra(Constants.DEVICE_TOKEN);
+        surveyQuestions = getIntent().getParcelableArrayListExtra(Constants.SURVEY_QUESTIONS);
         newRequestViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(NewRequestViewModel.class);
         observeImageUpload();
         observeAddingRequest();
@@ -120,7 +123,7 @@ public class ReviewRequestActivity extends DaggerAppCompatActivity {
                 newRequestViewModel.uploadImageToFirebaseStorage(imageUri);
             } else {
                 //send request
-                newRequestViewModel.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, problemDesc, planetType, planetCat);
+                newRequestViewModel.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, problemDesc, planetType, planetCat, surveyQuestions);
             }
         });
     }

@@ -24,6 +24,7 @@ public class Request {
     private String cat;
     private QuestionAnalysis questionAnalysis;
     private String flag;
+    private List<RequestSurveyQuestion> surveyQuestions;
 
     public Request() {
     }
@@ -153,6 +154,14 @@ public class Request {
 
     public void setFlag(String flag) {
         this.flag = flag;
+    }
+
+    public List<RequestSurveyQuestion> getSurveyQuestions() {
+        return surveyQuestions;
+    }
+
+    public void setSurveyQuestions(List<RequestSurveyQuestion> surveyQuestions) {
+        this.surveyQuestions = surveyQuestions;
     }
 
     public enum RequestStatus {

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <View
+            android:id="@+id/q0_view_empty"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:background="@drawable/white_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.025" />
+
+        <View
+            android:id="@+id/q1_view"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:background="@drawable/cornered_accent_bg"
+            app:layout_constraintStart_toEndOf="@id/q0_view_empty"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <View
+            android:id="@+id/q1_view_empty"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:background="@drawable/white_bg"
+            app:layout_constraintStart_toEndOf="@id/q1_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.05" />
+
+        <View
+            android:id="@+id/q2_view"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:background="@drawable/cornered_gray_bg"
+            app:layout_constraintStart_toEndOf="@id/q1_view_empty"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <View
+            android:id="@+id/q2_view_empty"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:background="@drawable/white_bg"
+            app:layout_constraintStart_toEndOf="@id/q2_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.05" />
+
+        <View
+            android:id="@+id/q3_view"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:background="@drawable/cornered_gray_bg"
+            app:layout_constraintStart_toEndOf="@id/q2_view_empty"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <View
+            android:id="@+id/q3_view_empty"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:background="@drawable/white_bg"
+            app:layout_constraintStart_toEndOf="@id/q3_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.05" />
+
+        <View
+            android:id="@+id/q4_view"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:background="@drawable/cornered_gray_bg"
+            app:layout_constraintStart_toEndOf="@id/q3_view_empty"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/question_layout_1"
+        layout="@layout/q1_survey_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp" />
+
+    <include
+        android:id="@+id/question_layout_2"
+        layout="@layout/q2_survey_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp" />
+
+    <include
+        android:id="@+id/question_layout_3"
+        layout="@layout/q3_survey_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp" />
+
+    <include
+        android:id="@+id/question_layout_4"
+        layout="@layout/q4_survey_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/skip_button"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:background="@drawable/cornered_gray_bg"
+            android:text="تخطي"
+            android:textColor="@color/dark_gray"
+            android:layout_alignParentStart="true"/>
+
+        <Button
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:background="@drawable/cornered_gray_bg"
+            android:text="التالي"
+            android:textColor="@color/dark_gray"
+            android:layout_alignParentEnd="true"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:id="@+id/selected_fruit_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cornered_gray_bg_small_radius"
+        android:paddingStart="32dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="32dp"
+        android:paddingBottom="8dp"
+        android:text="تفاحة"
+        android:textSize="16sp"
+        android:gravity="center"/>
+
+    <ImageButton
+        android:id="@+id/cancel_button"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="8dp"
+        android:background="@null"
+        android:backgroundTint="@color/colorAccentDark"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+</LinearLayout>

@@ -114,26 +114,6 @@ public class CameraXRecorder {
         useCaseGroupBuilder.addUseCase(preview);
         useCaseGroupBuilder.addUseCase(imageCapture);
 
-//        ImageAnalysis imageAnalysis =
-//                new ImageAnalysis.Builder()
-//                        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-//                        .build();
-//
-//        imageAnalysis.setAnalyzer(getExecutor(), new ImageAnalysis.Analyzer() {
-//            @Override
-//            public void analyze(@NonNull ImageProxy imageProxy) {
-//                int rotationDegrees = imageProxy.getImageInfo().getRotationDegrees();
-//                Image mediaImage = imageProxy.getImage();
-//                if (mediaImage != null) {
-//                    InputImage image = InputImage.fromMediaImage(mediaImage, rotationDegrees);
-//                    // Pass image to an ML Kit Vision API
-//                    // ...
-//                }
-//            }
-//        });
-
-//        useCaseGroupBuilder.addUseCase(imageAnalysis);
-
         //bind to lifecycle:
         cameraProvider.bindToLifecycle((LifecycleOwner) context, cameraSelector, useCaseGroupBuilder.build());
     }

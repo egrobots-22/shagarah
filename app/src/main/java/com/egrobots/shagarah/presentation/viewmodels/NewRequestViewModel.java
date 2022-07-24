@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.egrobots.shagarah.data.DatabaseRepository;
 import com.egrobots.shagarah.data.models.Image;
+import com.egrobots.shagarah.data.models.RequestSurveyQuestion;
 
 import java.io.File;
 import java.util.List;
@@ -36,9 +37,10 @@ public class NewRequestViewModel extends ViewModel {
                               File audioRecordedFile,
                               String problemDesc,
                               String type,
-                              String cat) {
+                              String cat,
+                              List<RequestSurveyQuestion> surveyQuestions) {
         SingleObserver<Boolean> singleObserver
-                = databaseRepository.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, problemDesc, type, cat)
+                = databaseRepository.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, problemDesc, type, cat, surveyQuestions)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new SingleObserver<Boolean>() {
