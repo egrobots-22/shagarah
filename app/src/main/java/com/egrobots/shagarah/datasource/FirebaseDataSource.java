@@ -10,7 +10,6 @@ import com.egrobots.shagarah.data.models.Request;
 import com.egrobots.shagarah.data.models.RequestSurveyQuestion;
 import com.egrobots.shagarah.data.models.TreeType;
 import com.egrobots.shagarah.utils.Constants;
-import com.egrobots.shagarah.utils.NotificationRequest;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,6 +80,37 @@ public class FirebaseDataSource {
                                             emitter.onError(error.toException());
                                         }
                                     });
+                        } else {
+                            emitter.onError(task.getException());
+                        }
+                    });
+        });
+    }
+
+    public Single<CurrentUser> signInAnonymously() {
+        return Single.create(emitter -> {
+            firebaseAuth.signInAnonymously()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            //get device token
+                            FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
+                                if (!TextUtils.isEmpty(token)) {
+                                    String userId = task.getResult().getUser().getUid();
+                                    CurrentUser user = new CurrentUser();
+                                    user.setUsername("Anonymous");
+                                    user.setEmail("Anonymous");
+                                    user.setId(userId);
+                                    user.setToken(token);
+                                    DatabaseReference usersRef = firebaseDatabase.getReference(Constants.USERS_NODE);
+                                    usersRef.child(userId).setValue(user).addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            emitter.onSuccess(user);
+                                        } else {
+                                            emitter.onError(task1.getException());
+                                        }
+                                    });
+                                }
+                            });
                         } else {
                             emitter.onError(task.getException());
                         }
@@ -322,7 +352,7 @@ public class FirebaseDataSource {
                     });
                 });
             } else {
-                saveRequestToFirebaseDatabase(userId, token, uploadedImagesUris, null, problemDesc, type, cat, surveyQuestions,emitter);
+                saveRequestToFirebaseDatabase(userId, token, uploadedImagesUris, null, problemDesc, type, cat, surveyQuestions, emitter);
             }
         });
     }
@@ -331,21 +361,21 @@ public class FirebaseDataSource {
         return Flowable.create(emitter -> {
             DatabaseReference treeTypesRef = firebaseDatabase.getReference(Constants.ANALYSIS_NODE).child(Constants.TREE_TYPES_NODE);
             treeTypesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            List<TreeType> treeTypeList = new ArrayList<>();
-                            for (DataSnapshot typeSnapshot : snapshot.getChildren()) {
-                                TreeType type = typeSnapshot.getValue(TreeType.class);
-                                treeTypeList.add(type);
-                            }
-                            emitter.onNext(treeTypeList);
-                        }
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    List<TreeType> treeTypeList = new ArrayList<>();
+                    for (DataSnapshot typeSnapshot : snapshot.getChildren()) {
+                        TreeType type = typeSnapshot.getValue(TreeType.class);
+                        treeTypeList.add(type);
+                    }
+                    emitter.onNext(treeTypeList);
+                }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            emitter.onError(error.toException());
-                        }
-                    });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    emitter.onError(error.toException());
+                }
+            });
         }, BackpressureStrategy.BUFFER);
     }
 

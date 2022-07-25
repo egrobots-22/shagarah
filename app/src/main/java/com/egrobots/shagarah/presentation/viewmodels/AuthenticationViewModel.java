@@ -48,6 +48,28 @@ public class AuthenticationViewModel extends ViewModel {
                 });
     }
 
+    public void signInAnonymously() {
+        SingleObserver<CurrentUser> singleObserver = databaseRepository.signInAnonymously()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new SingleObserver<CurrentUser>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(CurrentUser user) {
+                        userState.setValue(user);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        errorState.setValue(e.getMessage());
+                    }
+                });
+    }
+
     public void signUp(String username, String email, String password) {
         SingleObserver<CurrentUser> singleObserver = databaseRepository.signUp(username, email, password)
                 .subscribeOn(Schedulers.io())
@@ -99,4 +121,5 @@ public class AuthenticationViewModel extends ViewModel {
     public MediatorLiveData<String> observeErrorState() {
         return errorState;
     }
+
 }

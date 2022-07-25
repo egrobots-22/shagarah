@@ -31,6 +31,10 @@ public class DatabaseRepository {
         return firebaseDataSource.signIn(email, password);
     }
 
+    public Single<CurrentUser> signInAnonymously() {
+        return firebaseDataSource.signInAnonymously();
+    }
+
     public Single<CurrentUser> signUp(String username, String email, String password) {
         return firebaseDataSource.signUp(username, email, password);
     }

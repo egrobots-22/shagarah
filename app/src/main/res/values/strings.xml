@@ -39,6 +39,7 @@
     <string name="other_string">أخرى</string>
     <string name="question_answer_string">الرد علي السؤال</string>
     <string name="add_your_answer_here_hint">اضف اجابتك علي السؤال هنا</string>
+    <string name="skip">تخطي</string>
 
     <string-array name="default_options">
         <item>الحالة جيدة</item>

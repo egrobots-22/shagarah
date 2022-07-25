@@ -67,6 +67,11 @@ public class SignInActivity extends DaggerAppCompatActivity {
         }
     }
 
+    @OnClick(R.id.skip_button)
+    public void onSkipButtonClicked() {
+        authenticationViewModel.signInAnonymously();
+    }
+
     @OnClick(R.id.sign_up_text_view)
     public void onSignUpNowClicked() {
         startActivity(new Intent(this, SignUpActivity.class));

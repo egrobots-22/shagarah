@@ -40,6 +40,9 @@ public class SurveyDialog extends DialogFragment {
     private int currentQuestionPosition = 1;
     private List<RequestSurveyQuestion> surveyQuestions = new ArrayList<>();
     private SurveyDialogCallback surveyDialogCallback;
+    private CheckBox option1CheckBox, option2CheckBox, option3CheckBox;
+    private RadioButton noSelectedRadioButton;
+    private String selectedPlanet;
 
     @BindView(R.id.question_layout_1)
     View questionLayout1;
@@ -200,9 +203,6 @@ public class SurveyDialog extends DialogFragment {
         }
     }
 
-
-    private String selectedPlanet;
-
     private boolean getQuestion4Answer() {
 
         if (selectedPlanet.isEmpty()) {
@@ -217,8 +217,6 @@ public class SurveyDialog extends DialogFragment {
             return true;
         }
     }
-    private CheckBox option1CheckBox, option2CheckBox, option3CheckBox;
-    private RadioButton noSelectedRadioButton;
 
     private void setQuestion1() {
         option1CheckBox = questionLayout1.findViewById(R.id.q1_option1_checkbox);
