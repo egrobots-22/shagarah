@@ -94,8 +94,26 @@ public class SurveyDialog extends DialogFragment {
 
     @OnClick(R.id.skip_button)
     public void onSkipClicked() {
-        dismiss();
-//        onNextClicked();
+//        dismiss();
+        skipCurrentQuestion();
+    }
+
+    private void skipCurrentQuestion() {
+        currentQuestionPosition++;
+        if (currentQuestionPosition == 5) {
+            dismiss();
+        }
+        switch (currentQuestionPosition) {
+            case 2 :
+                setQuestion2();
+                break;
+            case 3 :
+                setQuestion3();;
+                break;
+            case 4 :
+                setQuestion4();
+                break;
+        }
     }
 
     @OnClick(R.id.next_button)
@@ -143,6 +161,7 @@ public class SurveyDialog extends DialogFragment {
             return false;
         } else {
             RequestSurveyQuestion question = new RequestSurveyQuestion();
+            question.setId(RequestSurveyQuestion.SurveyQuestionId.Q1.id);
             question.setQuestion("ما تم رشه في الشهر الماضي ؟");
             question.setAnswer(answerList);
 
@@ -170,6 +189,7 @@ public class SurveyDialog extends DialogFragment {
                     break;
             }
             RequestSurveyQuestion question = new RequestSurveyQuestion();
+            question.setId(RequestSurveyQuestion.SurveyQuestionId.Q2.id);
             question.setQuestion("مكم من المحاصيل الخاصة بك وتعاني من هذه المشكلة؟");
             question.setAnswer(answerList);
 
@@ -195,6 +215,7 @@ public class SurveyDialog extends DialogFragment {
             return false;
         } else {
             RequestSurveyQuestion question = new RequestSurveyQuestion();
+            question.setId(RequestSurveyQuestion.SurveyQuestionId.Q3.id);
             question.setQuestion("أي أجزاء من الأعراض تظهر مصنع ؟");
             question.setAnswer(answerList);
 
@@ -210,6 +231,7 @@ public class SurveyDialog extends DialogFragment {
             return false;
         } else {
             RequestSurveyQuestion question = new RequestSurveyQuestion();
+            question.setId(RequestSurveyQuestion.SurveyQuestionId.Q4.id);
             question.setQuestion("اختيار المحاصيل الخاصة بك");
             question.setAnswer(Collections.singletonList(selectedPlanet));
 

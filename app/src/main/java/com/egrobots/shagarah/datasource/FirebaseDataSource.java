@@ -105,6 +105,8 @@ public class FirebaseDataSource {
                                     usersRef.child(userId).setValue(user).addOnCompleteListener(task1 -> {
                                         if (task1.isSuccessful()) {
                                             emitter.onSuccess(user);
+                                            //save user locally on device
+
                                         } else {
                                             emitter.onError(task1.getException());
                                         }

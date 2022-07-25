@@ -7,6 +7,7 @@ import java.util.List;
 
 public class RequestSurveyQuestion implements Parcelable {
 
+    private int id;
     private String question;
     private List<String> answer;
 
@@ -14,6 +15,7 @@ public class RequestSurveyQuestion implements Parcelable {
     }
 
     protected RequestSurveyQuestion(Parcel in) {
+        id = in.readInt();
         question = in.readString();
         answer = in.createStringArrayList();
     }
@@ -29,6 +31,14 @@ public class RequestSurveyQuestion implements Parcelable {
             return new RequestSurveyQuestion[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getQuestion() {
         return question;
@@ -53,7 +63,20 @@ public class RequestSurveyQuestion implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(question);
         dest.writeStringList(answer);
+    }
+
+    public enum SurveyQuestionId{
+        Q1(1),
+        Q2(2),
+        Q3(3),
+        Q4(4);
+
+        public int id;
+        SurveyQuestionId(int i) {
+            id = i;
+        }
     }
 }

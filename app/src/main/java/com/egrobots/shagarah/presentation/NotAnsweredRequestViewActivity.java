@@ -143,17 +143,17 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
                         for (String answerItem : surveyQuestion.getAnswer()) {
                             answer.append(answerItem).append(" , ");
                         }
-                        switch (i) {
-                            case 0 :
+                        switch (surveyQuestion.getId()) {
+                            case 1 :
                                 q1SurveyAnswer.setText(answer);
                                 break;
-                            case 1:
+                            case 2:
                                 q2SurveyAnswer.setText(answer);
                                 break;
-                            case 2:
+                            case 3:
                                 q3SurveyAnswer.setText(answer);
                                 break;
-                            case 3:
+                            case 4:
                                 q4SurveyAnswer.setText(answer);
                                 break;
                         }
