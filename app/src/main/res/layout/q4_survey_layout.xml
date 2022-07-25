@@ -13,13 +13,6 @@
         android:textColor="@color/colorAccentDark"
         android:textSize="18sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fruit_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:orientation="horizontal"/>
-
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/search_edit_text"
         android:layout_width="match_parent"
@@ -36,10 +29,17 @@
         android:textColorHint="@color/dark_gray" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/selected_fruits_recycler_view"
+        android:id="@+id/plants_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_margin="16dp"
-        tools:listitem="@layout/selected_fruit_item_layout"/>
+        android:layout_margin="8dp"
+        android:orientation="horizontal"/>
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/selected_fruits_recycler_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp"-->
+<!--        android:layout_margin="16dp"-->
+<!--        tools:listitem="@layout/selected_fruit_item_layout"/>-->
 
 </LinearLayout>

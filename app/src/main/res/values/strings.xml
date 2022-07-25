@@ -45,4 +45,47 @@
         <item>مشكلة بسيطة</item>
         <item>تحتاج تدخل عاجل</item>
     </string-array>
+
+    <string-array name="plants">
+        <item>البطاطس</item>
+        <item>الطماطم</item>
+        <item>البصل</item>
+        <item>الباميا</item>
+        <item>الشمام</item>
+        <item>الجزر</item>
+        <item>كوسة</item>
+        <item>الخيار</item>
+        <item>الملوخيه</item>
+        <item>الفجل</item>
+        <item>الثوم</item>
+        <item>باذنجان</item>
+        <item>كراث</item>
+        <item>الفاصوليا  الخضراء</item>
+        <item>المانجو</item>
+        <item>النخيل</item>
+        <item>العنب</item>
+        <item>الموز</item>
+        <item>البرتقال</item>
+        <item>اللوز</item>
+        <item>الرمان</item>
+        <item>الفرسك</item>
+        <item>التفاح</item>
+        <item>الليمون</item>
+        <item>اليوسفي</item>
+        <item>البرقوق</item>
+        <item>الجوافه</item>
+        <item>التين</item>
+        <item>لوبيا</item>
+        <item>  عدس</item>
+        <item>حلبه</item>
+        <item>فول</item>
+        <item>بسله</item>
+        <item>فاصوليا</item>
+        <item>الإجمالي</item>
+        <item>الذرة</item>
+        <item>القمح</item>
+        <item>الدخن</item>
+        <item>الذرة الشامية</item>
+        <item>الشعير</item>
+    </string-array>
 </resources>

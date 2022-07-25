@@ -15,17 +15,20 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.egrobots.shagarah.R;
+import com.egrobots.shagarah.data.models.Planet;
 import com.egrobots.shagarah.data.models.RequestSurveyQuestion;
-import com.egrobots.shagarah.presentation.adapters.FruitsAdapter;
-import com.egrobots.shagarah.presentation.adapters.SelectedFruitsAdapter;
+import com.egrobots.shagarah.presentation.adapters.PlanetsAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -79,6 +82,7 @@ public class SurveyDialog extends DialogFragment {
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.WRAP_CONTENT);
         ButterKnife.bind(this, getDialog());
+        setQuestion1();
     }
 
     public void setSurveyDialogCallback(SurveyDialogCallback surveyDialogCallback){
@@ -123,28 +127,6 @@ public class SurveyDialog extends DialogFragment {
     }
 
     private boolean getQuestion1Answer() {
-        CheckBox option1CheckBox = questionLayout1.findViewById(R.id.q1_option1_checkbox);
-        CheckBox option2CheckBox = questionLayout1.findViewById(R.id.q1_option2_checkbox);
-        CheckBox option3CheckBox = questionLayout1.findViewById(R.id.q1_option3_checkbox);
-        RadioButton noSelectedRadioButton = questionLayout1.findViewById(R.id.q1_no_selected_option_radiobutton);
-        noSelectedRadioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                option1CheckBox.setChecked(false);
-                option2CheckBox.setChecked(false);
-                option3CheckBox.setChecked(false);
-            }
-        });
-
-        option1CheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) noSelectedRadioButton.setChecked(false);
-        });
-        option2CheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) noSelectedRadioButton.setChecked(false);
-        });
-        option3CheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) noSelectedRadioButton.setChecked(false);
-        });
-
         List<String> answerList = new ArrayList<>();
         if (noSelectedRadioButton.isChecked()) {
             answerList.add("لا شئ");
@@ -168,9 +150,6 @@ public class SurveyDialog extends DialogFragment {
 
     private boolean getQuestion2Answer() {
         RadioGroup q2RadioGroupOptions = questionLayout2.findViewById(R.id.q2_radio_group);
-        q2RadioGroupOptions.setOnCheckedChangeListener((group, checkedId) -> {
-
-        });
         if (q2RadioGroupOptions.getCheckedRadioButtonId() == -1) {
             Toast.makeText(getContext(), "يحب أن تختار إجابة", Toast.LENGTH_SHORT).show();
             return false;
@@ -222,21 +201,47 @@ public class SurveyDialog extends DialogFragment {
     }
 
 
-    private SelectedFruitsAdapter selectedFruitsAdapter;
+    private String selectedPlanet;
 
     private boolean getQuestion4Answer() {
 
-        if (selectedFruitsAdapter.getSelectedFruits().isEmpty()) {
+        if (selectedPlanet.isEmpty()) {
             Toast.makeText(getContext(), "يحب أن تختار إجابة", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             RequestSurveyQuestion question = new RequestSurveyQuestion();
             question.setQuestion("اختيار المحاصيل الخاصة بك");
-            question.setAnswer(selectedFruitsAdapter.getSelectedFruits());
+            question.setAnswer(Collections.singletonList(selectedPlanet));
 
             surveyQuestions.add(question);
             return true;
         }
+    }
+    private CheckBox option1CheckBox, option2CheckBox, option3CheckBox;
+    private RadioButton noSelectedRadioButton;
+
+    private void setQuestion1() {
+        option1CheckBox = questionLayout1.findViewById(R.id.q1_option1_checkbox);
+        option2CheckBox = questionLayout1.findViewById(R.id.q1_option2_checkbox);
+        option3CheckBox = questionLayout1.findViewById(R.id.q1_option3_checkbox);
+        noSelectedRadioButton = questionLayout1.findViewById(R.id.q1_no_selected_option_radiobutton);
+        noSelectedRadioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                option1CheckBox.setChecked(false);
+                option2CheckBox.setChecked(false);
+                option3CheckBox.setChecked(false);
+            }
+        });
+
+        option1CheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) noSelectedRadioButton.setChecked(false);
+        });
+        option2CheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) noSelectedRadioButton.setChecked(false);
+        });
+        option3CheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) noSelectedRadioButton.setChecked(false);
+        });
     }
 
     private void setQuestion2() {
@@ -263,28 +268,30 @@ public class SurveyDialog extends DialogFragment {
         q4SelectedView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.cornered_accent_bg));
         nextButton.setText("انهاء");
 
-        RecyclerView selectedFruitsRecyclerView = questionLayout4.findViewById(R.id.selected_fruits_recycler_view);
-        selectedFruitsAdapter = new SelectedFruitsAdapter();
-        selectedFruitsRecyclerView.setAdapter(selectedFruitsAdapter);
-        selectedFruitsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        RecyclerView selectedFruitsRecyclerView = questionLayout4.findViewById(R.id.selected_fruits_recycler_view);
+//        selectedFruitsAdapter = new SelectedFruitsAdapter();
+//        selectedFruitsRecyclerView.setAdapter(selectedFruitsAdapter);
+//        selectedFruitsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        RecyclerView fruitsRecyclerView = questionLayout4.findViewById(R.id.fruit_recycler_view);
-        List<String> fruits = new ArrayList<>();
-        fruits.add("تفاحة");
-        fruits.add("موز");
-        fruits.add("ريحان");
-        fruits.add("أفوكادو");
-        fruits.add("فراولة");
-        fruits.add("جوافة");
-        fruits.add("كمثرى");
-        FruitsAdapter fruitsAdapter = new FruitsAdapter(fruits, new FruitsAdapter.FruitsAdapterCallback() {
-            @Override
-            public void onFruitItemClicked(String selectedFruit) {
-                selectedFruitsAdapter.addItem(selectedFruit);
-            }
+        RecyclerView plantsRecyclerView = questionLayout4.findViewById(R.id.plants_recycler_view);
+        List<Planet> plantsList = new ArrayList<>();
+        plantsList.add(new Planet("تفاح", "https://images.vexels.com/media/users/3/211226/isolated/preview/2f7c3081d70a8917a01a038553e97219-apple-flat.png"));
+        plantsList.add(new Planet("موز", "https://cdn.iconscout.com/icon/free/png-256/bananas-55-1176320.png"));
+        plantsList.add(new Planet("أفوكادو", "https://cdn-icons-png.flaticon.com/512/765/765559.png"));
+        plantsList.add(new Planet("فراولة", "https://cdn-icons-png.flaticon.com/512/2790/2790229.png"));
+        plantsList.add(new Planet("جوافة", "https://cdn-icons-png.flaticon.com/512/2045/2045020.png"));
+        plantsList.add(new Planet("كمثرى", "https://icons-for-free.com/download-icon-pear+icon-1320183033953910655_256.ico"));
+
+        List<String> plantsNames = Arrays.asList(getResources().getStringArray(R.array.plants));
+        for (String planetName : plantsNames) {
+            plantsList.add(new Planet(planetName, ""));
+        }
+
+        PlanetsAdapter planetsAdapter = new PlanetsAdapter(plantsList, selectedPlanet -> {
+            SurveyDialog.this.selectedPlanet = selectedPlanet;
         });
-        fruitsRecyclerView.setAdapter(fruitsAdapter);
-        fruitsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        plantsRecyclerView.setAdapter(planetsAdapter);
+        plantsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         EditText searchView = questionLayout4.findViewById(R.id.search_edit_text);
         searchView.addTextChangedListener(new TextWatcher() {
@@ -295,7 +302,7 @@ public class SurveyDialog extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                fruitsAdapter.getFilter().filter(s);
+                planetsAdapter.getFilter().filter(s);
             }
 
             @Override

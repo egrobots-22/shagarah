@@ -138,32 +138,32 @@ public class CameraXRecorder {
                         public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                             Uri imageUri = outputFileResults.getSavedUri();
                             recordingAudio = true;
-                            cameraXCallback.onCaptureImage(imageUri, true);
+//                            cameraXCallback.onCaptureImage(imageUri, true);
 
-//                            InputImage image;
-//                            try {
-//                                image = InputImage.fromFilePath(context, imageUri);
-//                                ImageLabeler labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
-//                                labeler.process(image)
-//                                        .addOnSuccessListener(labels -> {
-//                                            boolean isPlanet = false;
-//                                            for (ImageLabel label : labels) {
-//                                                String text = label.getText();
-//                                                float confidence = label.getConfidence();
-//                                                int index = label.getIndex();
-//                                                if (text.contains("Plant")) {
-//                                                    isPlanet = true;
-//                                                    break;
-//                                                }
-//                                            }
-//                                            cameraXCallback.onCaptureImage(imageUri, isPlanet);
-//                                        })
-//                                        .addOnFailureListener(e -> {
-//                                            cameraXCallback.onCaptureImage(null, false);
-//                                        });
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
+                            InputImage image;
+                            try {
+                                image = InputImage.fromFilePath(context, imageUri);
+                                ImageLabeler labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
+                                labeler.process(image)
+                                        .addOnSuccessListener(labels -> {
+                                            boolean isPlanet = false;
+                                            for (ImageLabel label : labels) {
+                                                String text = label.getText();
+                                                float confidence = label.getConfidence();
+                                                int index = label.getIndex();
+                                                if (text.contains("Plant")) {
+                                                    isPlanet = true;
+                                                    break;
+                                                }
+                                            }
+                                            cameraXCallback.onCaptureImage(imageUri, isPlanet);
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            cameraXCallback.onCaptureImage(null, false);
+                                        });
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         @Override

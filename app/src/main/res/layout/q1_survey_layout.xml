@@ -17,7 +17,7 @@
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
-        android:src="@drawable/shagarah_logo" />
+        android:src="@drawable/q1_image" />
 
     <CheckBox
         android:id="@+id/q1_option1_checkbox"

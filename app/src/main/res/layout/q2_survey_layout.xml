@@ -18,7 +18,7 @@
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
-        android:src="@drawable/shagarah_logo" />
+        android:src="@drawable/q2_image" />
 
     <RadioGroup
         android:id="@+id/q2_radio_group"

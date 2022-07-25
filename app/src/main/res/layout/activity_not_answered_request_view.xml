@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="16dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -153,6 +154,104 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/request_question_label" />
 
+        <LinearLayout
+            android:id="@+id/other_question_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/request_question_value_text_view" >
+
+            <TextView
+                android:id="@+id/other_question_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="أسئلة أخرى" />
+
+            <TextView
+                android:id="@+id/q1_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:text="ما تم رشه في الشهر الماضي ؟"
+                android:textColor="@color/colorAccentDark" />
+
+            <TextView
+                android:id="@+id/q1_label_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:text="ما تم رشه في الشهر الماضي ؟"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/q2_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:text="كم من المحاصيل الخاصة بك وتعاني من هذه المشكلة؟"
+                android:textColor="@color/colorAccentDark" />
+
+            <TextView
+                android:id="@+id/q2_label_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:text="كم من المحاصيل الخاصة بك وتعاني من هذه المشكلة؟"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/q3_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:text="أي أجزاء من الأعراض تظهر مصنع ؟"
+                android:textColor="@color/colorAccentDark" />
+
+            <TextView
+                android:id="@+id/q3_label_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:text="أي أجزاء من الأعراض تظهر مصنع ؟"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/q4_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:text="اختيار المحاصيل الخاصة بك"
+                android:textColor="@color/colorAccentDark" />
+
+            <TextView
+                android:id="@+id/q4_label_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:text="اختيار المحاصيل الخاصة بك"
+                android:textColor="@color/colorPrimaryDark" />
+
+        </LinearLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/play_audio_item_layout"
             android:layout_width="match_parent"
@@ -163,7 +262,7 @@
             android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/request_question_value_text_view">
+            app:layout_constraintTop_toBottomOf="@id/other_question_layout">
 
             <FrameLayout
                 android:id="@+id/controllers_layout"

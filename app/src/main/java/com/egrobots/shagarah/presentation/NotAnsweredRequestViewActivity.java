@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.egrobots.shagarah.R;
 import com.egrobots.shagarah.data.models.QuestionAnalysis;
+import com.egrobots.shagarah.data.models.RequestSurveyQuestion;
 import com.egrobots.shagarah.data.models.TreeType;
 import com.egrobots.shagarah.managers.AudioPlayer;
 import com.egrobots.shagarah.presentation.adapters.ImagesAdapter;
@@ -63,6 +64,16 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
     SeekBar seekBar;
     @BindView(R.id.audio_length_textview)
     TextView audioLengthTextView;
+    @BindView(R.id.other_question_layout)
+    View surveyQuestionLayout;
+    @BindView(R.id.q1_label_answer)
+    TextView q1SurveyAnswer;
+    @BindView(R.id.q2_label_answer)
+    TextView q2SurveyAnswer;
+    @BindView(R.id.q3_label_answer)
+    TextView q3SurveyAnswer;
+    @BindView(R.id.q4_label_answer)
+    TextView q4SurveyAnswer;
     @Inject
     ViewModelProviderFactory providerFactory;
 
@@ -124,6 +135,30 @@ public class NotAnsweredRequestViewActivity extends DaggerAppCompatActivity {
                 requestQuestionTextView.setText(request.getTextQuestion().isEmpty() ? getString(R.string.no_current_text_question) : request.getTextQuestion());
                 typeTextView.setText(request.getType());
                 catTextView.setText(request.getCat());
+                if (request.getSurveyQuestions() != null) {
+                    surveyQuestionLayout.setVisibility(View.VISIBLE);
+                    for (int i=0; i<request.getSurveyQuestions().size(); i++) {
+                        RequestSurveyQuestion surveyQuestion = request.getSurveyQuestions().get(i);
+                        StringBuilder answer = new StringBuilder();
+                        for (String answerItem : surveyQuestion.getAnswer()) {
+                            answer.append(answerItem).append(" , ");
+                        }
+                        switch (i) {
+                            case 0 :
+                                q1SurveyAnswer.setText(answer);
+                                break;
+                            case 1:
+                                q2SurveyAnswer.setText(answer);
+                                break;
+                            case 2:
+                                q3SurveyAnswer.setText(answer);
+                                break;
+                            case 3:
+                                q4SurveyAnswer.setText(answer);
+                                break;
+                        }
+                    }
+                }
                 if (request.getAudioQuestion() == null || request.getAudioQuestion().isEmpty()) {
                     audioQuestionView.setVisibility(View.GONE);
                 } else {
