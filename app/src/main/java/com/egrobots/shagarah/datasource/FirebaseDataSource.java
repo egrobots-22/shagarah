@@ -47,16 +47,19 @@ public class FirebaseDataSource {
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth firebaseAuth;
     private FirebaseMessaging firebaseMessaging;
+    private SharedPreferencesDataSource sharedPreferencesDataSource;
 
     @Inject
     public FirebaseDataSource(StorageReference storageReference
             , FirebaseDatabase firebaseDatabase
             , FirebaseAuth firebaseAuth
-            , FirebaseMessaging firebaseMessaging) {
+            , FirebaseMessaging firebaseMessaging
+            , SharedPreferencesDataSource sharedPreferencesDataSource) {
         this.storageReference = storageReference;
         this.firebaseDatabase = firebaseDatabase;
         this.firebaseAuth = firebaseAuth;
         this.firebaseMessaging = firebaseMessaging;
+        this.sharedPreferencesDataSource = sharedPreferencesDataSource;
     }
 
     public Single<CurrentUser> signIn(String email, String password) {
@@ -106,7 +109,7 @@ public class FirebaseDataSource {
                                         if (task1.isSuccessful()) {
                                             emitter.onSuccess(user);
                                             //save user locally on device
-
+                                            sharedPreferencesDataSource.saveUserIdOnDevice(userId);
                                         } else {
                                             emitter.onError(task1.getException());
                                         }

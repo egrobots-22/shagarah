@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.egrobots.shagarah.R;
@@ -62,6 +63,8 @@ public class SurveyDialog extends DialogFragment {
     View q4SelectedView;
     @BindView(R.id.next_button)
     Button nextButton;
+    @BindView(R.id.selected_planet_text_view)
+    TextView selectedPlanetTextView;
 
     public static SurveyDialog newInstance() {
 
@@ -295,20 +298,18 @@ public class SurveyDialog extends DialogFragment {
 
         RecyclerView plantsRecyclerView = questionLayout4.findViewById(R.id.plants_recycler_view);
         List<Planet> plantsList = new ArrayList<>();
-        plantsList.add(new Planet("تفاح", "https://images.vexels.com/media/users/3/211226/isolated/preview/2f7c3081d70a8917a01a038553e97219-apple-flat.png"));
-        plantsList.add(new Planet("موز", "https://cdn.iconscout.com/icon/free/png-256/bananas-55-1176320.png"));
-        plantsList.add(new Planet("أفوكادو", "https://cdn-icons-png.flaticon.com/512/765/765559.png"));
-        plantsList.add(new Planet("فراولة", "https://cdn-icons-png.flaticon.com/512/2790/2790229.png"));
-        plantsList.add(new Planet("جوافة", "https://cdn-icons-png.flaticon.com/512/2045/2045020.png"));
-        plantsList.add(new Planet("كمثرى", "https://icons-for-free.com/download-icon-pear+icon-1320183033953910655_256.ico"));
-
-        List<String> plantsNames = Arrays.asList(getResources().getStringArray(R.array.plants));
+        List<String> plantsNames = Arrays.asList(getResources().getStringArray(R.array.plants_names));
+        List<String> plantsImages = Arrays.asList(getResources().getStringArray(R.array.plants_images));
+        int i=0;
         for (String planetName : plantsNames) {
-            plantsList.add(new Planet(planetName, ""));
+            plantsList.add(new Planet(planetName, plantsImages.get(i)));
+            i++;
         }
 
         PlanetsAdapter planetsAdapter = new PlanetsAdapter(plantsList, selectedPlanet -> {
             SurveyDialog.this.selectedPlanet = selectedPlanet;
+            selectedPlanetTextView.setVisibility(View.VISIBLE);
+            selectedPlanetTextView.setText(selectedPlanet);
         });
         plantsRecyclerView.setAdapter(planetsAdapter);
         plantsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));

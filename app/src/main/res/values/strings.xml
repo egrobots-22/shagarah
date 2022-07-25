@@ -47,7 +47,7 @@
         <item>تحتاج تدخل عاجل</item>
     </string-array>
 
-    <string-array name="plants">
+    <string-array name="plants_names">
         <item>البطاطس</item>
         <item>الطماطم</item>
         <item>البصل</item>
@@ -61,15 +61,17 @@
         <item>الثوم</item>
         <item>باذنجان</item>
         <item>كراث</item>
-        <item>الفاصوليا  الخضراء</item>
+        <item>الفاصوليا</item>
         <item>المانجو</item>
         <item>النخيل</item>
         <item>العنب</item>
         <item>الموز</item>
+        <item>فراولة</item>
+        <item>كمثرى</item>
+        <item>أفوكادو</item>
         <item>البرتقال</item>
         <item>اللوز</item>
         <item>الرمان</item>
-        <item>الفرسك</item>
         <item>التفاح</item>
         <item>الليمون</item>
         <item>اليوسفي</item>
@@ -77,16 +79,52 @@
         <item>الجوافه</item>
         <item>التين</item>
         <item>لوبيا</item>
-        <item>  عدس</item>
-        <item>حلبه</item>
+        <item>عدس</item>
         <item>فول</item>
         <item>بسله</item>
-        <item>فاصوليا</item>
-        <item>الإجمالي</item>
         <item>الذرة</item>
         <item>القمح</item>
-        <item>الدخن</item>
-        <item>الذرة الشامية</item>
         <item>الشعير</item>
+    </string-array>
+
+    <string-array name="plants_images">
+        <item>https://cdn-icons-png.flaticon.com/512/1652/1652077.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/2503/2503930.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/1998/1998121.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/2909/2909889.png</item>
+        <item>https://images.vexels.com/media/users/3/128211/isolated/preview/af538d53a26ee71fe028abeac3a70782-melon-flat-circle-icon.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/271/271439.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/1515/1515034.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/7315/7315837.png</item>
+        <item>https://flyclipart.com/thumb2/green-leaf-leaves-mentha-mint-peppermint-spearmint-icon-53071.png</item>
+        <item>https://www.i2clipart.com/cliparts/b/a/1/2/clipart-radish-512x512-ba12.png</item>
+        <item>https://png.pngtree.com/png-clipart/20200401/original/pngtree-garlic-cartoon-vector-png-image_5327892.jpg</item>
+        <item>https://cdn-icons-png.flaticon.com/512/1147/1147561.png</item>
+        <item>https://cdn-icons.flaticon.com/png/512/3137/premium/3137094.png?token=exp=1658762793~hmac=a0d152a106903b8640909d1d511f95c6</item>
+        <item>https://cdn-icons-png.flaticon.com/512/3823/3823282.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/700/700804.png</item>
+        <item>https://cdn-icons.flaticon.com/png/512/3850/premium/3850525.png?token=exp=1658761815~hmac=294a6790e7e0917f3b08be63dad7c3b5</item>
+        <item>https://cdn-icons-png.flaticon.com/512/765/765560.png</item>
+        <item>https://cdn.iconscout.com/icon/free/png-256/bananas-55-1176320.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/2790/2790229.png</item>
+        <item>https://icons-for-free.com/download-icon-pear+icon-1320183033953910655_256.ico</item>
+        <item>https://cdn-icons-png.flaticon.com/512/765/765559.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/135/135620.png</item>
+        <item>https://cdn-icons.flaticon.com/png/512/5263/premium/5263329.png?token=exp=1658761872~hmac=24a41b7949af15492e8efb1955841c30</item>
+        <item>https://cdn-icons.flaticon.com/png/512/3944/premium/3944202.png?token=exp=1658761898~hmac=f878434bd7b2e00fd71337ff84b6028e</item>
+        <item>https://images.vexels.com/media/users/3/211226/isolated/preview/2f7c3081d70a8917a01a038553e97219-apple-flat.png</item>
+        <item>https://cdn-icons.flaticon.com/png/512/2079/premium/2079250.png?token=exp=1658762723~hmac=05a19a4cc048b65dd40059835b1417f1</item>
+        <item>https://cdn-icons.flaticon.com/png/512/628/premium/628235.png?token=exp=1658761942~hmac=172fb7424d985cefaa08315ffb94e37d</item>
+        <item>https://cdn-icons-png.flaticon.com/512/1515/1515046.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/2045/2045020.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/1135/1135552.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/2224/2224180.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/7230/7230964.png</item>
+        <item>https://cdn-icons.flaticon.com/png/512/2079/premium/2079285.png?token=exp=1658762074~hmac=c323cb761a33388785deeec08b7f1179</item>
+        <item>https://cdn-icons.flaticon.com/png/512/2346/premium/2346964.png?token=exp=1658762103~hmac=a975982695b6327b0a92cee801a1312e</item>
+        <item>https://cdn-icons.flaticon.com/png/512/895/premium/895140.png?token=exp=1658762143~hmac=eb7e8dc43decb73a3fe91884da91cbfc</item>
+        <item>https://cdn-icons-png.flaticon.com/512/740/740889.png</item>
+        <item>https://cdn-icons-png.flaticon.com/512/6678/6678131.png</item>
+
     </string-array>
 </resources>
