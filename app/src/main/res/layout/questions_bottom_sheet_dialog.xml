@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="@string/tree_type"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dialog_title" />
 
@@ -54,7 +55,7 @@
                 android:textSize="16sp"
                 android:hint="@string/select_tree_type_hint"
                 android:textAlignment="viewStart"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="@string/category"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tree_type_value_edit_text" />
 
@@ -98,7 +100,7 @@
                 android:textSize="16sp"
                 android:hint="@string/select_category_hint"
                 android:textAlignment="viewStart"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:focusable="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tree_category_label" />

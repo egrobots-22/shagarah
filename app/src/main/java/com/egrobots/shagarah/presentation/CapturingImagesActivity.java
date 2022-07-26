@@ -120,7 +120,7 @@ public class CapturingImagesActivity extends DaggerAppCompatActivity
     @Override
     public void onStartNowClicked() {
         surveyDialog.show(getSupportFragmentManager(), null);
-        surveyDialog.setSurveyDialogCallback(surveyQuestions -> requestSurveyQuestions = surveyQuestions);
+        requestSurveyQuestions = surveyDialog.getSurveyQuestionsAnswers();
         initializeCameraX();
     }
 

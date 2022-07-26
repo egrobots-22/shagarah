@@ -41,6 +41,10 @@
     <string name="add_your_answer_here_hint">اضف اجابتك علي السؤال هنا</string>
     <string name="skip">تخطي</string>
 
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="finish">انهاء</string>
+    <string name="next">التالي</string>
+
     <string-array name="default_options">
         <item>الحالة جيدة</item>
         <item>مشكلة بسيطة</item>
@@ -86,7 +90,7 @@
         <item>القمح</item>
         <item>الشعير</item>
     </string-array>
-
+    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="plants_images">
         <item>https://cdn-icons-png.flaticon.com/512/1652/1652077.png</item>
         <item>https://cdn-icons-png.flaticon.com/512/2503/2503930.png</item>

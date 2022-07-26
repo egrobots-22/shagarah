@@ -20,29 +20,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/planet_type_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="نوع النبات"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="16dp"
-            app:layout_constraintTop_toBottomOf="@id/request_images_viewpager" />
+<!--        <TextView-->
+<!--            android:id="@+id/planet_type_label"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="نوع النبات"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:layout_margin="16dp"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/request_images_viewpager" />-->
 
-        <EditText
-            android:id="@+id/planet_type_value_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/cornered_gray_bg_small_radius"
-            android:padding="8dp"
-            android:textColor="@color/colorAccentDark"
-            android:textSize="14sp"
-            android:maxLines="1"
-            android:inputType="text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/planet_type_label" />
+<!--        <EditText-->
+<!--            android:id="@+id/planet_type_value_edit_text"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:background="@drawable/cornered_gray_bg_small_radius"-->
+<!--            android:padding="8dp"-->
+<!--            android:textColor="@color/colorAccentDark"-->
+<!--            android:textSize="14sp"-->
+<!--            android:maxLines="1"-->
+<!--            android:inputType="text"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/planet_type_label" />-->
 
         <TextView
             android:id="@+id/planet_cat_label"
@@ -52,7 +52,7 @@
             android:text="صنف النبات"
             android:layout_margin="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/planet_type_value_edit_text" />
+            app:layout_constraintTop_toBottomOf="@id/request_images_viewpager" />
 
         <EditText
             android:id="@+id/planet_cat_value_edit_text"
@@ -104,6 +104,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/question_desc_label" />
 
+        <TextView
+            android:id="@+id/question_option_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="* يمكنك كتابة وصف المشكلة أو قم بتسجيل صوتي"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/question_desc_value_edit_text" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/play_audio_item_layout"
             android:layout_width="match_parent"
@@ -115,7 +127,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/question_desc_value_edit_text">
+            app:layout_constraintTop_toBottomOf="@id/question_option_label">
 
             <FrameLayout
                 android:id="@+id/controllers_layout"
@@ -207,7 +219,7 @@
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/question_desc_value_edit_text">
+            app:layout_constraintTop_toBottomOf="@id/question_option_label">
 
             <ImageButton
                 android:id="@+id/record_audio_button"

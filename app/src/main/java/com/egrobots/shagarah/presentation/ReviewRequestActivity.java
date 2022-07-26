@@ -45,8 +45,8 @@ public class ReviewRequestActivity extends DaggerAppCompatActivity {
 
     @BindView(R.id.request_images_viewpager)
     ViewPager2 imagesViewPager;
-    @BindView(R.id.planet_type_value_edit_text)
-    EditText planetTypeEditText;
+//    @BindView(R.id.planet_type_value_edit_text)
+//    EditText planetTypeEditText;
     @BindView(R.id.planet_cat_value_edit_text)
     EditText planetCatEditText;
     @BindView(R.id.question_desc_value_edit_text)
@@ -85,7 +85,7 @@ public class ReviewRequestActivity extends DaggerAppCompatActivity {
     private ProgressDialog progressDialog;
     private String userId;
     private String token;
-    private String planetType;
+//    private String planetType;
     private String planetCat;
     private String problemDesc;
     private int uploadedImageIndex = 0;
@@ -123,7 +123,7 @@ public class ReviewRequestActivity extends DaggerAppCompatActivity {
                 newRequestViewModel.uploadImageToFirebaseStorage(imageUri);
             } else {
                 //send request
-                newRequestViewModel.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, problemDesc, planetType, planetCat, surveyQuestions);
+                newRequestViewModel.addNewRequest(userId, token, uploadedImagesUris, audioRecordedFile, problemDesc, null, planetCat, surveyQuestions);
             }
         });
     }
@@ -282,7 +282,7 @@ public class ReviewRequestActivity extends DaggerAppCompatActivity {
 
     @OnClick(R.id.send_request_button)
     public void onSendRequestClicked() {
-        planetType = planetTypeEditText.getText().toString();
+//        planetType = planetTypeEditText.getText().toString();
         planetCat = planetCatEditText.getText().toString();
         problemDesc = questionDescEditText.getText().toString();
 

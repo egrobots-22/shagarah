@@ -1,57 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="كم من المحاصيل الخاصة بك وتعاني من هذه المشكلة؟"
-        android:textColor="@color/colorAccentDark"
-        android:textSize="18sp" />
-
-    <ImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/q2_image" />
-
-    <RadioGroup
-        android:id="@+id/q2_radio_group"
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/q2_option1_radio_button"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="عدد قليل من النباتات"
-            android:textSize="18sp"
-            android:textColor="@color/colorPrimaryDark" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="كم من المحاصيل الخاصة بك وتعاني من هذه المشكلة؟"
+            android:textColor="@color/colorAccentDark"
+            android:textSize="18sp" />
 
-        <RadioButton
-            android:id="@+id/q2_option2_radio_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="العديد من النباتات"
-            android:textSize="18sp"
-            android:textColor="@color/colorPrimaryDark" />
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/q2_image" />
 
-        <RadioButton
-            android:id="@+id/q2_option3_radio_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="كامل المحصول"
-            android:textSize="18sp"
-            android:textColor="@color/colorPrimaryDark" />
+        <RadioGroup
+            android:id="@+id/q2_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/q2_option1_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="عدد قليل من النباتات"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimaryDark" />
 
-</LinearLayout>
+            <RadioButton
+                android:id="@+id/q2_option2_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="العديد من النباتات"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <RadioButton
+                android:id="@+id/q2_option3_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="كامل المحصول"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimaryDark" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+</ScrollView>

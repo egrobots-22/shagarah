@@ -1,58 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="أي أجزاء من الأعراض تظهر مصنع ؟"
-        android:textColor="@color/colorAccentDark"
-        android:textSize="18sp" />
+        android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/q3_image" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="أي أجزاء من الأعراض تظهر مصنع ؟"
+            android:textColor="@color/colorAccentDark"
+            android:textSize="18sp" />
 
-    <CheckBox
-        android:id="@+id/q3_option1_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="ورقة الشجر"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark" />
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/q3_image" />
 
-    <CheckBox
-        android:id="@+id/q3_option2_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="ايقاف"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark" />
+        <CheckBox
+            android:id="@+id/q3_option1_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="ورق الشجر"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark" />
 
-    <CheckBox
-        android:id="@+id/q3_option3_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="فاكهة"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark" />
+        <CheckBox
+            android:id="@+id/q3_option2_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="الساق"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark" />
 
-    <CheckBox
-        android:id="@+id/q3_option4_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="جذور"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark" />
+        <CheckBox
+            android:id="@+id/q3_option3_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="الثمار"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark" />
 
-</LinearLayout>
+        <CheckBox
+            android:id="@+id/q3_option4_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="الجذور"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark" />
+
+    </LinearLayout>
+</ScrollView>

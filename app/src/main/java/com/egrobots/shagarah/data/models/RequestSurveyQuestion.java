@@ -69,14 +69,16 @@ public class RequestSurveyQuestion implements Parcelable {
     }
 
     public enum SurveyQuestionId{
-        Q1(1),
-        Q2(2),
-        Q3(3),
-        Q4(4);
+        Q1(1, "ما تم رشه في الشهر الماضي ؟"),
+        Q2(2, "كم من المحاصيل الخاصة بك وتعاني من هذه المشكلة؟"),
+        Q3(3, "أي جزء من النبات يظهر في الصورة؟"),
+        Q4(4, "اختيار المحاصيل الخاصة بك");
 
         public int id;
-        SurveyQuestionId(int i) {
+        public String question;
+        SurveyQuestionId(int i, String q) {
             id = i;
+            question = q;
         }
     }
 }
